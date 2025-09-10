@@ -7,6 +7,7 @@ import Layout from "../layout/Layout";
 import Vehicles from "../pages/Vehicles";
 import ExtraServices from "../pages/ExtraServices";
 import Drivers from "../pages/Drivers";
+import Inquiries from "../pages/Inquiries";
 
 export const routes: RouteObject[] = [
   {
@@ -44,6 +45,14 @@ export const routes: RouteObject[] = [
       {
         path: `${MainRoutes.drivers}/${DynamicRoute.pageNumber}`,
         element: <Drivers />,
+      },
+      {
+        path: MainRoutes.inquiries,
+        element: <Inquiries />,
+      },
+      {
+        path: `${MainRoutes.inquiries}/${DynamicRoute.pageNumber}`,
+        element: <Inquiries />,
       },
     ],
   },

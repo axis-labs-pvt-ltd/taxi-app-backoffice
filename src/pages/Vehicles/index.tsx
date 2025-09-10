@@ -11,10 +11,17 @@ import DeleteDialog from "../../components/Reusable/DeleteDialog";
 const Vehicles = () => {
   const headers: TableHeaderType<VehiclePaginatedDataType>[] = [
     { key: "plateNumber", label: "Plate Number" },
-    { key: "brand", label: "Brand" },
-    { key: "model", label: "Model" },
-    { key: "type", label: "Boat Type" },
-    { key: "capacity", label: "Capacity" },
+    {
+      key: "model",
+      label: "Brand",
+      render: (row) => <p>{row.model.brand}</p>,
+    },
+    {
+      key: "model",
+      label: "Model",
+      render: (row) => <p>{row.model.modelName}</p>,
+    },
+    { key: "status", label: "Status" },
     {
       key: null,
       label: "Actions",
@@ -49,12 +56,12 @@ const Vehicles = () => {
     setIsAddVehicleOpen,
     editingVehicle,
     setEditingVehicle,
-    vehicleTypes,
     onSubmit,
     isDeleteVehicleOpen,
     setIsDeleteVehicleOpen,
     deleteVehicleSuccess,
     handleDeleteVehicle,
+    vehicleModelsEssentials,
   } = useVehicles();
 
   return (
@@ -94,7 +101,7 @@ const Vehicles = () => {
           setIsAddVehicleOpen={setIsAddVehicleOpen}
           initialData={editingVehicle}
           onSubmit={onSubmit}
-          vehicleTypes={vehicleTypes}
+          vehicleModelsEssentials={vehicleModelsEssentials}
         />
       )}
 

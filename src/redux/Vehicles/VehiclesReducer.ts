@@ -1,5 +1,8 @@
 import { ReduxState, ReduxStatus } from "../../types/Redux.types";
-import { VehiclePaginatedType } from "../../types/Vehicle.types";
+import {
+  VehiclePaginatedType,
+  VehiclesByModelAndDateType,
+} from "../../types/Vehicle.types";
 
 export const FETCH_VEHICLES_PAGINATED_REQUEST =
   "FETCH_VEHICLES_PAGINATED_REQUEST";
@@ -18,6 +21,12 @@ export const DELETE_VEHICLE_REQUEST = "DELETE_VEHICLE_REQUEST";
 export const DELETE_VEHICLE_SUCCESS = "DELETE_VEHICLE_SUCCESS";
 export const DELETE_VEHICLE_FAILURE = "DELETE_VEHICLE_FAILURE";
 export const RESET_DELETE_VEHICLE_SUCCESS = "RESET_DELETE_VEHICLE_SUCCESS";
+export const FETCH_VEHICLES_BY_MODEL_AND_DATE_REQUEST =
+  "FETCH_VEHICLES_BY_MODEL_AND_DATE_REQUEST";
+export const FETCH_VEHICLES_BY_MODEL_AND_DATE_SUCCESS =
+  "FETCH_VEHICLES_BY_MODEL_AND_DATE_SUCCESS";
+export const FETCH_VEHICLES_BY_MODEL_AND_DATE_FAILURE =
+  "FETCH_VEHICLES_BY_MODEL_AND_DATE_FAILURE";
 
 interface VehicleState {
   loading: boolean;
@@ -25,6 +34,7 @@ interface VehicleState {
   vehicleTypes: ReduxState<string[] | null>;
   addVehicleSuccess: ReduxStatus;
   deleteVehicleSuccess: ReduxStatus;
+  vehiclesByModelAndDate: ReduxState<VehiclesByModelAndDateType[] | null>;
 }
 
 const initialState: VehicleState = {
@@ -33,6 +43,7 @@ const initialState: VehicleState = {
   vehicleTypes: { data: null, loading: false, error: null },
   addVehicleSuccess: { status: false, loading: false, error: null },
   deleteVehicleSuccess: { status: false, loading: false, error: null },
+  vehiclesByModelAndDate: { data: null, loading: false, error: null },
 };
 
 interface FetchVehiclesPaginatedRequestAction {
@@ -97,6 +108,20 @@ interface ResetDeleteVehicleSuccessAction {
   type: typeof RESET_DELETE_VEHICLE_SUCCESS;
 }
 
+interface FetchVehiclesByModelAndDateRequestAction {
+  type: typeof FETCH_VEHICLES_BY_MODEL_AND_DATE_REQUEST;
+}
+
+interface FetchVehiclesByModelAndDateSuccessAction {
+  type: typeof FETCH_VEHICLES_BY_MODEL_AND_DATE_SUCCESS;
+  payload: VehiclesByModelAndDateType[];
+}
+
+interface FetchVehiclesByModelAndDateFailureAction {
+  type: typeof FETCH_VEHICLES_BY_MODEL_AND_DATE_FAILURE;
+  payload: string;
+}
+
 export type VehiclesActionTypes =
   | FetchVehiclesPaginatedRequestAction
   | FetchVehiclesPaginatedSuccessAction
@@ -111,7 +136,10 @@ export type VehiclesActionTypes =
   | DeleteVehicleRequestAction
   | DeleteVehicleSuccessAction
   | DeleteVehicleFailureAction
-  | ResetDeleteVehicleSuccessAction;
+  | ResetDeleteVehicleSuccessAction
+  | FetchVehiclesByModelAndDateRequestAction
+  | FetchVehiclesByModelAndDateSuccessAction
+  | FetchVehiclesByModelAndDateFailureAction;
 
 const vehiclesReducer = (
   state = initialState,
@@ -228,6 +256,33 @@ const vehiclesReducer = (
         deleteVehicleSuccess: {
           status: false,
           error: null,
+          loading: false,
+        },
+      };
+
+    case FETCH_VEHICLES_BY_MODEL_AND_DATE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        vehiclesByModelAndDate: { data: null, error: null, loading: true },
+      };
+    case FETCH_VEHICLES_BY_MODEL_AND_DATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        vehiclesByModelAndDate: {
+          data: action.payload,
+          error: null,
+          loading: false,
+        },
+      };
+    case FETCH_VEHICLES_BY_MODEL_AND_DATE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        vehiclesByModelAndDate: {
+          data: null,
+          error: action.payload,
           loading: false,
         },
       };

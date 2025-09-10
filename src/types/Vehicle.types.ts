@@ -1,12 +1,14 @@
-export interface VehiclePaginatedDataType {
-  type: string;
-  plateNumber: string;
-  brand: string;
-  model: string;
-  pricePerKm: number;
-  capacity: number;
-  status: string;
+export interface VehiclePaginatedModelType {
   id: string;
+  modelName: string;
+  brand: string;
+}
+
+export interface VehiclePaginatedDataType {
+  id: string;
+  plateNumber: string;
+  model: VehiclePaginatedModelType;
+  status: string;
 }
 
 export interface VehiclePaginatedType {
@@ -20,11 +22,16 @@ export interface VehiclePaginatedType {
 }
 
 export interface CreateVehicleType {
-  type: string;
+  modelId: string;
   plateNumber: string;
-  brand: string;
-  model: string;
-  pricePerKm: string;
-  capacity: string;
   status: "available" | "booked" | "not available";
+}
+
+export interface VehiclesByModelAndDateType {
+  id: string;
+  plateNumber: string;
+}
+
+export interface AssignVehicleType {
+  vehicleId: string;
 }

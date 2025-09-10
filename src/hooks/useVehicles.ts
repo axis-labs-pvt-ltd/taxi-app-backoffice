@@ -13,12 +13,12 @@ import {
   addVehicle,
   deleteVehicle,
   fetchVehiclesPaginated,
-  fetchVehicleTypes,
   ResetAddVehicleSuccess,
   ResetDeleteVehicleSuccess,
   updateVehicle,
 } from "../redux/Vehicles/VehiclesAction";
 import { Slide, toast } from "react-toastify";
+import { fetchVehicleModels } from "../redux/VehicleModels/VehicleModelsAction";
 
 type AppDispatch = ThunkDispatch<RootState, unknown, VehiclesActionTypes>;
 
@@ -26,12 +26,11 @@ const useVehicles = () => {
   const { pageNumber } = useParams<{ pageNumber: string }>();
   const currentPage = parseInt(pageNumber ?? "1", 10);
   const dispatch: AppDispatch = useDispatch();
-  const {
-    vehiclesPaginated,
-    vehicleTypes,
-    addVehicleSuccess,
-    deleteVehicleSuccess,
-  } = useSelector((state: RootState) => state.vehicles);
+  const { vehiclesPaginated, addVehicleSuccess, deleteVehicleSuccess } =
+    useSelector((state: RootState) => state.vehicles);
+  const { vehicleModelsEssentials } = useSelector(
+    (state: RootState) => state.vehicleModels
+  );
 
   const { SearchInput, searchKey } = useSearch({
     text: "Search for vehicle",
@@ -80,7 +79,7 @@ const useVehicles = () => {
   ]);
 
   useEffect(() => {
-    dispatch(fetchVehicleTypes());
+    dispatch(fetchVehicleModels());
   }, [dispatch]);
 
   useEffect(() => {
@@ -138,12 +137,12 @@ const useVehicles = () => {
     setIsAddVehicleOpen,
     editingVehicle,
     setEditingVehicle,
-    vehicleTypes,
     onSubmit,
     isDeleteVehicleOpen,
     setIsDeleteVehicleOpen,
     deleteVehicleSuccess,
     handleDeleteVehicle,
+    vehicleModelsEssentials,
   };
 };
 

@@ -4,12 +4,16 @@ import authReducer from "./Auth/AuthReducer";
 import vehiclesReducer from "./Vehicles/VehiclesReducer";
 import extraServicesReducer from "./ExtraServices/ExtraServicesReducer";
 import driversReducer from "./Drivers/DriversReducer";
+import vehicleModelsReducer from "./VehicleModels/VehicleModelsReducer";
+import inquiriesReducer from "./Inquiries/InquiriesReducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   vehicles: vehiclesReducer,
   extraServices: extraServicesReducer,
   drivers: driversReducer,
+  vehicleModels: vehicleModelsReducer,
+  inquiries: inquiriesReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

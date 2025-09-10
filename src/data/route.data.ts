@@ -7,6 +7,7 @@ export enum MainRoutes {
   vehicles = "/vehicles/page",
   extraServices = "/extra-services/page",
   drivers = "/drivers/page",
+  inquiries = "/inquiries/page",
   logout = MainRoutes.login,
 
   // Error Routes

@@ -10,6 +10,9 @@ import {
   FETCH_VEHICLE_TYPES_FAILURE,
   FETCH_VEHICLE_TYPES_REQUEST,
   FETCH_VEHICLE_TYPES_SUCCESS,
+  FETCH_VEHICLES_BY_MODEL_AND_DATE_FAILURE,
+  FETCH_VEHICLES_BY_MODEL_AND_DATE_REQUEST,
+  FETCH_VEHICLES_BY_MODEL_AND_DATE_SUCCESS,
   FETCH_VEHICLES_PAGINATED_FAILURE,
   FETCH_VEHICLES_PAGINATED_REQUEST,
   FETCH_VEHICLES_PAGINATED_SUCCESS,
@@ -193,3 +196,40 @@ export const deleteVehicle =
 export const ResetDeleteVehicleSuccess = (): VehiclesActionTypes => ({
   type: RESET_DELETE_VEHICLE_SUCCESS,
 });
+
+export const fetchVehiclesByModelAndDate = (modelId: string, date: string) => {
+  return async (dispatch: Dispatch<VehiclesActionTypes>) => {
+    dispatch({ type: FETCH_VEHICLES_BY_MODEL_AND_DATE_REQUEST });
+    const token = Cookies.get("access_token");
+    if (!token) {
+      dispatch({
+        type: FETCH_VEHICLES_BY_MODEL_AND_DATE_FAILURE,
+        payload: "Access token not found",
+      });
+      return;
+    }
+    try {
+      const url = `${API_BASE_URLS.backendAPI}${generateRoute(
+        apiRoutes.vehiclesByModelAndDate,
+        {
+          modelId,
+          date,
+        }
+      )}`;
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch({
+        type: FETCH_VEHICLES_BY_MODEL_AND_DATE_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: FETCH_VEHICLES_BY_MODEL_AND_DATE_FAILURE,
+        payload: error.message,
+      });
+    }
+  };
+};

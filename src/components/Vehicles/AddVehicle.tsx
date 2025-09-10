@@ -10,18 +10,19 @@ import { Button } from "../Reusable/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { vehicleSchema } from "../../schemas/Vehicle.schema";
 import { ReduxState } from "../../types/Redux.types";
+import { VehicleModelsEssentialType } from "../../types/VehicleModels.types";
 
 interface AddVehicleProps {
   setIsAddVehicleOpen: React.Dispatch<React.SetStateAction<boolean>>;
   initialData: VehiclePaginatedDataType | undefined;
-  vehicleTypes: ReduxState<string[] | null>;
+  vehicleModelsEssentials: ReduxState<VehicleModelsEssentialType[] | null>;
   onSubmit: (data: CreateVehicleType, id?: string) => void;
 }
 
 const AddVehicle: React.FC<AddVehicleProps> = ({
   setIsAddVehicleOpen,
   initialData,
-  vehicleTypes,
+  vehicleModelsEssentials,
   onSubmit,
 }) => {
   const {
@@ -34,14 +35,7 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
     defaultValues: initialData
       ? {
           ...initialData,
-          pricePerKm:
-            initialData.pricePerKm !== undefined
-              ? String(initialData.pricePerKm)
-              : "",
-          capacity:
-            initialData.capacity !== undefined
-              ? String(initialData.capacity)
-              : "",
+          modelId: initialData.model.id,
           status:
             initialData.status === "available" ||
             initialData.status === "booked" ||
@@ -50,13 +44,9 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
               : "available",
         }
       : {
-          type: "",
+          modelId: "",
           plateNumber: "",
-          capacity: "",
           status: "available",
-          brand: "",
-          model: "",
-          pricePerKm: "",
         },
   });
 
@@ -70,10 +60,10 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
     reset();
   };
 
-  const vehicleTypeOptions: { value: string; label: string }[] | undefined =
-    vehicleTypes?.data?.map((type) => ({
-      value: type,
-      label: type,
+  const vehicleModelOptions: { value: string; label: string }[] | undefined =
+    vehicleModelsEssentials?.data?.map((type) => ({
+      value: type.id,
+      label: type.modelName,
     })) as { value: string; label: string }[];
 
   return (
@@ -101,38 +91,22 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
               onSubmit={handleSubmit(handleFormSubmit)}
               className="mt-5 space-y-8"
             >
-              {/* Use Controller for the "name" field */}
-              <Controller
-                name="plateNumber"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    label="Plate Number"
-                    mandotary
-                    placeholder="Plate Number"
-                    error={errors["plateNumber"]?.message}
-                    width="w-full"
-                  />
-                )}
-              />
               <div>
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold">
-                    Vehicle Type
+                    Vehicle Model
                     <span className="text-sm text-[#F34747]">*</span>
                   </label>
                   <Controller
-                    name="type"
+                    name="modelId"
                     control={control}
                     render={({ field, fieldState }) => (
                       <div>
                         <Select
-                          options={vehicleTypeOptions} // from backend or hardcoded enum
-                          placeholder="Select vehicle type"
+                          options={vehicleModelOptions} // from backend or hardcoded enum
+                          placeholder="Select a vehicle model"
                           value={
-                            vehicleTypeOptions.find(
+                            vehicleModelOptions.find(
                               (option) => option.value === field.value
                             ) || null
                           }
@@ -152,109 +126,18 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
                   />
                 </div>
               </div>
-              {/* Use Controller for the "description" field */}
               <Controller
-                name="brand"
+                name="plateNumber"
                 control={control}
+                defaultValue=""
                 render={({ field }) => (
                   <Input
                     {...field}
-                    label="Brand"
-                    placeholder="Brand"
-                    error={errors["brand"]?.message}
+                    label="Plate Number"
+                    mandotary
+                    placeholder="Plate Number"
+                    error={errors["plateNumber"]?.message}
                     width="w-full"
-                  />
-                )}
-              />
-              <Controller
-                name="model"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    label="Model"
-                    placeholder="Model"
-                    error={errors["model"]?.message}
-                    width="w-full"
-                  />
-                )}
-              />
-
-              <Controller
-                name="pricePerKm"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="text"
-                    label="Price Per Km"
-                    placeholder="Price Per Km"
-                    error={errors.pricePerKm?.message}
-                    width="w-full"
-                    onKeyDown={(e) => {
-                      // Allow: backspace, delete, tab, escape, enter
-                      if (
-                        [8, 9, 13, 27, 46].includes(e.keyCode) ||
-                        // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
-                        (e.keyCode === 65 && e.ctrlKey === true) ||
-                        (e.keyCode === 67 && e.ctrlKey === true) ||
-                        (e.keyCode === 86 && e.ctrlKey === true) ||
-                        (e.keyCode === 88 && e.ctrlKey === true) ||
-                        // Allow: numbers and numpad numbers
-                        (e.keyCode >= 48 && e.keyCode <= 57) ||
-                        (e.keyCode >= 96 && e.keyCode <= 105)
-                      ) {
-                        return;
-                      }
-                      // Prevent default for all other keys
-                      e.preventDefault();
-                    }}
-                    onChange={(e) => {
-                      // Ensure the value is a valid number or empty string
-                      const value = e.target.value;
-                      if (value === "" || !isNaN(Number(value))) {
-                        field.onChange(e);
-                      }
-                    }}
-                  />
-                )}
-              />
-              <Controller
-                name="capacity"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="text"
-                    label="Capacity"
-                    placeholder="Capacity"
-                    error={errors.capacity?.message}
-                    width="w-full"
-                    onKeyDown={(e) => {
-                      // Allow: backspace, delete, tab, escape, enter
-                      if (
-                        [8, 9, 13, 27, 46].includes(e.keyCode) ||
-                        // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
-                        (e.keyCode === 65 && e.ctrlKey === true) ||
-                        (e.keyCode === 67 && e.ctrlKey === true) ||
-                        (e.keyCode === 86 && e.ctrlKey === true) ||
-                        (e.keyCode === 88 && e.ctrlKey === true) ||
-                        // Allow: numbers and numpad numbers
-                        (e.keyCode >= 48 && e.keyCode <= 57) ||
-                        (e.keyCode >= 96 && e.keyCode <= 105)
-                      ) {
-                        return;
-                      }
-                      // Prevent default for all other keys
-                      e.preventDefault();
-                    }}
-                    onChange={(e) => {
-                      // Ensure the value is a valid number or empty string
-                      const value = e.target.value;
-                      if (value === "" || !isNaN(Number(value))) {
-                        field.onChange(e);
-                      }
-                    }}
                   />
                 )}
               />
