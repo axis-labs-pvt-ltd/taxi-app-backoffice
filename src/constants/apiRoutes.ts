@@ -9,10 +9,15 @@ export enum apiRoutes {
   vehicles = "/vehicles",
   vehiclesPaginated = "/vehicles/paginated",
   vehiclesByModelAndDate = "/vehicles/models/:modelId",
-  vehicleTypes = "/vehicles/types",
+  vehicleTypes = "/vehicleModels/types",
+  vehicleBrands = "/vehicleModels/brands",
   editAndDeleteVehicle = "/vehicles/:id",
 
+  vehicleModels = "/vehicleModels",
+  updateAndDeleteVehicleModel = "/vehicleModels/:id",
+
   vehicleModelsEssentials = "/vehicleModels/essentials",
+  vehicleModelsPaginated = "/vehicleModels/paginated",
 
   extraServices = "/services",
   extraServicesPaginated = "/services/paginated",
@@ -26,6 +31,10 @@ export enum apiRoutes {
 
   inquiriesPaginated = "/inquiries/paginated",
   assignVehicleToInquiry = "/inquiries/:inquiryId",
+
+  rateCards = "/rateCards",
+  rateCardsPaginated = "/rateCards/paginated",
+  editAndDeleteRateCard = "/rateCards/:id",
 }
 
 export const generateRoute = (

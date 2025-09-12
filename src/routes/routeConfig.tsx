@@ -8,6 +8,8 @@ import Vehicles from "../pages/Vehicles";
 import ExtraServices from "../pages/ExtraServices";
 import Drivers from "../pages/Drivers";
 import Inquiries from "../pages/Inquiries";
+import VehicleModels from "../pages/VehicleModels";
+import RateCards from "../pages/RateCards";
 
 export const routes: RouteObject[] = [
   {
@@ -53,6 +55,22 @@ export const routes: RouteObject[] = [
       {
         path: `${MainRoutes.inquiries}/${DynamicRoute.pageNumber}`,
         element: <Inquiries />,
+      },
+      {
+        path: MainRoutes.vehicleModels,
+        element: <VehicleModels />,
+      },
+      {
+        path: `${MainRoutes.vehicleModels}/${DynamicRoute.pageNumber}`,
+        element: <VehicleModels />,
+      },
+      {
+        path: MainRoutes.rateCards,
+        element: <RateCards />,
+      },
+      {
+        path: `${MainRoutes.rateCards}/${DynamicRoute.pageNumber}`,
+        element: <RateCards />,
       },
     ],
   },

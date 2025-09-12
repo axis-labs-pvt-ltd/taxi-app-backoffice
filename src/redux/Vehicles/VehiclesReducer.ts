@@ -27,11 +27,15 @@ export const FETCH_VEHICLES_BY_MODEL_AND_DATE_SUCCESS =
   "FETCH_VEHICLES_BY_MODEL_AND_DATE_SUCCESS";
 export const FETCH_VEHICLES_BY_MODEL_AND_DATE_FAILURE =
   "FETCH_VEHICLES_BY_MODEL_AND_DATE_FAILURE";
+export const FETCH_VEHICLE_BRANDS_REQUEST = "FETCH_VEHICLE_BRANDS_REQUEST";
+export const FETCH_VEHICLE_BRANDS_SUCCESS = "FETCH_VEHICLE_BRANDS_SUCCESS";
+export const FETCH_VEHICLE_BRANDS_FAILURE = "FETCH_VEHICLE_BRANDS_FAILURE";
 
 interface VehicleState {
   loading: boolean;
   vehiclesPaginated: ReduxState<VehiclePaginatedType | null>;
   vehicleTypes: ReduxState<string[] | null>;
+  vehicleBrands: ReduxState<string[] | null>;
   addVehicleSuccess: ReduxStatus;
   deleteVehicleSuccess: ReduxStatus;
   vehiclesByModelAndDate: ReduxState<VehiclesByModelAndDateType[] | null>;
@@ -41,6 +45,7 @@ const initialState: VehicleState = {
   loading: false,
   vehiclesPaginated: { data: null, loading: false, error: null },
   vehicleTypes: { data: null, loading: false, error: null },
+  vehicleBrands: { data: null, loading: false, error: null },
   addVehicleSuccess: { status: false, loading: false, error: null },
   deleteVehicleSuccess: { status: false, loading: false, error: null },
   vehiclesByModelAndDate: { data: null, loading: false, error: null },
@@ -122,6 +127,20 @@ interface FetchVehiclesByModelAndDateFailureAction {
   payload: string;
 }
 
+interface FetchVehicleBrandsRequestAction {
+  type: typeof FETCH_VEHICLE_BRANDS_REQUEST;
+}
+
+interface FetchVehicleBrandsSuccessAction {
+  type: typeof FETCH_VEHICLE_BRANDS_SUCCESS;
+  payload: string[];
+}
+
+interface FetchVehicleBrandsFailureAction {
+  type: typeof FETCH_VEHICLE_BRANDS_FAILURE;
+  payload: string;
+}
+
 export type VehiclesActionTypes =
   | FetchVehiclesPaginatedRequestAction
   | FetchVehiclesPaginatedSuccessAction
@@ -139,7 +158,10 @@ export type VehiclesActionTypes =
   | ResetDeleteVehicleSuccessAction
   | FetchVehiclesByModelAndDateRequestAction
   | FetchVehiclesByModelAndDateSuccessAction
-  | FetchVehiclesByModelAndDateFailureAction;
+  | FetchVehiclesByModelAndDateFailureAction
+  | FetchVehicleBrandsRequestAction
+  | FetchVehicleBrandsSuccessAction
+  | FetchVehicleBrandsFailureAction;
 
 const vehiclesReducer = (
   state = initialState,
@@ -285,6 +307,25 @@ const vehiclesReducer = (
           error: action.payload,
           loading: false,
         },
+      };
+
+    case FETCH_VEHICLE_BRANDS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        vehicleBrands: { data: null, error: null, loading: true },
+      };
+    case FETCH_VEHICLE_BRANDS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        vehicleBrands: { data: action.payload, error: null, loading: false },
+      };
+    case FETCH_VEHICLE_BRANDS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        vehicleBrands: { data: null, error: action.payload, loading: false },
       };
 
     default:

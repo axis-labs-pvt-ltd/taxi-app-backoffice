@@ -49,6 +49,18 @@ export const useSidebar = () => {
         path: MainRoutes.inquiries,
       },
       {
+        id: "vehicleModels",
+        name: "Vehicle Models",
+        icon: IoBoatOutline,
+        path: MainRoutes.vehicleModels,
+      },
+      {
+        id: "rateCards",
+        name: "Rate Cards",
+        icon: IoBoatOutline,
+        path: MainRoutes.rateCards,
+      },
+      {
         id: "logout",
         name: "Logout",
         icon: TbLogout2,
