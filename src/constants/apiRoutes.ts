@@ -31,6 +31,8 @@ export enum apiRoutes {
 
   inquiriesPaginated = "/inquiries/paginated",
   assignVehicleToInquiry = "/inquiries/:inquiryId",
+  updateActualDiatnace = "/inquiries/:inquiryId/actualTotalDistance",
+  updateInquiryStatus = "/inquiries/:inquiryId/status",
 
   rateCards = "/rateCards",
   rateCardsPaginated = "/rateCards/paginated",

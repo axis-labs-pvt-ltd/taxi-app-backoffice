@@ -26,3 +26,12 @@ export const assignVehicleSchema = z.object({
       message: "Vehicle cannot be empty or just spaces",
     }),
 });
+
+export const updateTotalDistanceSchema = z.object({
+  actualTotalDistance: z
+    .number()
+    .refine((val) => !isNaN(val), {
+      message: "Actual distance rate must be a number",
+    })
+    .min(0, { message: "Actual distance cannot be negative" }),
+});

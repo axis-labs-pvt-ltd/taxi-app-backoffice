@@ -77,7 +77,7 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
         onClick={() => setIsAddVehicleOpen(false)}
       >
         <div
-          className="w-[850px] h-[630px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
+          className="w-[850px] h-[430px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="px-10 py-8">

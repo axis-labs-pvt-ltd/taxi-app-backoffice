@@ -7,10 +7,19 @@ import useSearch from "./useSearch";
 import { useEffect, useState } from "react";
 import {
   fetchInquiriesPaginated,
+  ResetupdateActualTotalDistanceSuccess,
+  ResetupdateInquiryStatusSuccess,
+  ResetupdateInquirySuccess,
+  updateActualTotalDistance,
   updateInquiry,
+  updateInquiryStatus,
 } from "../redux/Inquiries/InquiriesAction";
 import { fetchVehiclesByModelAndDate } from "../redux/Vehicles/VehiclesAction";
-import { AssignVehicleType } from "../types/Vehicle.types";
+import {
+  AssignVehicleType,
+  updateActualDistanceType,
+} from "../types/Vehicle.types";
+import { Slide, toast } from "react-toastify";
 
 type AppDispatch = ThunkDispatch<RootState, unknown, InquiriesActionTypes>;
 
@@ -18,9 +27,12 @@ const useInquiries = () => {
   const { pageNumber } = useParams<{ pageNumber: string }>();
   const currentPage = parseInt(pageNumber ?? "1", 10);
   const dispatch: AppDispatch = useDispatch();
-  const { inquiriesPaginated } = useSelector(
-    (state: RootState) => state.inquiries
-  );
+  const {
+    inquiriesPaginated,
+    updateInquirySuccess,
+    updateActualTotalDistanceSuccess,
+    updateInquiryStatusSuccess,
+  } = useSelector((state: RootState) => state.inquiries);
   const { vehiclesByModelAndDate } = useSelector(
     (state: RootState) => state.vehicles
   );
@@ -30,6 +42,8 @@ const useInquiries = () => {
     placeholder: "Search for inquiry",
   });
   const [isAssignVehicleModalOpen, setIsAssignVehicleModalOpen] =
+    useState<boolean>(false);
+  const [isUpdateDistanceModalOpen, setIsUpdateDistanceModalOpen] =
     useState<boolean>(false);
   const [inquiryId, setInquiryId] = useState<string | null>(null);
   //   const [editingService, setEditingService] = useState<
@@ -68,9 +82,75 @@ const useInquiries = () => {
     }
   }, [
     dispatch,
-    // deleteVehicleSuccess.status,
+    updateInquirySuccess.status,
+    updateActualTotalDistanceSuccess.status,
+    updateInquiryStatusSuccess.status,
     searchKey,
   ]);
+
+  useEffect(() => {
+    if (updateInquirySuccess.status) {
+      toast.success("Vehicle Assigned Successfully!", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetupdateInquirySuccess());
+    }
+  }, [updateInquirySuccess.status, dispatch]);
+
+  useEffect(() => {
+    if (updateActualTotalDistanceSuccess.status) {
+      toast.success("Distance Updated Successfully!", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetupdateActualTotalDistanceSuccess());
+    }
+  }, [updateActualTotalDistanceSuccess.status, dispatch]);
+
+  useEffect(() => {
+    if (updateInquiryStatusSuccess.status) {
+      toast.success("Inquiry Status Updated Successfully!", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetupdateInquiryStatusSuccess());
+    }
+  }, [updateInquiryStatusSuccess.status, dispatch]);
+
+  useEffect(() => {
+    if (updateInquiryStatusSuccess.error) {
+      toast.error(updateInquiryStatusSuccess.error, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetupdateInquiryStatusSuccess());
+    }
+  }, [updateInquiryStatusSuccess.error, dispatch]);
 
   const handleFetchVehiclesByModelAndDate = async (
     modelId: string,
@@ -84,9 +164,23 @@ const useInquiries = () => {
     if (inquiryId) {
       dispatch(updateInquiry(data, inquiryId));
     }
+    setInquiryId(null);
   };
 
-  console.log(vehiclesByModelAndDate.data)
+  const handleUpdateActualDistance = (data: updateActualDistanceType) => {
+    if (inquiryId) {
+      dispatch(updateActualTotalDistance(data, inquiryId));
+    }
+    setInquiryId(null);
+  };
+
+  const handleUpdateInquiryStatus = (data: string, id: string) => {
+    const payload = {
+      status: data,
+    };
+
+    dispatch(updateInquiryStatus(payload, id));
+  };
 
   return {
     currentPage,
@@ -98,6 +192,10 @@ const useInquiries = () => {
     setIsAssignVehicleModalOpen,
     setInquiryId,
     assignVehicle,
+    isUpdateDistanceModalOpen,
+    setIsUpdateDistanceModalOpen,
+    handleUpdateActualDistance,
+    handleUpdateInquiryStatus,
   };
 };
 

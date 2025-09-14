@@ -25,6 +25,12 @@ export const useSidebar = () => {
         path: "/",
       },
       {
+        id: "inquiries",
+        name: "Inquiries",
+        icon: IoBoatOutline,
+        path: MainRoutes.inquiries,
+      },
+      {
         id: "vehicles",
         name: "Vehicles",
         icon: IoBoatOutline,
@@ -41,12 +47,6 @@ export const useSidebar = () => {
         name: "Drivers",
         icon: IoBoatOutline,
         path: MainRoutes.drivers,
-      },
-      {
-        id: "inquiries",
-        name: "Inquiries",
-        icon: IoBoatOutline,
-        path: MainRoutes.inquiries,
       },
       {
         id: "vehicleModels",

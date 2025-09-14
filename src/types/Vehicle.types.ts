@@ -35,3 +35,11 @@ export interface VehiclesByModelAndDateType {
 export interface AssignVehicleType {
   vehicleId: string;
 }
+
+export interface updateActualDistanceType {
+  actualTotalDistance: number;
+}
+
+export interface UpdateInquiryStatusType {
+  status: string;
+}

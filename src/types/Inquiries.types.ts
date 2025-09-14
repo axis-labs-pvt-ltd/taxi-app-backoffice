@@ -18,7 +18,7 @@ export interface DropPointsType {
 }
 
 export interface InquiryPaginatedDataType {
-  id?: string
+  id?: string;
   customerId?: string;
   pickup: {
     lat: number;
@@ -35,7 +35,9 @@ export interface InquiryPaginatedDataType {
   email: string;
   tourDate: string;
   estimatedPrice: number;
+  finalPrice: number;
   totalDistance: number;
+  actualTotalDistance: number;
   vehicleModelId: VehicleModelIdType;
   status: string;
   dropPoints: DropPointsType[];

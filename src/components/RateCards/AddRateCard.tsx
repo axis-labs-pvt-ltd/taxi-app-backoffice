@@ -76,7 +76,7 @@ const AddRateCard: React.FC<AddRateCardProps> = ({
           <div className="px-10 py-8">
             <div>
               <p className="text-2xl font-bold tracking-wider">
-                {initialData ? "Edit Vehicle" : "Add Vehicle"}
+                {initialData ? "Edit Rate Card" : "Add Rate Card"}
               </p>
             </div>
             <div className="border-b border-[#EBEBEB] w-full mt-4"></div>
@@ -249,7 +249,7 @@ const AddRateCard: React.FC<AddRateCardProps> = ({
               <div className="w-full flex items-center justify-end gap-8 mt-8">
                 <Button
                   children={
-                    initialData ? "Update Vehicle Model" : "Add Vehicle Model"
+                    initialData ? "Update Rate Card" : "Add Rate Card"
                   }
                   variant="primary"
                   size="small"

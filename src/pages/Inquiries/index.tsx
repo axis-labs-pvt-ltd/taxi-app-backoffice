@@ -1,10 +1,18 @@
-import { RiDeleteBinLine } from "react-icons/ri";
 import { TableHeaderType, TableNew } from "../../components/Reusable/TableNew";
 import SubHeader from "../../components/SubHeader";
 import { InquiryPaginatedDataType } from "../../types/Inquiries.types";
 import useInquiries from "../../hooks/useInquiries";
-import { FaRegEdit } from "react-icons/fa";
 import AssignVehicleModal from "../../components/Inquiries/AssignVehicleModal";
+import UpdateActualDistance from "../../components/Inquiries/UpdateActualDistance";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../../components/ui/dropdown-menu";
+import { CiMenuKebab } from "react-icons/ci";
 
 const Inquiries = () => {
   const headers: TableHeaderType<InquiryPaginatedDataType>[] = [
@@ -28,9 +36,21 @@ const Inquiries = () => {
       render: (row) => <p>{row.totalDistance.toFixed(2)} Km</p>,
     },
     {
+      key: "actualTotalDistance",
+      label: "Actual Distance",
+      render: (row) => <p>{row.actualTotalDistance.toFixed(2)} Km</p>,
+    },
+    {
       key: "estimatedPrice",
       label: "Estimated Price",
       render: (row) => <p>Rs. {row.estimatedPrice.toFixed(2)}</p>,
+    },
+    {
+      key: "finalPrice",
+      label: "Final Price",
+      render: (row) => (
+        <p>{row.finalPrice ? "Rs. " + row.finalPrice.toFixed(2) : "---"}</p>
+      ),
     },
     {
       key: "status",
@@ -40,27 +60,78 @@ const Inquiries = () => {
       key: null,
       label: "Actions",
       render: (row) => (
-        <div className="flex items-center gap-5">
-          <FaRegEdit
-            className="cursor-pointer"
-            size={16}
-            onClick={() => {
-              handleFetchVehiclesByModelAndDate(
-                row.vehicleModelId.id,
-                row.tourDate.split("T")[0]
-              );
-              setInquiryId(row.id ?? null);
-            }}
-          />
-          <RiDeleteBinLine
-            className="cursor-pointer"
-            size={16}
-            // onClick={() => {
-            //   setEditingService(row);
-            //   setIsDeleteServiceOpen(true);
-            // }}
-          />
-        </div>
+        // <div className="flex items-center gap-5">
+        //   <FaRegEdit
+        //     className="cursor-pointer"
+        //     size={16}
+        //     onClick={() => {
+        //       handleFetchVehiclesByModelAndDate(
+        //         row.vehicleModelId.id,
+        //         row.tourDate.split("T")[0]
+        //       );
+        //       setInquiryId(row.id ?? null);
+        //     }}
+        //   />
+        //   <RiDeleteBinLine
+        //     className="cursor-pointer"
+        //     size={16}
+        //     // onClick={() => {
+        //     //   setEditingService(row);
+        //     //   setIsDeleteServiceOpen(true);
+        //     // }}
+        //   />
+        // </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="p-1">
+              <CiMenuKebab className="w-5 h-5" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+                handleFetchVehiclesByModelAndDate(
+                  row.vehicleModelId.id,
+                  row.tourDate.split("T")[0]
+                );
+                setInquiryId(row.id ?? null);
+              }}
+            >
+              Assign Vehicle
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+                setIsUpdateDistanceModalOpen(true);
+                setInquiryId(row.id ?? null);
+              }}
+            >
+              Update Actual Distance
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+                handleUpdateInquiryStatus("confirmed", row.id ?? "");
+              }}
+            >
+              Confirm
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+                handleUpdateInquiryStatus("cancelled", row.id ?? "");
+              }}
+            >
+              Cancel
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ),
     },
   ];
@@ -75,6 +146,10 @@ const Inquiries = () => {
     setIsAssignVehicleModalOpen,
     setInquiryId,
     assignVehicle,
+    isUpdateDistanceModalOpen,
+    setIsUpdateDistanceModalOpen,
+    handleUpdateActualDistance,
+    handleUpdateInquiryStatus,
   } = useInquiries();
 
   return (
@@ -97,7 +172,7 @@ const Inquiries = () => {
           loading={inquiriesPaginated.loading}
           currentPage={currentPage}
           totalPages={inquiriesPaginated.data?.totalPages}
-          type="vehicles"
+          type="inquiries"
         />
       </div>
 
@@ -106,6 +181,13 @@ const Inquiries = () => {
           setIsAssignVehicleModalOpen={setIsAssignVehicleModalOpen}
           vehiclesByModelAndDate={vehiclesByModelAndDate}
           assignVehicle={assignVehicle}
+        />
+      )}
+
+      {isUpdateDistanceModalOpen && (
+        <UpdateActualDistance
+          setIsUpdateDistanceModalOpen={setIsUpdateDistanceModalOpen}
+          handleUpdateActualDistance={handleUpdateActualDistance}
         />
       )}
 
