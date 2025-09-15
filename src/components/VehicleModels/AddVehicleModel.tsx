@@ -146,7 +146,7 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
           <div className="px-10 py-8">
             <div>
               <p className="text-2xl font-bold tracking-wider">
-                {initialData ? "Edit Vehicle" : "Add Vehicle"}
+                {initialData ? "Edit Vehicle Model" : "Add Vehicle Model"}
               </p>
             </div>
             <div className="border-b border-[#EBEBEB] w-full mt-4"></div>
@@ -154,6 +154,21 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
               onSubmit={handleSubmit(handleFormSubmit, handleError)}
               className="mt-5 space-y-8"
             >
+              <Controller
+                name="modelName"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    label="Model Name"
+                    mandotary
+                    placeholder="Ex: Vagan R"
+                    error={errors["modelName"]?.message}
+                    width="w-full"
+                  />
+                )}
+              />
               <div>
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold">
@@ -329,21 +344,6 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
                   />
                 </div>
               </div>
-              <Controller
-                name="modelName"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    label="Model Name"
-                    mandotary
-                    placeholder="Ex: Vagan R"
-                    error={errors["modelName"]?.message}
-                    width="w-full"
-                  />
-                )}
-              />
               <Controller
                 name="options.passengerCount"
                 control={control}
