@@ -38,7 +38,13 @@ const Inquiries = () => {
     {
       key: "actualTotalDistance",
       label: "Actual Distance",
-      render: (row) => <p>{row.actualTotalDistance.toFixed(2)} Km</p>,
+      render: (row) => (
+        <p>
+          {row.actualTotalDistance
+            ? row.actualTotalDistance.toFixed(2) + "Km"
+            : "---"}{" "}
+        </p>
+      ),
     },
     {
       key: "estimatedPrice",
