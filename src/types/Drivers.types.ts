@@ -1,20 +1,20 @@
 export interface DriverAddressType {
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
+  street?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
 }
 
 export interface DriverEmergencyContactType {
-  name: string;
-  phone: string;
-  relationship: string;
+  name?: string;
+  phone?: string;
+  relationship?: string;
 }
 
 export interface DriversPaginatedDataType {
   id: string;
-  address: DriverAddressType;
-  emergencyContact: DriverEmergencyContactType;
+  address?: DriverAddressType;
+  emergencyContact?: DriverEmergencyContactType;
   fullName: string;
   type: string;
   mobileNo: string;
@@ -52,6 +52,6 @@ export interface CreateDriveType {
   dateOfBirth: string;
   salary?: number;
   joinDate?: string;
-  address: DriverAddressType;
+  address?: DriverAddressType;
   emergencyContact?: DriverEmergencyContactType;
 }

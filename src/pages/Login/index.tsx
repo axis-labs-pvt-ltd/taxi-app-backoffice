@@ -142,7 +142,7 @@ const Login = () => {
           />
           <div className="items-center mt-2">
             <p className="text-sm text-[#494B49] text-center font-medium max-sm:text-xs">
-              Welcome to the Taxi. Sign in to <br /> access your account.
+              Welcome to the Bound Bond. Sign in to <br /> access your account.
             </p>
           </div>
           {/* {errorMessage && (
@@ -206,12 +206,12 @@ const Login = () => {
             <div className="mt-2">
               <button
                 type="submit"
-                //   disabled={loading}
+                disabled={loading || isLocked}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md bg-[#EB1F25] shadow-sm text-sm font-bold text-white bg-secondaryColor focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 max-sm:text-xs"
               >
                 {loading ? (
                   <>
-                    {/* <Spinner aria-label="Spinner button example" size="sm" /> */}
+                    <div v-if="isLoading" className="custom-spinner"></div>
                   </>
                 ) : (
                   <p className="text-sm font-bold">

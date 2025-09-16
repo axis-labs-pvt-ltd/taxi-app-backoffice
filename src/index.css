@@ -66,3 +66,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+.custom-spinner {
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-left-color: #fafafa;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }

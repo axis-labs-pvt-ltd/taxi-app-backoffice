@@ -31,6 +31,18 @@ export const useSidebar = () => {
         path: MainRoutes.inquiries,
       },
       {
+        id: "rateCards",
+        name: "Rate Cards",
+        icon: IoBoatOutline,
+        path: MainRoutes.rateCards,
+      },
+      {
+        id: "vehicleModels",
+        name: "Vehicle Models",
+        icon: IoBoatOutline,
+        path: MainRoutes.vehicleModels,
+      },
+      {
         id: "vehicles",
         name: "Vehicles",
         icon: IoBoatOutline,
@@ -47,18 +59,6 @@ export const useSidebar = () => {
         name: "Drivers",
         icon: IoBoatOutline,
         path: MainRoutes.drivers,
-      },
-      {
-        id: "vehicleModels",
-        name: "Vehicle Models",
-        icon: IoBoatOutline,
-        path: MainRoutes.vehicleModels,
-      },
-      {
-        id: "rateCards",
-        name: "Rate Cards",
-        icon: IoBoatOutline,
-        path: MainRoutes.rateCards,
       },
       {
         id: "logout",

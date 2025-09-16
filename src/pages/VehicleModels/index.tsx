@@ -108,7 +108,7 @@ const VehicleModels = () => {
           loading={vehicleModelsPaginated.loading}
           currentPage={currentPage}
           totalPages={vehicleModelsPaginated.data?.totalPages}
-          type="vehicles"
+          type="vehicleModels"
         />
       </div>
       {isAddVehicleModelOpen && (

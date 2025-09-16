@@ -9,6 +9,9 @@ import { fetchVehiclesPaginated } from "../../redux/Vehicles/VehiclesAction";
 import { VehiclesActionTypes } from "../../redux/Vehicles/VehiclesReducer";
 import { fetchExtraServicesPaginated } from "../../redux/ExtraServices/ExtraServicesAction";
 import { fetchDriversPaginated } from "../../redux/Drivers/DriversAction";
+import { fetchInquiriesPaginated } from "../../redux/Inquiries/InquiriesAction";
+import { fetchVehicleModelsPaginated } from "../../redux/VehicleModels/VehicleModelsAction";
+import { fetchRateCardsPaginated } from "../../redux/RateCards/RateCardsAction";
 
 type AppDispatch = ThunkDispatch<RootState, unknown, VehiclesActionTypes>;
 
@@ -29,7 +32,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
   const handlePageChange = (page: number) => {
     if (type === "vehicles") {
-      navigate(`${MainRoutes.boats}/${page}`);
+      navigate(`${MainRoutes.vehicles}/${page}`);
       dispatch(
         fetchVehiclesPaginated({ pageNumber: page, pageSize: 6, searchKey: "" })
       );
@@ -46,6 +49,33 @@ const Pagination: React.FC<PaginationProps> = ({
       navigate(`${MainRoutes.drivers}/${page}`);
       dispatch(
         fetchDriversPaginated({
+          pageNumber: page,
+          pageSize: 6,
+          searchKey: "",
+        })
+      );
+    } else if (type === "inquiries") {
+      navigate(`${MainRoutes.inquiries}/${page}`);
+      dispatch(
+        fetchInquiriesPaginated({
+          pageNumber: page,
+          pageSize: 6,
+          searchKey: "",
+        })
+      );
+    } else if (type === "vehicleModels") {
+      navigate(`${MainRoutes.vehicleModels}/${page}`);
+      dispatch(
+        fetchVehicleModelsPaginated({
+          pageNumber: page,
+          pageSize: 6,
+          searchKey: "",
+        })
+      );
+    } else if (type === "rateCards") {
+      navigate(`${MainRoutes.rateCards}/${page}`);
+      dispatch(
+        fetchRateCardsPaginated({
           pageNumber: page,
           pageSize: 6,
           searchKey: "",
