@@ -43,3 +43,8 @@ export interface updateActualDistanceType {
 export interface UpdateInquiryStatusType {
   status: string;
 }
+
+export interface UpdateMeterValuesType {
+  startMeter: number;
+  endMeter?: number | null;
+}

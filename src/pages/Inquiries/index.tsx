@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
 import { CiMenuKebab } from "react-icons/ci";
+import UpdateMeterValues from "../../components/Inquiries/UpdateMeterValues";
 
 const Inquiries = () => {
   const headers: TableHeaderType<InquiryPaginatedDataType>[] = [
@@ -66,27 +67,6 @@ const Inquiries = () => {
       key: null,
       label: "Actions",
       render: (row) => (
-        // <div className="flex items-center gap-5">
-        //   <FaRegEdit
-        //     className="cursor-pointer"
-        //     size={16}
-        //     onClick={() => {
-        //       handleFetchVehiclesByModelAndDate(
-        //         row.vehicleModelId.id,
-        //         row.tourDate.split("T")[0]
-        //       );
-        //       setInquiryId(row.id ?? null);
-        //     }}
-        //   />
-        //   <RiDeleteBinLine
-        //     className="cursor-pointer"
-        //     size={16}
-        //     // onClick={() => {
-        //     //   setEditingService(row);
-        //     //   setIsDeleteServiceOpen(true);
-        //     // }}
-        //   />
-        // </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="p-1">
@@ -108,6 +88,16 @@ const Inquiries = () => {
               }}
             >
               Assign Vehicle
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+                handleFetchMetersByInquiry(row.id ?? "");
+                setInquiryId(row.id ?? null);
+              }}
+            >
+              Update Meter Values
             </DropdownMenuItem>
 
             <DropdownMenuItem
@@ -156,6 +146,11 @@ const Inquiries = () => {
     setIsUpdateDistanceModalOpen,
     handleUpdateActualDistance,
     handleUpdateInquiryStatus,
+    isUpdateMeterValuesModalOpen,
+    setIsUpdateMeterValuesModalOpen,
+    handleUpdateMeterValues,
+    handleFetchMetersByInquiry,
+    metersByInquiry,
   } = useInquiries();
 
   return (
@@ -194,6 +189,14 @@ const Inquiries = () => {
         <UpdateActualDistance
           setIsUpdateDistanceModalOpen={setIsUpdateDistanceModalOpen}
           handleUpdateActualDistance={handleUpdateActualDistance}
+        />
+      )}
+
+      {isUpdateMeterValuesModalOpen && (
+        <UpdateMeterValues
+          setIsUpdateMeterValuesModalOpen={setIsUpdateMeterValuesModalOpen}
+          handleUpdateMeterValues={handleUpdateMeterValues}
+          initialData={metersByInquiry}
         />
       )}
 

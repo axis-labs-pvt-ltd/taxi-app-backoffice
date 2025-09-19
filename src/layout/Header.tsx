@@ -1,5 +1,5 @@
 import React from "react";
-import { Bell, Search, User, Settings, LogOut } from "lucide-react";
+import { Bell, Search, User, Settings } from "lucide-react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
@@ -36,9 +36,9 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
       <div className="flex items-center space-x-4">
         <button className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors">
           <Bell className="w-5 h-5 text-gray-600" />
-          <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+          {/* <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
             3
-          </span>
+          </span> */}
         </button>
 
         <div className="relative group">
@@ -48,8 +48,8 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
               alt="Profile"
               className="w-8 h-8 rounded-full object-cover"
             />
-            <span className="hidden md:block text-sm font-medium text-gray-700">
-              {user?.firstName}  {user?.lastName}
+            <span className="hidden md:block text-sm font-medium text-gray-700 capitalize">
+              {user?.firstName} {user?.lastName}
             </span>
           </button>
 
@@ -67,14 +67,6 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
             >
               <Settings className="w-4 h-4" />
               <span>Settings</span>
-            </a>
-            <hr className="my-1" />
-            <a
-              href="#"
-              className="flex items-center space-x-2 px-4 py-2 text-sm text-red-600 hover:bg-gray-50"
-            >
-              <LogOut className="w-4 h-4" />
-              <span>Sign out</span>
             </a>
           </div>
         </div>

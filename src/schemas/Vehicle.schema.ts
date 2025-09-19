@@ -35,3 +35,26 @@ export const updateTotalDistanceSchema = z.object({
     })
     .min(0, { message: "Actual distance cannot be negative" }),
 });
+
+export const updateMeterValuesSchema = z
+  .object({
+    startMeter: z
+      .number()
+      .min(0, { message: "Start meter cannot be negative" }),
+    endMeter: z
+      .number()
+      .min(0, { message: "End meter cannot be negative" })
+      .nullable()
+      .optional(),
+  })
+  .refine(
+    (data) =>
+      data.endMeter === null ||
+      data.endMeter === undefined ||
+      data.endMeter > data.startMeter,
+    {
+      path: ["endMeter"],
+      message: "End meter must be greater than start meter",
+    }
+  );
+

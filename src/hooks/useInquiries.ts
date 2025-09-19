@@ -7,17 +7,21 @@ import useSearch from "./useSearch";
 import { useEffect, useState } from "react";
 import {
   fetchInquiriesPaginated,
+  fetchMetersByInquiry,
   ResetupdateActualTotalDistanceSuccess,
   ResetupdateInquiryStatusSuccess,
   ResetupdateInquirySuccess,
+  ResetupdateMeterValuesSuccess,
   updateActualTotalDistance,
   updateInquiry,
   updateInquiryStatus,
+  updateMeterValues,
 } from "../redux/Inquiries/InquiriesAction";
 import { fetchVehiclesByModelAndDate } from "../redux/Vehicles/VehiclesAction";
 import {
   AssignVehicleType,
   updateActualDistanceType,
+  UpdateMeterValuesType,
 } from "../types/Vehicle.types";
 import { Slide, toast } from "react-toastify";
 
@@ -32,6 +36,8 @@ const useInquiries = () => {
     updateInquirySuccess,
     updateActualTotalDistanceSuccess,
     updateInquiryStatusSuccess,
+    updateMeterValuesSuccess,
+    metersByInquiry,
   } = useSelector((state: RootState) => state.inquiries);
   const { vehiclesByModelAndDate } = useSelector(
     (state: RootState) => state.vehicles
@@ -44,6 +50,8 @@ const useInquiries = () => {
   const [isAssignVehicleModalOpen, setIsAssignVehicleModalOpen] =
     useState<boolean>(false);
   const [isUpdateDistanceModalOpen, setIsUpdateDistanceModalOpen] =
+    useState<boolean>(false);
+  const [isUpdateMeterValuesModalOpen, setIsUpdateMeterValuesModalOpen] =
     useState<boolean>(false);
   const [inquiryId, setInquiryId] = useState<string | null>(null);
   //   const [editingService, setEditingService] = useState<
@@ -85,6 +93,7 @@ const useInquiries = () => {
     updateInquirySuccess.status,
     updateActualTotalDistanceSuccess.status,
     updateInquiryStatusSuccess.status,
+    updateMeterValuesSuccess.status,
     searchKey,
   ]);
 
@@ -152,12 +161,33 @@ const useInquiries = () => {
     }
   }, [updateInquiryStatusSuccess.error, dispatch]);
 
+  useEffect(() => {
+    if (updateMeterValuesSuccess.status) {
+      toast.success("Meter Updated Successfully!", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetupdateMeterValuesSuccess());
+    }
+  }, [updateMeterValuesSuccess.status, dispatch]);
+
   const handleFetchVehiclesByModelAndDate = async (
     modelId: string,
     date: string
   ) => {
     await dispatch(fetchVehiclesByModelAndDate(modelId, date));
     setIsAssignVehicleModalOpen(true);
+  };
+
+  const handleFetchMetersByInquiry = async (inquiryId: string) => {
+    await dispatch(fetchMetersByInquiry(inquiryId));
+    setIsUpdateMeterValuesModalOpen(true);
   };
 
   const assignVehicle = (data: AssignVehicleType) => {
@@ -182,6 +212,13 @@ const useInquiries = () => {
     dispatch(updateInquiryStatus(payload, id));
   };
 
+  const handleUpdateMeterValues = (data: UpdateMeterValuesType) => {
+    if (inquiryId) {
+      dispatch(updateMeterValues(data, inquiryId));
+    }
+    setInquiryId(null);
+  };
+
   return {
     currentPage,
     inquiriesPaginated,
@@ -196,6 +233,11 @@ const useInquiries = () => {
     setIsUpdateDistanceModalOpen,
     handleUpdateActualDistance,
     handleUpdateInquiryStatus,
+    isUpdateMeterValuesModalOpen,
+    setIsUpdateMeterValuesModalOpen,
+    handleUpdateMeterValues,
+    handleFetchMetersByInquiry,
+    metersByInquiry,
   };
 };
 

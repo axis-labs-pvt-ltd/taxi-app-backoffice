@@ -52,3 +52,13 @@ export interface InquiryPaginatedType {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
 }
+
+export interface RecentInquiriesType {
+  fullName: string;
+  tourDate: string;
+}
+
+export interface MeterValuesType {
+  startMeter: number;
+  endMeter: number;
+}
