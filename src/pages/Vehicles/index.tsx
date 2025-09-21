@@ -14,12 +14,12 @@ const Vehicles = () => {
     {
       key: "model",
       label: "Brand",
-      render: (row) => <p>{row.model.brand}</p>,
+      render: (row) => <p>{row.model?.brand}</p>,
     },
     {
       key: "model",
       label: "Model",
-      render: (row) => <p>{row.model.modelName}</p>,
+      render: (row) => <p>{row.model?.modelName}</p>,
     },
     { key: "status", label: "Status" },
     {

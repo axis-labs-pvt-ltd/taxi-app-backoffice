@@ -28,7 +28,7 @@ const Inquiries = () => {
       key: "vehicleModelId",
       label: "Vehicle",
       render: (row) => (
-        <p>{row.vehicleModelId.brand + " " + row.vehicleModelId.modelName}</p>
+        <p>{row.vehicleModelId?.brand + " " + row.vehicleModelId?.modelName}</p>
       ),
     },
     {
