@@ -5,6 +5,7 @@ import { ExtraServicePaginatedDataType } from "../../types/ExtraServices.types";
 import { DriversPaginatedDataType } from "../../types/Drivers.types";
 import { VehicleModelsPaginatedDataType } from "../../types/VehicleModels.types";
 import { RateCardsType } from "../../types/RateCards.types";
+import { UsersDataType } from "../../types/Users.types";
 
 interface DeleteDialogProps {
   title: string;
@@ -14,6 +15,7 @@ interface DeleteDialogProps {
   driverToBeDelete?: DriversPaginatedDataType;
   vehicleModelToBeDelete?: VehicleModelsPaginatedDataType;
   rateCardToBeDelete?: RateCardsType;
+  userToBeDelete?: UsersDataType;
   buttonTitle: string;
   handleDelete: (id: string) => void;
   item: string;
@@ -28,6 +30,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
   driverToBeDelete,
   vehicleModelToBeDelete,
   rateCardToBeDelete,
+  userToBeDelete,
   buttonTitle,
   handleDelete,
   item,
@@ -49,7 +52,8 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
                   serviceToBeDelete?.name ??
                   driverToBeDelete?.fullName ??
                   vehicleModelToBeDelete?.modelName ??
-                  rateCardToBeDelete?.name}
+                  rateCardToBeDelete?.name ??
+                  userToBeDelete?.firstName + " " + userToBeDelete?.lastName}
                 ”.
               </p>
             </div>
@@ -80,6 +84,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
                       driverToBeDelete?.id ??
                       vehicleModelToBeDelete?.id ??
                       rateCardToBeDelete?.id ??
+                      userToBeDelete?.id ??
                       ""
                   )
                 }

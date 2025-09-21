@@ -40,6 +40,11 @@ export enum apiRoutes {
   rateCards = "/rateCards",
   rateCardsPaginated = "/rateCards/paginated",
   editAndDeleteRateCard = "/rateCards/:id",
+
+  usersPaginated = "/users/paginated",
+  createUser = "/auth/register",
+  editAndDeleteUser = "/users/:id",
+  resetPassword = "/users/:id/reset",
 }
 
 export const generateRoute = (

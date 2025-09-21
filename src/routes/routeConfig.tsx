@@ -10,6 +10,7 @@ import Drivers from "../pages/Drivers";
 import Inquiries from "../pages/Inquiries";
 import VehicleModels from "../pages/VehicleModels";
 import RateCards from "../pages/RateCards";
+import Users from "../pages/Users/index";
 
 export const routes: RouteObject[] = [
   {
@@ -71,6 +72,14 @@ export const routes: RouteObject[] = [
       {
         path: `${MainRoutes.rateCards}/${DynamicRoute.pageNumber}`,
         element: <RateCards />,
+      },
+      {
+        path: MainRoutes.users,
+        element: <Users />,
+      },
+      {
+        path: `${MainRoutes.users}/${DynamicRoute.pageNumber}`,
+        element: <Users />,
       },
     ],
   },

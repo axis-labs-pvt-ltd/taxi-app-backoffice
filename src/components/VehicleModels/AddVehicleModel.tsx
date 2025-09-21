@@ -52,7 +52,7 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
             passengerCount: initialData.options.passengerCount,
             luggageCapacity: initialData.options.luggageCapacity,
             transmission: initialData.options.transmission,
-            airCondition: initialData.options.airCondition ?? false,
+            airCondition: initialData.options.airCondition,
           },
           rateCardId: initialData.rateCardId.id,
         }
@@ -82,7 +82,7 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
     if (initialData?.id) {
       onSubmit(payload, initialData.id); // Pass ID for update
     } else {
-      onSubmit(data);
+      onSubmit(payload);
     }
     setIsAddVehicleModelOpen(false);
     reset();
