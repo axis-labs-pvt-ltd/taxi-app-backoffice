@@ -1,30 +1,17 @@
 import { z } from "zod";
 
-// Driver Address Schema (all fields optional)
 export const driverAddressSchema = z.object({
-  street: z
-    .string()
-    .min(1, { message: "Street address is required" })
-    .optional(),
-  city: z.string().min(1, { message: "City is required" }).optional(),
-  state: z.string().min(1, { message: "State is required" }).optional(),
-  zipCode: z.string().min(1, { message: "Zip code is required" }).optional(),
+  street: z.string().optional(),
+  city: z.string().optional(),
+  state: z.string().optional(),
+  zipCode: z.string().optional(),
 });
 
 // Driver Emergency Contact Schema (all fields optional)
 export const driverEmergencyContactSchema = z.object({
-  name: z
-    .string()
-    .min(1, { message: "Emergency contact name is required" })
-    .optional(),
-  phone: z
-    .string()
-    .min(1, { message: "Emergency contact phone is required" })
-    .optional(),
-  relationship: z
-    .string()
-    .min(1, { message: "Relationship is required" })
-    .optional(),
+  name: z.string().optional(),
+  phone: z.string().optional(),
+  relationship: z.string().optional(),
 });
 
 // Create Driver Schema
@@ -42,7 +29,7 @@ export const createDriveSchema = z.object({
     .number()
     .nonnegative({ message: "Salary cannot be negative" })
     .optional(),
-  joinDate: z.string().min(1, { message: "Join date is required" }).optional(),
+  joinDate: z.string().optional(),
   address: driverAddressSchema.optional(),
   emergencyContact: driverEmergencyContactSchema.optional(),
 });

@@ -39,6 +39,12 @@ export interface InquiryPaginatedDataType {
   totalDistance: number;
   actualTotalDistance: number;
   vehicleModelId: VehicleModelIdType;
+  vehicleAssigned: {
+    vehicleId: string;
+    plateNumber: string;
+  };
+  startMeter: number;
+  endMeter: number;
   status: string;
   dropPoints: DropPointsType[];
 }

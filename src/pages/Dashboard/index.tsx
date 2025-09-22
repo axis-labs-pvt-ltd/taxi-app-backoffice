@@ -1,26 +1,75 @@
 import React from "react";
-import {
-  dashboardMetrics,
-  revenueData,
-  trafficData,
-} from "../../data/dummyData";
+import { trafficData } from "../../data/dummyData";
 import MetricCard from "../../components/MetricCard";
 import { Activity } from "lucide-react";
 import useDashboard from "../../hooks/useDashboard";
+import DateRangeFilter from "../../components/Reusable/DateRangeFilter";
+import { MetricCardType } from "../../types";
+import SubHeader from "../../components/SubHeader";
 
 const Dashboard: React.FC = () => {
-  const { recentInquiries } = useDashboard();
+  const {
+    recentInquiries,
+    totalIncome,
+    monthlyIncome,
+    showPopup,
+    setShowPopup,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    setSelectedDateRange,
+  } = useDashboard();
 
-  console.log(recentInquiries);
+  const dashboardMetrics: MetricCardType[] = [
+    {
+      title: "Total Revenue (LKR)",
+      value: totalIncome.data?.totalIncome ?? 0,
+      change: "+12.5%",
+      trend: "up",
+      icon: "DollarSign",
+    },
+    {
+      title: "Completed Inquiries",
+      value: totalIncome.data?.totalCompletedInquiries ?? 0,
+      change: "+8.2%",
+      trend: "up",
+      icon: "Users",
+    },
+    {
+      title: "Pending Inquiries",
+      value: totalIncome.data?.totalPendingInquiries ?? 0,
+      change: "-0.5%",
+      trend: "down",
+      icon: "TrendingUp",
+    },
+    {
+      title: "Cancelled Inquiries",
+      value: totalIncome.data?.totalcancelledInquiries ?? 0,
+      change: "+4.1%",
+      trend: "up",
+      icon: "BarChart3",
+    },
+  ];
+
   return (
     <div className="space-y-6">
-      {/* Welcome Section */}
-      {/* <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 rounded-xl text-white">
-        <h1 className="text-2xl font-bold mb-2">Welcome back, John!</h1>
-        <p className="text-blue-100">
-          Here's what's happening with your business today.
-        </p>
-      </div> */}
+      <div>
+        <SubHeader topic="Dashboard" />
+        <div className="flex items-center justify-end w-full -mt-20">
+          <div className="w-fit z-10 px-10 py-2">
+            <DateRangeFilter
+              showPopup={showPopup}
+              setShowPopup={setShowPopup}
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+              setSelectedDateRange={setSelectedDateRange}
+            />
+          </div>
+        </div>
+      </div>
 
       {/* Metrics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -37,20 +86,20 @@ const Dashboard: React.FC = () => {
             Revenue Trends
           </h3>
           <div className="space-y-4">
-            {revenueData.map((item, index) => (
+            {monthlyIncome?.data?.map((item, index) => (
               <div key={index} className="flex items-center justify-between">
                 <span className="text-sm font-medium text-gray-600">
-                  {item.name}
+                  {item.month}
                 </span>
                 <div className="flex items-center space-x-3">
                   <div className="w-32 bg-gray-200 rounded-full h-2">
                     <div
                       className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${(item.value / 6000) * 100}%` }}
+                      style={{ width: `${(item.totalIncome / 60000) * 100}%` }}
                     />
                   </div>
-                  <span className="text-sm font-medium text-gray-900 w-16 text-right">
-                    ${item.value.toLocaleString()}
+                  <span className="text-sm font-medium text-gray-900 w-20 text-right">
+                    LKR {item.totalIncome.toLocaleString()}
                   </span>
                 </div>
               </div>

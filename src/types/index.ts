@@ -10,9 +10,9 @@ export interface User {
   lastActive: string;
 }
 
-export interface MetricCard {
+export interface MetricCardType {
   title: string;
-  value: string;
+  value: number | null;
   change: string;
   trend: "up" | "down";
   icon: string;

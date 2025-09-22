@@ -1,4 +1,4 @@
-import { User, MetricCard, ChartData } from '../types';
+import { User, ChartData } from '../types';
 
 export const users: User[] = [
   {
@@ -37,46 +37,6 @@ export const users: User[] = [
     status: 'active',
     lastActive: '30 minutes ago'
   }
-];
-
-export const dashboardMetrics: MetricCard[] = [
-  {
-    title: 'Total Revenue',
-    value: '$124,500',
-    change: '+12.5%',
-    trend: 'up',
-    icon: 'DollarSign'
-  },
-  {
-    title: 'Active Users',
-    value: '8,549',
-    change: '+8.2%',
-    trend: 'up',
-    icon: 'Users'
-  },
-  {
-    title: 'Conversion Rate',
-    value: '3.84%',
-    change: '-0.5%',
-    trend: 'down',
-    icon: 'TrendingUp'
-  },
-  {
-    title: 'Growth',
-    value: '24.7%',
-    change: '+4.1%',
-    trend: 'up',
-    icon: 'BarChart3'
-  }
-];
-
-export const revenueData: ChartData[] = [
-  { name: 'Jan', value: 4000 },
-  { name: 'Feb', value: 3000 },
-  { name: 'Mar', value: 5000 },
-  { name: 'Apr', value: 4500 },
-  { name: 'May', value: 6000 },
-  { name: 'Jun', value: 5500 }
 ];
 
 export const trafficData: ChartData[] = [

@@ -14,6 +14,7 @@ import {
 } from "../../components/ui/dropdown-menu";
 import { CiMenuKebab } from "react-icons/ci";
 import UpdateMeterValues from "../../components/Inquiries/UpdateMeterValues";
+import InquiryView from "../../components/Inquiries/InquiryView";
 
 const Inquiries = () => {
   const headers: TableHeaderType<InquiryPaginatedDataType>[] = [
@@ -29,6 +30,17 @@ const Inquiries = () => {
       label: "Vehicle",
       render: (row) => (
         <p>{row.vehicleModelId?.brand + " " + row.vehicleModelId?.modelName}</p>
+      ),
+    },
+    {
+      key: "vehicleAssigned",
+      label: "Assigned Vehicle",
+      render: (row) => (
+        <p>
+          {row.vehicleAssigned?.plateNumber
+            ? row.vehicleAssigned?.plateNumber
+            : "---"}
+        </p>
       ),
     },
     {
@@ -76,6 +88,16 @@ const Inquiries = () => {
           <DropdownMenuContent>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
+
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+                setselectedInquiry(row);
+                setIsInquiryViewOpen(true);
+              }}
+            >
+              View
+            </DropdownMenuItem>
 
             <DropdownMenuItem
               onSelect={(e) => {
@@ -151,6 +173,10 @@ const Inquiries = () => {
     handleUpdateMeterValues,
     handleFetchMetersByInquiry,
     metersByInquiry,
+    isInquiryViewOpen,
+    setIsInquiryViewOpen,
+    selectedInquiry,
+    setselectedInquiry,
   } = useInquiries();
 
   return (
@@ -197,6 +223,13 @@ const Inquiries = () => {
           setIsUpdateMeterValuesModalOpen={setIsUpdateMeterValuesModalOpen}
           handleUpdateMeterValues={handleUpdateMeterValues}
           initialData={metersByInquiry}
+        />
+      )}
+
+      {isInquiryViewOpen && (
+        <InquiryView
+          setIsInquiryViewOpen={setIsInquiryViewOpen}
+          selectedInquiry={selectedInquiry}
         />
       )}
 

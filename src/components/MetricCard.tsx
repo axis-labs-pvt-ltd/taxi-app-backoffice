@@ -1,12 +1,10 @@
 import React from 'react';
-import { MetricCard as MetricCardType } from '../types';
+import { MetricCardType } from '../types';
 import { 
   DollarSign, 
   Users, 
   TrendingUp, 
   BarChart3,
-  ArrowUp,
-  ArrowDown
 } from 'lucide-react';
 
 interface MetricCardProps {
@@ -42,7 +40,7 @@ const MetricCard: React.FC<MetricCardProps> = ({ metric }) => {
             <p className="text-2xl font-bold text-gray-900">{metric.value}</p>
           </div>
         </div>
-        <div className={`
+        {/* <div className={`
           flex items-center space-x-1 text-sm font-medium
           ${isPositive ? 'text-green-600' : 'text-red-600'}
         `}>
@@ -52,7 +50,7 @@ const MetricCard: React.FC<MetricCardProps> = ({ metric }) => {
             <ArrowDown className="w-4 h-4" />
           )}
           <span>{metric.change}</span>
-        </div>
+        </div> */}
       </div>
     </div>
   );

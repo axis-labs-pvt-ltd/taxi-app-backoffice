@@ -24,6 +24,7 @@ import {
   UpdateMeterValuesType,
 } from "../types/Vehicle.types";
 import { Slide, toast } from "react-toastify";
+import { InquiryPaginatedDataType } from "../types/Inquiries.types";
 
 type AppDispatch = ThunkDispatch<RootState, unknown, InquiriesActionTypes>;
 
@@ -53,10 +54,11 @@ const useInquiries = () => {
     useState<boolean>(false);
   const [isUpdateMeterValuesModalOpen, setIsUpdateMeterValuesModalOpen] =
     useState<boolean>(false);
+  const [isInquiryViewOpen, setIsInquiryViewOpen] = useState<boolean>(false);
   const [inquiryId, setInquiryId] = useState<string | null>(null);
-  //   const [editingService, setEditingService] = useState<
-  //     ExtraServicePaginatedDataType | undefined
-  //   >(undefined);
+  const [selectedInquiry, setselectedInquiry] = useState<
+    InquiryPaginatedDataType | undefined
+  >(undefined);
   //   const [isDeleteServiceOpen, setIsDeleteServiceOpen] =
   //     useState<boolean>(false);
 
@@ -238,6 +240,10 @@ const useInquiries = () => {
     handleUpdateMeterValues,
     handleFetchMetersByInquiry,
     metersByInquiry,
+    isInquiryViewOpen,
+    setIsInquiryViewOpen,
+    selectedInquiry,
+    setselectedInquiry,
   };
 };
 

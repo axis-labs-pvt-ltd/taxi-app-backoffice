@@ -41,12 +41,10 @@ const AddDriver: React.FC<AddDriverProps> = ({
     defaultValues: initialData
       ? {
           ...initialData,
-          status:
-            ["available", "booked", "not available"].includes(
-              initialData.status
-            )
-              ? initialData.status
-              : "available",
+          joinDate: initialData.joinDate?.split("T")[0],
+          dateOfBirth: initialData.dateOfBirth?.split("T")[0],
+          drivingLicenseExpireDate:
+            initialData.drivingLicenseExpireDate?.split("T")[0],
         }
       : {
           fullName: "",
@@ -148,8 +146,8 @@ const AddDriver: React.FC<AddDriverProps> = ({
                   <Controller
                     name="type"
                     control={control}
-                    render={({ field, fieldState }) => (
-                      <div>
+                    render={({ field }) => (
+                      <div className="space-y-2">
                         <label className="text-sm font-semibold">
                           Driver Type<span className="text-red-500">*</span>
                         </label>
@@ -163,10 +161,15 @@ const AddDriver: React.FC<AddDriverProps> = ({
                           }
                           onChange={(opt) => field.onChange(opt?.value)}
                           isClearable
+                          className={`capitalize focus:outline-none ${
+                            errors.type?.message
+                              ? "border rounded-md border-red-400"
+                              : ""
+                          }`}
                         />
-                        {fieldState.error && (
-                          <p className="text-red-500 text-sm mt-1">
-                            {fieldState.error.message}
+                        {errors.type?.message && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {errors.type?.message}
                           </p>
                         )}
                       </div>
@@ -176,9 +179,9 @@ const AddDriver: React.FC<AddDriverProps> = ({
                     name="status"
                     control={control}
                     render={({ field, fieldState }) => (
-                      <div>
+                      <div className="space-y-2">
                         <label className="text-sm font-semibold">
-                          Driver Status<span className="text-red-500">*</span>
+                          Driver Status
                         </label>
                         <Select
                           options={driverStatusOptions}
@@ -190,6 +193,7 @@ const AddDriver: React.FC<AddDriverProps> = ({
                           }
                           onChange={(opt) => field.onChange(opt?.value)}
                           isClearable
+                          className="capitalize"
                         />
                         {fieldState.error && (
                           <p className="text-red-500 text-sm mt-1">
@@ -209,6 +213,7 @@ const AddDriver: React.FC<AddDriverProps> = ({
                         placeholder="Mobile no"
                         error={errors.mobileNo?.message}
                         width="w-full"
+                        mandotary
                       />
                     )}
                   />
@@ -222,6 +227,7 @@ const AddDriver: React.FC<AddDriverProps> = ({
                         placeholder="Email"
                         error={errors.email?.message}
                         width="w-full"
+                        mandotary
                       />
                     )}
                   />
@@ -235,6 +241,7 @@ const AddDriver: React.FC<AddDriverProps> = ({
                         label="Date of Birth"
                         error={errors.dateOfBirth?.message}
                         width="w-full"
+                        mandotary
                       />
                     )}
                   />
@@ -261,6 +268,7 @@ const AddDriver: React.FC<AddDriverProps> = ({
                         label="Driving License Expire Date"
                         error={errors.drivingLicenseExpireDate?.message}
                         width="w-full"
+                        mandotary
                       />
                     )}
                   />
@@ -280,6 +288,7 @@ const AddDriver: React.FC<AddDriverProps> = ({
                             e.target.value === "" ? 0 : Number(e.target.value)
                           )
                         }
+                        mandotary
                       />
                     )}
                   />

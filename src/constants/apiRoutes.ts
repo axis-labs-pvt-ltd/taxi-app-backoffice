@@ -36,6 +36,8 @@ export enum apiRoutes {
   updateInquiryStatus = "/inquiries/:inquiryId/status",
   recentInquiries = "/inquiries/recents",
   metersByInquiry = "/inquiries/:inquiryId/meters",
+  totalIncome = "/inquiries/total-income",
+  monthlyIncome = "/inquiries/monthly-income",
 
   rateCards = "/rateCards",
   rateCardsPaginated = "/rateCards/paginated",
