@@ -248,6 +248,12 @@ const AddRateCard: React.FC<AddRateCardProps> = ({
 
               <div className="w-full flex items-center justify-end gap-8 mt-8">
                 <Button
+                  children="Cancel"
+                  variant="secondary"
+                  size="small"
+                  onClick={() => setIsAddRateCardOpen(false)}
+                />
+                <Button
                   children={
                     initialData ? "Update Rate Card" : "Add Rate Card"
                   }

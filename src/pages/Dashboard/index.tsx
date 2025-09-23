@@ -1,10 +1,9 @@
 import React from "react";
-import { trafficData } from "../../data/dummyData";
 import MetricCard from "../../components/MetricCard";
 import { Activity } from "lucide-react";
 import useDashboard from "../../hooks/useDashboard";
 import DateRangeFilter from "../../components/Reusable/DateRangeFilter";
-import { MetricCardType } from "../../types";
+import { ChartData, MetricCardType } from "../../types";
 import SubHeader from "../../components/SubHeader";
 
 const Dashboard: React.FC = () => {
@@ -52,6 +51,23 @@ const Dashboard: React.FC = () => {
     },
   ];
 
+  const inquiryData: ChartData[] = [
+    {
+      name: "Completed",
+      value: totalIncome.data?.totalCompletedInquiries ?? 0,
+    },
+    { name: "Pending", value: totalIncome.data?.totalPendingInquiries ?? 0 },
+    {
+      name: "Cancelled",
+      value: totalIncome.data?.totalcancelledInquiries ?? 0,
+    },
+  ];
+
+  const totalInquiries =
+    (totalIncome.data?.totalCompletedInquiries ?? 0) +
+    (totalIncome.data?.totalPendingInquiries ?? 0) +
+    (totalIncome.data?.totalcancelledInquiries ?? 0);
+
   return (
     <div className="space-y-6">
       <div>
@@ -95,7 +111,7 @@ const Dashboard: React.FC = () => {
                   <div className="w-32 bg-gray-200 rounded-full h-2">
                     <div
                       className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${(item.totalIncome / 60000) * 100}%` }}
+                      style={{ width: `${(item.totalIncome / 500000) * 100}%` }}
                     />
                   </div>
                   <span className="text-sm font-medium text-gray-900 w-20 text-right">
@@ -110,10 +126,10 @@ const Dashboard: React.FC = () => {
         {/* Traffic Sources */}
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Traffic Sources
+            Inquiry Rates
           </h3>
           <div className="space-y-4">
-            {trafficData.map((item, index) => {
+            {inquiryData.map((item, index) => {
               const colors = ["bg-blue-600", "bg-green-600", "bg-purple-600"];
               return (
                 <div key={index} className="flex items-center justify-between">
@@ -124,7 +140,7 @@ const Dashboard: React.FC = () => {
                     </span>
                   </div>
                   <span className="text-sm font-medium text-gray-900">
-                    {item.value}%
+                    {((item.value / totalInquiries) * 100).toFixed(2)}%
                   </span>
                 </div>
               );
@@ -132,9 +148,36 @@ const Dashboard: React.FC = () => {
           </div>
           <div className="mt-4 h-2 bg-gray-200 rounded-full overflow-hidden">
             <div className="h-full flex">
-              <div className="bg-blue-600 flex-1 max-w-[45%]" />
-              <div className="bg-green-600 flex-1 max-w-[35%]" />
-              <div className="bg-purple-600 flex-1 max-w-[20%]" />
+              <div
+                className="bg-blue-600"
+                style={{
+                  width: `${
+                    ((totalIncome.data?.totalCompletedInquiries ?? 0) /
+                      totalInquiries) *
+                    100
+                  }%`,
+                }}
+              />
+              <div
+                className="bg-green-600"
+                style={{
+                  width: `${
+                    ((totalIncome.data?.totalPendingInquiries ?? 0) /
+                      totalInquiries) *
+                    100
+                  }%`,
+                }}
+              />
+              <div
+                className="bg-purple-600"
+                style={{
+                  width: `${
+                    ((totalIncome.data?.totalcancelledInquiries ?? 0) /
+                      totalInquiries) *
+                    100
+                  }%`,
+                }}
+              />
             </div>
           </div>
         </div>

@@ -144,6 +144,12 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
 
               <div className="w-full flex items-center justify-end gap-8 mt-8">
                 <Button
+                  children="Cancel"
+                  variant="secondary"
+                  size="small"
+                  onClick={() => setIsAddVehicleOpen(false)}
+                />
+                <Button
                   children={initialData ? "Update Vehicle" : "Add Vehicle"}
                   variant="primary"
                   size="small"

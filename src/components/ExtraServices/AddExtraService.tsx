@@ -140,6 +140,12 @@ const AddExtraService: React.FC<AddExtraServiceProps> = ({
 
               <div className="w-full flex items-center justify-end gap-8 mt-8">
                 <Button
+                                  children="Cancel"
+                                  variant="secondary"
+                                  size="small"
+                                  onClick={() => setIsAddVehicleOpen(false)}
+                                />
+                <Button
                   children={initialData ? "Update Service" : "Add Service"}
                   variant="primary"
                   size="small"

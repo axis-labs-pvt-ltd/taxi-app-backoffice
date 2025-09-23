@@ -1,4 +1,4 @@
-import { User, ChartData } from '../types';
+import { User } from '../types';
 
 export const users: User[] = [
   {
@@ -37,10 +37,4 @@ export const users: User[] = [
     status: 'active',
     lastActive: '30 minutes ago'
   }
-];
-
-export const trafficData: ChartData[] = [
-  { name: 'Desktop', value: 45 },
-  { name: 'Mobile', value: 35 },
-  { name: 'Tablet', value: 20 }
 ];

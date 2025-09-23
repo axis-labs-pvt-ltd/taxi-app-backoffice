@@ -205,6 +205,12 @@ const AddUser: React.FC<AddUserProps> = ({
 
               <div className="w-full flex items-center justify-end gap-8 mt-8">
                 <Button
+                  children="Cancel"
+                  variant="secondary"
+                  size="small"
+                  onClick={() => setIsAddUserOpen(false)}
+                />
+                <Button
                   children={initialData ? "Update User" : "Add User"}
                   variant="primary"
                   size="small"

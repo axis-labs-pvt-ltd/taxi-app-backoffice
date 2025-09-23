@@ -401,6 +401,12 @@ const AddDriver: React.FC<AddDriverProps> = ({
               {/* Submit Button */}
               <div className="w-full flex items-center justify-end gap-8 mt-8">
                 <Button
+                  children="Cancel"
+                  variant="secondary"
+                  size="small"
+                  onClick={() => setIsAddDriverOpen(false)}
+                />
+                <Button
                   children={initialData ? "Update Driver" : "Add Driver"}
                   variant="primary"
                   size="small"
