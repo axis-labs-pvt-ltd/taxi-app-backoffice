@@ -15,6 +15,7 @@ import {
 import { Slide, toast } from "react-toastify";
 import { ResetStoredImage } from "../redux/Images/ImageAction";
 import { ImageActionTypes } from "../redux/Images/ImageReducer";
+import useFileUpload from "./useFileUpload";
 
 type AppDispatch = ThunkDispatch<
   RootState,
@@ -42,6 +43,19 @@ const useTours = () => {
     text: "Search for tour",
     placeholder: "Search for tour",
   });
+
+  const {
+    selectedFiles,
+    handleClearImages,
+    dragActive,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleFileChange,
+    imageUrls,
+    setImageUrls,
+    setSelectedFiles,
+  } = useFileUpload();
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -105,6 +119,13 @@ const useTours = () => {
     dispatch(ResetStoredImage());
   };
 
+  const handleCancel = () => {
+    setIsAddTourOpen(false);
+    setEditingTour(undefined);
+    setImageUrls([]);
+    dispatch(ResetStoredImage());
+  };
+
   return {
     currentPage,
     toursPaginated,
@@ -114,6 +135,16 @@ const useTours = () => {
     editingTour,
     setEditingTour,
     onSubmit,
+    handleCancel,
+    selectedFiles,
+    handleClearImages,
+    dragActive,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleFileChange,
+    imageUrls,
+    setSelectedFiles,
   };
 };
 

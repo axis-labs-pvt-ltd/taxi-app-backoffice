@@ -61,6 +61,16 @@ const Tours = () => {
     editingTour,
     setEditingTour,
     onSubmit,
+    handleCancel,
+    selectedFiles,
+    handleClearImages,
+    dragActive,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleFileChange,
+    imageUrls,
+    setSelectedFiles,
   } = useTours();
 
   useEffect(() => {
@@ -84,7 +94,7 @@ const Tours = () => {
         }
       }) ?? []
     );
-  }, [editingTour?.images]);
+  }, [editingTour?.images, setIsAddTourOpen]);
 
   // const {
   //   selectedImage,
@@ -97,17 +107,7 @@ const Tours = () => {
   //   imageName,
   // } = useFileUpload();
 
-  const {
-    selectedFiles,
-    handleClearImages,
-    dragActive,
-    handleDragOver,
-    handleDragLeave,
-    handleDrop,
-    handleFileChange,
-    imageUrls,
-    setSelectedFiles,
-  } = useFileUpload();
+  
 
   return (
     <div>
@@ -143,7 +143,7 @@ const Tours = () => {
       </div>
       {isAddTourOpen && (
         <AddTour
-          setIsAddTourOpen={setIsAddTourOpen}
+          handleCancel={handleCancel}
           initialData={editingTour}
           onSubmit={onSubmit}
           selectedFiles={selectedFiles}

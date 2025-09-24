@@ -109,32 +109,32 @@ const useFileUpload = () => {
   const previousImageUrlRef = useRef<ImageUrlType | null>(null);
 
   useEffect(() => {
-  if (imageUrl?.files?.length) {
-    // Check if this is actually new data (not a reset/replacement)
-    const isNewUpload = previousImageUrlRef.current !== imageUrl;
-    
-    if (isNewUpload) {
-      setImageUrls((prev) => {
-        const existingUrls = new Set(prev.map(f => f.url));
-        const filesToAdd = imageUrl.files.filter(file => 
-          !existingUrls.has(file.url)
-        );
+    if (imageUrl?.files?.length) {
+      // Check if this is actually new data (not a reset/replacement)
+      const isNewUpload = previousImageUrlRef.current !== imageUrl;
 
-        if (filesToAdd.length === 0) return prev;
+      if (isNewUpload) {
+        setImageUrls((prev) => {
+          const existingUrls = new Set(prev.map((f) => f.url));
+          const filesToAdd = imageUrl.files.filter(
+            (file) => !existingUrls.has(file.url)
+          );
 
-        const newFiles = filesToAdd.map(file => ({
-          url: file.url,
-          fileName: file.fileName,
-        }));
+          if (filesToAdd.length === 0) return prev;
 
-        return [...prev, ...newFiles];
-      });
+          const newFiles = filesToAdd.map((file) => ({
+            url: file.url,
+            fileName: file.fileName,
+          }));
+
+          return [...prev, ...newFiles];
+        });
+      }
+
+      // Update the ref to track the current state
+      previousImageUrlRef.current = imageUrl;
     }
-    
-    // Update the ref to track the current state
-    previousImageUrlRef.current = imageUrl;
-  }
-}, [imageUrl]);
+  }, [imageUrl]);
 
   console.log(imageUrls);
 
@@ -192,6 +192,7 @@ const useFileUpload = () => {
     handleDrop,
     handleFileChange,
     imageUrls,
+    setImageUrls,
     setSelectedFiles,
   };
 };

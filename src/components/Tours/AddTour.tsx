@@ -9,7 +9,7 @@ import ImageUpload from "../Reusable/ImageUpload";
 import { SelectedFile } from "../../hooks/useFileUpload";
 
 interface AddTourProps {
-  setIsAddTourOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleCancel: () => void;
   initialData: ToursDataType | undefined;
   onSubmit: (data: ToursDataType, id?: string) => void;
   selectedFiles: SelectedFile[];
@@ -26,7 +26,7 @@ interface AddTourProps {
 }
 
 const AddTour: React.FC<AddTourProps> = ({
-  setIsAddTourOpen,
+  handleCancel,
   initialData,
   onSubmit,
   selectedFiles,
@@ -59,7 +59,10 @@ const AddTour: React.FC<AddTourProps> = ({
     if (initialData) {
       payload = {
         ...data,
-        images: selectedFiles.map((file) => file.previewUrl),
+        images: [
+          ...(initialData.images ?? []),
+          ...imageUrls.map((img) => img.url),
+        ],
       };
     } else {
       payload = {
@@ -73,7 +76,7 @@ const AddTour: React.FC<AddTourProps> = ({
     } else {
       onSubmit(payload);
     }
-    setIsAddTourOpen(false);
+    handleCancel();
     reset();
   };
 
@@ -311,7 +314,7 @@ const AddTour: React.FC<AddTourProps> = ({
                 handleFileChange={handleFileChange}
                 handleClearImages={handleClearImages}
               />
-              {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+              {error && <p className="text-red-500 text-xs">{error}</p>}
 
               {/* Buttons */}
               <div className="w-full flex items-center justify-end gap-8 mt-8">
@@ -319,7 +322,8 @@ const AddTour: React.FC<AddTourProps> = ({
                   children="Cancel"
                   variant="secondary"
                   size="small"
-                  onClick={() => setIsAddTourOpen(false)}
+                  type="button"
+                  onClick={() => handleCancel()}
                 />
                 <Button
                   children={initialData ? "Update Tour" : "Add Tour"}
