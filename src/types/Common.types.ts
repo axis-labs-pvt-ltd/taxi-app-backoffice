@@ -67,3 +67,10 @@ export interface PaginationParamsForInvoice {
   // minAmount: number;
   // maxAmount: number;
 }
+
+export interface ImageUrlType {
+  files: {
+    fileName: string;
+    url: string;
+  }[];
+}

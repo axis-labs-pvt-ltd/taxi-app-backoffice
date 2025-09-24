@@ -47,6 +47,12 @@ export enum apiRoutes {
   createUser = "/auth/register",
   editAndDeleteUser = "/users/:id",
   resetPassword = "/users/:id/reset",
+
+  toursPaginated = "/tours/paginated",
+  tours = "/tours",
+  editAndDeleteTour = "/tours/:id",
+
+  files = "/files",
 }
 
 export const generateRoute = (

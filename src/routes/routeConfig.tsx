@@ -11,6 +11,7 @@ import Inquiries from "../pages/Inquiries";
 import VehicleModels from "../pages/VehicleModels";
 import RateCards from "../pages/RateCards";
 import Users from "../pages/Users/index";
+import Tours from "../pages/Tours";
 
 export const routes: RouteObject[] = [
   {
@@ -80,6 +81,14 @@ export const routes: RouteObject[] = [
       {
         path: `${MainRoutes.users}/${DynamicRoute.pageNumber}`,
         element: <Users />,
+      },
+      {
+        path: MainRoutes.tours,
+        element: <Tours />,
+      },
+      {
+        path: `${MainRoutes.tours}/${DynamicRoute.pageNumber}`,
+        element: <Tours />,
       },
     ],
   },
