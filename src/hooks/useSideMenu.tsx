@@ -67,6 +67,12 @@ export const useSidebar = () => {
         path: MainRoutes.users,
       },
       {
+        id: "tours",
+        name: "Tours",
+        icon: IoBoatOutline,
+        path: MainRoutes.tours,
+      },
+      {
         id: "logout",
         name: "Logout",
         icon: TbLogout2,

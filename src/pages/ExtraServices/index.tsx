@@ -89,7 +89,7 @@ const ExtraServices = () => {
           loading={extraServicesPaginated.loading}
           currentPage={currentPage}
           totalPages={extraServicesPaginated.data?.totalPages}
-          type="vehicles"
+          type="services"
         />
       </div>
       {isAddServiceOpen && (
