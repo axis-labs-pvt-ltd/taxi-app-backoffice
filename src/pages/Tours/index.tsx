@@ -6,8 +6,8 @@ import useTours from "../../hooks/useTours";
 import { ToursDataType } from "../../types/Tours.types";
 import { FaRegEdit } from "react-icons/fa";
 import AddTour from "../../components/Tours/AddTour";
-import useFileUpload from "../../hooks/useFileUpload";
 import { useEffect } from "react";
+import DeleteDialog from "../../components/Reusable/DeleteDialog";
 
 const Tours = () => {
   const headers: TableHeaderType<ToursDataType>[] = [
@@ -42,10 +42,10 @@ const Tours = () => {
           <RiDeleteBinLine
             className="cursor-pointer"
             size={16}
-            // onClick={() => {
-            //   setEditingVehicle(row);
-            //   setIsDeleteVehicleOpen(true);
-            // }}
+            onClick={() => {
+              setEditingTour(row);
+              setIsDeleteTourOpen(true);
+            }}
           />
         </div>
       ),
@@ -71,6 +71,10 @@ const Tours = () => {
     handleFileChange,
     imageUrls,
     setSelectedFiles,
+    isDeleteTourOpen,
+    setIsDeleteTourOpen,
+    handleTourDelete,
+    deleteTourSuccess,
   } = useTours();
 
   useEffect(() => {
@@ -106,8 +110,6 @@ const Tours = () => {
   //   handleFileChange,
   //   imageName,
   // } = useFileUpload();
-
-  
 
   return (
     <div>
@@ -157,17 +159,17 @@ const Tours = () => {
         />
       )}
 
-      {/* {isDeleteUserOpen && editingUser && (
+      {isDeleteTourOpen && editingTour && (
         <DeleteDialog
-          title="User"
-          setIsDialogOpen={setIsDeleteUserOpen}
-          userToBeDelete={editingUser}
-          buttonTitle="Delete User"
-          handleDelete={handleDeleteUser}
+          title="Tour"
+          setIsDialogOpen={setIsDeleteTourOpen}
+          tourToBeDelete={editingTour}
+          buttonTitle="Delete Tour"
+          handleDelete={handleTourDelete}
           item="user"
-          loading={deleteUserSuccess.loading}
+          loading={deleteTourSuccess.loading}
         />
-      )} */}
+      )}
     </div>
   );
 };

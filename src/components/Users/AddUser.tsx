@@ -60,18 +60,8 @@ const AddUser: React.FC<AddUserProps> = ({
 
   return (
     <>
-      <div
-        className="fixed inset-0 bg-black opacity-50 z-40"
-        onClick={() => {
-          setIsAddUserOpen(false);
-        }}
-      ></div>
-      <div
-        className="fixed inset-0 flex items-center justify-center z-40 p-4"
-        onClick={() => {
-          setIsAddUserOpen(false);
-        }}
-      >
+      <div className="fixed inset-0 bg-black opacity-50 z-40"></div>
+      <div className="fixed inset-0 flex items-center justify-center z-40 p-4">
         <div
           className="w-[850px] h-[630px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
           onClick={(e) => e.stopPropagation()}

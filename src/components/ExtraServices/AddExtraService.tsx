@@ -67,20 +67,8 @@ const AddExtraService: React.FC<AddExtraServiceProps> = ({
 
   return (
     <>
-      <div
-        className="fixed inset-0 bg-black opacity-50 z-40"
-        onClick={() => {
-          setIsFree(false);
-          setIsAddVehicleOpen(false);
-        }}
-      ></div>
-      <div
-        className="fixed inset-0 flex items-center justify-center z-40 p-4"
-        onClick={() => {
-          setIsFree(false);
-          setIsAddVehicleOpen(false);
-        }}
-      >
+      <div className="fixed inset-0 bg-black opacity-50 z-40"></div>
+      <div className="fixed inset-0 flex items-center justify-center z-40 p-4">
         <div
           className="w-[850px] h-[510px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
           onClick={(e) => e.stopPropagation()}
@@ -140,11 +128,14 @@ const AddExtraService: React.FC<AddExtraServiceProps> = ({
 
               <div className="w-full flex items-center justify-end gap-8 mt-8">
                 <Button
-                                  children="Cancel"
-                                  variant="secondary"
-                                  size="small"
-                                  onClick={() => setIsAddVehicleOpen(false)}
-                                />
+                  children="Cancel"
+                  variant="secondary"
+                  size="small"
+                  onClick={() => {
+                    setIsFree(false);
+                    setIsAddVehicleOpen(false);
+                  }}
+                />
                 <Button
                   children={initialData ? "Update Service" : "Add Service"}
                   variant="primary"

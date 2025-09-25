@@ -125,20 +125,8 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
 
   return (
     <>
-      <div
-        className="fixed inset-0 bg-black opacity-50 z-40"
-        onClick={() => {
-          setIsAirConditioned(true);
-          setIsAddVehicleModelOpen(false);
-        }}
-      ></div>
-      <div
-        className="fixed inset-0 flex items-center justify-center z-40 p-4"
-        onClick={() => {
-          setIsAirConditioned(true);
-          setIsAddVehicleModelOpen(false);
-        }}
-      >
+      <div className="fixed inset-0 bg-black opacity-50 z-40"></div>
+      <div className="fixed inset-0 flex items-center justify-center z-40 p-4">
         <div
           className="w-[850px] h-[630px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
           onClick={(e) => e.stopPropagation()}
@@ -394,7 +382,10 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
                   children="Cancel"
                   variant="secondary"
                   size="small"
-                  onClick={() => setIsAddVehicleModelOpen(false)}
+                  onClick={() => {
+                    setIsAirConditioned(true);
+                    setIsAddVehicleModelOpen(false);
+                  }}
                 />
                 <Button
                   children={

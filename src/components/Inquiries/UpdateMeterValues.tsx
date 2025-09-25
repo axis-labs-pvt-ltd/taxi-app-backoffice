@@ -50,14 +50,8 @@ const UpdateMeterValues: React.FC<UpdateMeterValuesProps> = ({
 
   return (
     <>
-      <div
-        className="fixed inset-0 bg-black opacity-50 z-40"
-        onClick={() => setIsUpdateMeterValuesModalOpen(false)}
-      ></div>
-      <div
-        className="fixed inset-0 flex items-center justify-center z-40 p-4"
-        onClick={() => setIsUpdateMeterValuesModalOpen(false)}
-      >
+      <div className="fixed inset-0 bg-black opacity-50 z-40"></div>
+      <div className="fixed inset-0 flex items-center justify-center z-40 p-4">
         <div
           className="w-[850px] h-[450px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
           onClick={(e) => e.stopPropagation()}
@@ -158,6 +152,13 @@ const UpdateMeterValues: React.FC<UpdateMeterValuesProps> = ({
               </div>
 
               <div className="w-full flex items-center justify-end gap-8 mt-8">
+                <Button
+                  children="Cancel"
+                  variant="secondary"
+                  size="small"
+                  type="button"
+                  onClick={() => setIsUpdateMeterValuesModalOpen(false)}
+                />
                 <Button
                   children="Update Actual Distance"
                   variant="primary"
