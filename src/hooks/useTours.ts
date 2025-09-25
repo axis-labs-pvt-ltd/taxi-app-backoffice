@@ -8,8 +8,10 @@ import { ToursDataType } from "../types/Tours.types";
 import useSearch from "./useSearch";
 import {
   addTour,
+  deleteTour,
   fetchToursPaginated,
   ResetAddTourSuccess,
+  ResetDeleteTourSuccess,
   updateTour,
 } from "../redux/Tours/ToursAction";
 import { Slide, toast } from "react-toastify";
@@ -27,7 +29,7 @@ const useTours = () => {
   const { pageNumber } = useParams<{ pageNumber: string }>();
   const currentPage = parseInt(pageNumber ?? "1", 10);
   const dispatch: AppDispatch = useDispatch();
-  const { toursPaginated, addTourSuccess } = useSelector(
+  const { toursPaginated, addTourSuccess, deleteTourSuccess } = useSelector(
     (state: RootState) => state.tours
   );
 
@@ -35,9 +37,7 @@ const useTours = () => {
   const [editingTour, setEditingTour] = useState<ToursDataType | undefined>(
     undefined
   );
-  // const [isDeleteUserOpen, setIsDeleteUserOpen] = useState<boolean>(false);
-  // const [isResetPasswordOpen, setIsResetPasswordOpen] =
-  //   useState<boolean>(false);
+  const [isDeleteTourOpen, setIsDeleteTourOpen] = useState<boolean>(false);
 
   const { SearchInput, searchKey } = useSearch({
     text: "Search for tour",
@@ -85,12 +85,7 @@ const useTours = () => {
         })
       );
     }
-  }, [
-    dispatch,
-    addTourSuccess.status,
-    // deleteUserSuccess.status,
-    searchKey,
-  ]);
+  }, [dispatch, addTourSuccess.status, deleteTourSuccess.status, searchKey]);
 
   useEffect(() => {
     if (addTourSuccess.status) {
@@ -108,6 +103,22 @@ const useTours = () => {
     }
   }, [addTourSuccess.status, dispatch]);
 
+  useEffect(() => {
+    if (deleteTourSuccess.status) {
+      toast.success("Tour Deleted Successfully!", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetDeleteTourSuccess());
+    }
+  }, [deleteTourSuccess.status, dispatch]);
+
   const onSubmit = (data: ToursDataType, id?: string) => {
     if (editingTour && id) {
       dispatch(updateTour(data, id));
@@ -124,6 +135,11 @@ const useTours = () => {
     setEditingTour(undefined);
     setImageUrls([]);
     dispatch(ResetStoredImage());
+  };
+
+  const handleTourDelete = async (id: string) => {
+    await dispatch(deleteTour(id));
+    setIsDeleteTourOpen(false);
   };
 
   return {
@@ -145,6 +161,10 @@ const useTours = () => {
     handleFileChange,
     imageUrls,
     setSelectedFiles,
+    isDeleteTourOpen,
+    setIsDeleteTourOpen,
+    handleTourDelete,
+    deleteTourSuccess,
   };
 };
 

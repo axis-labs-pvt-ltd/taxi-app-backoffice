@@ -8,17 +8,23 @@ export const ADD_TOUR_REQUEST = "ADD_TOUR_REQUEST";
 export const ADD_TOUR_SUCCESS = "ADD_TOUR_SUCCESS";
 export const ADD_TOUR_FAILURE = "ADD_TOUR_FAILURE";
 export const RESET_ADD_TOUR_SUCCESS = "RESET_ADD_TOUR_SUCCESS";
+export const DELETE_TOUR_REQUEST = "DELETE_TOUR_REQUEST";
+export const DELETE_TOUR_SUCCESS = "DELETE_TOUR_SUCCESS";
+export const DELETE_TOUR_FAILURE = "DELETE_TOUR_FAILURE";
+export const RESET_DELETE_TOUR_SUCCESS = "RESET_DELETE_TOUR_SUCCESS";
 
 interface TourState {
   loading: boolean;
   toursPaginated: ReduxState<ToursPaginatedType | null>;
   addTourSuccess: ReduxStatus;
+  deleteTourSuccess: ReduxStatus;
 }
 
 const initialState: TourState = {
   loading: false,
   toursPaginated: { data: null, loading: false, error: null },
   addTourSuccess: { status: false, loading: false, error: null },
+  deleteTourSuccess: { status: false, loading: false, error: null },
 };
 
 interface FetchToursPaginatedRequestAction {
@@ -52,6 +58,23 @@ interface ResetAddTourSuccessAction {
   type: typeof RESET_ADD_TOUR_SUCCESS;
 }
 
+interface DeleteTourRequestAction {
+  type: typeof DELETE_TOUR_REQUEST;
+}
+
+interface DeleteTourSuccessAction {
+  type: typeof DELETE_TOUR_SUCCESS;
+}
+
+interface DeleteTourFailureAction {
+  type: typeof DELETE_TOUR_FAILURE;
+  payload: string;
+}
+
+interface ResetDeleteTourSuccessAction {
+  type: typeof RESET_DELETE_TOUR_SUCCESS;
+}
+
 export type ToursActionTypes =
   | FetchToursPaginatedRequestAction
   | FetchToursPaginatedSuccessAction
@@ -59,7 +82,11 @@ export type ToursActionTypes =
   | AddTourRequestAction
   | AddTourSuccessAction
   | AddTourFailureAction
-  | ResetAddTourSuccessAction;
+  | ResetAddTourSuccessAction
+  | DeleteTourRequestAction
+  | DeleteTourSuccessAction
+  | DeleteTourFailureAction
+  | ResetDeleteTourSuccessAction;
 
 const toursReducer = (
   state = initialState,
@@ -125,6 +152,44 @@ const toursReducer = (
         ...state,
         loading: false,
         addTourSuccess: {
+          status: false,
+          error: null,
+          loading: false,
+        },
+      };
+
+    case DELETE_TOUR_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        deleteTourSuccess: { status: false, error: null, loading: true },
+      };
+    case DELETE_TOUR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        deleteTourSuccess: {
+          status: true,
+          error: null,
+          loading: false,
+        },
+      };
+    case DELETE_TOUR_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        deleteTourSuccess: {
+          status: false,
+          error: action.payload,
+          loading: false,
+        },
+      };
+
+    case RESET_DELETE_TOUR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        deleteTourSuccess: {
           status: false,
           error: null,
           loading: false,

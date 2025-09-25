@@ -82,11 +82,9 @@ const AddDriver: React.FC<AddDriverProps> = ({
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black opacity-50 z-40"
-        onClick={() => setIsAddDriverOpen(false)}
       />
       <div
         className="fixed inset-0 flex items-center justify-center z-40 p-4"
-        onClick={() => setIsAddDriverOpen(false)}
       >
         <div
           className="w-[1050px] h-[650px] bg-white shadow-lg overflow-y-auto rounded-md p-4"

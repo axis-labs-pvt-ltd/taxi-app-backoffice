@@ -32,14 +32,8 @@ const UpdateActualDistance: React.FC<UpdateActualDistanceProps> = ({
 
   return (
     <>
-      <div
-        className="fixed inset-0 bg-black opacity-50 z-40"
-        onClick={() => setIsUpdateDistanceModalOpen(false)}
-      ></div>
-      <div
-        className="fixed inset-0 flex items-center justify-center z-40 p-4"
-        onClick={() => setIsUpdateDistanceModalOpen(false)}
-      >
+      <div className="fixed inset-0 bg-black opacity-50 z-40"></div>
+      <div className="fixed inset-0 flex items-center justify-center z-40 p-4">
         <div
           className="w-[850px] h-[330px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
           onClick={(e) => e.stopPropagation()}
@@ -98,6 +92,13 @@ const UpdateActualDistance: React.FC<UpdateActualDistanceProps> = ({
               </div>
 
               <div className="w-full flex items-center justify-end gap-8 mt-8">
+                <Button
+                  children="Cancel"
+                  variant="secondary"
+                  size="small"
+                  type="button"
+                  onClick={() => setIsUpdateDistanceModalOpen(false)}
+                />
                 <Button
                   children="Update Actual Distance"
                   variant="primary"
