@@ -118,7 +118,7 @@ export const addVehicleModel =
     } catch (error: any) {
       dispatch({
         type: ADD_VEHICLE_MODEL_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };
@@ -152,7 +152,7 @@ export const updateVehicleModel =
     } catch (error: any) {
       dispatch({
         type: ADD_VEHICLE_MODEL_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };
@@ -183,7 +183,7 @@ export const deleteVehicleModel =
     } catch (error: any) {
       dispatch({
         type: DELETE_VEHICLE_MODEL_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };

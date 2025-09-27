@@ -83,7 +83,7 @@ export const addTour =
     } catch (error: any) {
       dispatch({
         type: ADD_TOUR_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };
@@ -119,7 +119,7 @@ export const updateTour =
     } catch (error: any) {
       dispatch({
         type: ADD_TOUR_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };

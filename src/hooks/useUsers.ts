@@ -91,6 +91,22 @@ const useUsers = () => {
   }, [addUserSuccess.status, dispatch]);
 
   useEffect(() => {
+    if (addUserSuccess.error) {
+      toast.error(addUserSuccess.error, {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetAddUserSuccess());
+    }
+  }, [addUserSuccess.error, dispatch]);
+
+  useEffect(() => {
     if (resetPasswordSuccess.status) {
       toast.success("Password Reset Successfully!", {
         position: "top-center",

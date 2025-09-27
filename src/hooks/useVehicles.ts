@@ -99,6 +99,22 @@ const useVehicles = () => {
   }, [addVehicleSuccess.status, dispatch]);
 
   useEffect(() => {
+    if (addVehicleSuccess.error) {
+      toast.error(addVehicleSuccess.error, {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetAddVehicleSuccess());
+    }
+  }, [addVehicleSuccess.error, dispatch]);
+
+  useEffect(() => {
     if (deleteVehicleSuccess.status) {
       toast.success("Vehicle Deleted Successfully!", {
         position: "top-center",

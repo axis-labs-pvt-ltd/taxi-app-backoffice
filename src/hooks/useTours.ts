@@ -104,6 +104,22 @@ const useTours = () => {
   }, [addTourSuccess.status, dispatch]);
 
   useEffect(() => {
+    if (addTourSuccess.error) {
+      toast.error(addTourSuccess.error, {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetAddTourSuccess());
+    }
+  }, [addTourSuccess.error, dispatch]);
+
+  useEffect(() => {
     if (deleteTourSuccess.status) {
       toast.success("Tour Deleted Successfully!", {
         position: "top-center",

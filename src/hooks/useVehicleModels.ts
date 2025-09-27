@@ -111,6 +111,22 @@ const useVehicleModels = () => {
   }, [addVehicleModelSuccess.status, dispatch]);
 
   useEffect(() => {
+    if (addVehicleModelSuccess.error) {
+      toast.error(addVehicleModelSuccess.error, {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetAddVehicleModelSuccess());
+    }
+  }, [addVehicleModelSuccess.error, dispatch]);
+
+  useEffect(() => {
     if (deleteVehicleModelSuccess.status) {
       toast.success("Vehicle Model Deleted Successfully!", {
         position: "top-center",

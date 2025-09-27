@@ -87,7 +87,7 @@ export const addUser =
     } catch (error: any) {
       dispatch({
         type: ADD_USER_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };
@@ -121,7 +121,7 @@ export const updateUser =
     } catch (error: any) {
       dispatch({
         type: ADD_USER_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };
@@ -151,7 +151,7 @@ export const resetPassword =
     } catch (error: any) {
       dispatch({
         type: RESET_PASSWORD_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };
@@ -186,7 +186,7 @@ export const deleteUser =
     } catch (error: any) {
       dispatch({
         type: DELETE_USER_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };

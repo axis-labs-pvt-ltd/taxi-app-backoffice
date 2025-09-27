@@ -18,6 +18,7 @@ export interface DriversPaginatedDataType {
   fullName: string;
   type: string;
   mobileNo: string;
+  licenseNo: string;
   drivingLicenseExpireDate: string;
   licenseImageUrl: string;
   status: string;

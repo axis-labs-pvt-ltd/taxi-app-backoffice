@@ -124,7 +124,7 @@ export const addVehicle =
     } catch (error: any) {
       dispatch({
         type: ADD_VEHICLE_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };
@@ -160,7 +160,7 @@ export const updateVehicle =
     } catch (error: any) {
       dispatch({
         type: ADD_VEHICLE_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };
@@ -191,7 +191,7 @@ export const deleteVehicle =
     } catch (error: any) {
       dispatch({
         type: DELETE_VEHICLE_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };
