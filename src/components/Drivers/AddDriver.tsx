@@ -50,6 +50,7 @@ const AddDriver: React.FC<AddDriverProps> = ({
           fullName: "",
           type: "",
           mobileNo: "",
+          licenseNo: "",
           drivingLicenseExpireDate: "",
           email: "",
           dateOfBirth: "",
@@ -80,12 +81,8 @@ const AddDriver: React.FC<AddDriverProps> = ({
   return (
     <>
       {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-black opacity-50 z-40"
-      />
-      <div
-        className="fixed inset-0 flex items-center justify-center z-40 p-4"
-      >
+      <div className="fixed inset-0 bg-black opacity-50 z-40" />
+      <div className="fixed inset-0 flex items-center justify-center z-40 p-4">
         <div
           className="w-[1050px] h-[650px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
           onClick={(e) => e.stopPropagation()}
@@ -216,6 +213,20 @@ const AddDriver: React.FC<AddDriverProps> = ({
                     )}
                   />
                   <Controller
+                    name="licenseNo"
+                    control={control}
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        label="License No"
+                        placeholder="License no"
+                        error={errors.licenseNo?.message}
+                        width="w-full"
+                        mandotary
+                      />
+                    )}
+                  />
+                  <Controller
                     name="email"
                     control={control}
                     render={({ field }) => (
@@ -225,7 +236,6 @@ const AddDriver: React.FC<AddDriverProps> = ({
                         placeholder="Email"
                         error={errors.email?.message}
                         width="w-full"
-                        mandotary
                       />
                     )}
                   />

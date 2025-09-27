@@ -38,8 +38,7 @@ const Users = () => {
             <DropdownMenuSeparator />
 
             <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+              onSelect={() => {
                 setEditingUser(row); // Set selected brand for editing
                 setIsAddUserOpen(true);
               }}
@@ -48,8 +47,7 @@ const Users = () => {
             </DropdownMenuItem>
 
             <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+              onSelect={() => {
                 setEditingUser(row); // Set selected brand for editing
                 setIsResetPasswordOpen(true);
               }}
@@ -58,8 +56,7 @@ const Users = () => {
             </DropdownMenuItem>
 
             <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+              onSelect={() => {
                 setEditingUser(row);
                 setIsDeleteUserOpen(true);
               }}

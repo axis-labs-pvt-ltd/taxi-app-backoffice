@@ -150,7 +150,7 @@ export const deleteTour =
     } catch (error: any) {
       dispatch({
         type: DELETE_TOUR_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };

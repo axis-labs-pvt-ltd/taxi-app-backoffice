@@ -46,9 +46,9 @@ export interface CreateDriveType {
   type: string;
   mobileNo: string;
   drivingLicenseExpireDate: string;
-  // licenseImageUrl: string;
+  licenseNo: string;
   status: string;
-  email: string;
+  email?: string;
   dateOfBirth: string;
   salary?: number;
   joinDate?: string;

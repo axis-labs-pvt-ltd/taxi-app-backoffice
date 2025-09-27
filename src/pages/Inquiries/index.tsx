@@ -90,8 +90,7 @@ const Inquiries = () => {
             <DropdownMenuSeparator />
 
             <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+              onSelect={() => {
                 setselectedInquiry(row);
                 setIsInquiryViewOpen(true);
               }}
@@ -100,8 +99,7 @@ const Inquiries = () => {
             </DropdownMenuItem>
 
             <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+              onSelect={() => {
                 handleFetchVehiclesByModelAndDate(
                   row.vehicleModelId.id,
                   row.tourDate.split("T")[0]
@@ -113,8 +111,7 @@ const Inquiries = () => {
             </DropdownMenuItem>
 
             <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+              onSelect={() => {
                 handleFetchMetersByInquiry(row.id ?? "");
                 setInquiryId(row.id ?? null);
               }}
@@ -123,8 +120,7 @@ const Inquiries = () => {
             </DropdownMenuItem>
 
             <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+              onSelect={() => {
                 setIsUpdateDistanceModalOpen(true);
                 setInquiryId(row.id ?? null);
               }}
@@ -133,16 +129,14 @@ const Inquiries = () => {
             </DropdownMenuItem>
 
             <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+              onSelect={() => {
                 handleUpdateInquiryStatus("confirmed", row.id ?? "");
               }}
             >
               Confirm
             </DropdownMenuItem>
             <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault(); // prevent default to ensure it doesn’t misfire
+              onSelect={() => {
                 handleUpdateInquiryStatus("cancelled", row.id ?? "");
               }}
             >
