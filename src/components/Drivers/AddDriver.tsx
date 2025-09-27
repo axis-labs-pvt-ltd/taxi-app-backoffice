@@ -48,7 +48,7 @@ const AddDriver: React.FC<AddDriverProps> = ({
         }
       : {
           fullName: "",
-          type: "",
+          type: "permanent",
           mobileNo: "",
           licenseNo: "",
           drivingLicenseExpireDate: "",
@@ -58,7 +58,7 @@ const AddDriver: React.FC<AddDriverProps> = ({
           salary: 0,
           address: { street: "", city: "", state: "", zipCode: "" },
           emergencyContact: { name: "", phone: "", relationship: "" },
-          status: "available",
+          status: "active",
         },
   });
 

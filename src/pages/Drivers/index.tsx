@@ -21,7 +21,7 @@ const Drivers = () => {
     {
       key: "joinDate",
       label: "Joined Date",
-      render: (row) => <p>{row.dateOfBirth.split("T")[0]}</p>,
+      render: (row) => <p>{row.joinDate.split("T")[0]}</p>,
     },
     { key: "salary", label: "Salary" },
     { key: "status", label: "Status" },
