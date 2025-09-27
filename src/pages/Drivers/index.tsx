@@ -12,6 +12,7 @@ const Drivers = () => {
   const headers: TableHeaderType<DriversPaginatedDataType>[] = [
     { key: "fullName", label: "Name" },
     { key: "mobileNo", label: "Mobile" },
+    { key: "licenseNo", label: "License No" },
     {
       key: "dateOfBirth",
       label: "DOB",

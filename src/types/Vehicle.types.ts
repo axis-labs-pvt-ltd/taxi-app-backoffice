@@ -2,6 +2,7 @@ export interface VehiclePaginatedModelType {
   id: string;
   modelName: string;
   brand: string;
+  rateCard: string;
 }
 
 export interface VehiclePaginatedDataType {

@@ -152,7 +152,7 @@ export const addDriver =
     } catch (error: any) {
       dispatch({
         type: ADD_DRIVER_FAILURE,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
@@ -188,7 +188,7 @@ export const updateDriver =
     } catch (error: any) {
       dispatch({
         type: ADD_DRIVER_FAILURE,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
@@ -219,7 +219,7 @@ export const deleteDriver =
     } catch (error: any) {
       dispatch({
         type: DELETE_DRIVER_FAILURE,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };

@@ -84,7 +84,7 @@ export const addExtraService =
     } catch (error: any) {
       dispatch({
         type: ADD_EXTRASERVICE_FAILURE,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
@@ -120,7 +120,7 @@ export const updateService =
     } catch (error: any) {
       dispatch({
         type: ADD_EXTRASERVICE_FAILURE,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
@@ -151,7 +151,7 @@ export const deleteExtraService =
     } catch (error: any) {
       dispatch({
         type: DELETE_EXTRASERVICE_FAILURE,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };

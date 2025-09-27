@@ -18,6 +18,7 @@ export interface DriversPaginatedDataType {
   fullName: string;
   type: string;
   mobileNo: string;
+  licenseNo: string;
   drivingLicenseExpireDate: string;
   licenseImageUrl: string;
   status: string;
@@ -46,9 +47,9 @@ export interface CreateDriveType {
   type: string;
   mobileNo: string;
   drivingLicenseExpireDate: string;
-  // licenseImageUrl: string;
+  licenseNo: string;
   status: string;
-  email: string;
+  email?: string;
   dateOfBirth: string;
   salary?: number;
   joinDate?: string;

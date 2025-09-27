@@ -118,7 +118,7 @@ export const addRateCard =
     } catch (error: any) {
       dispatch({
         type: ADD_RATE_CARD_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };
@@ -154,7 +154,7 @@ export const updateRateCard =
     } catch (error: any) {
       dispatch({
         type: ADD_RATE_CARD_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };
@@ -183,7 +183,7 @@ export const deleteRateCard =
     } catch (error: any) {
       dispatch({
         type: DELETE_RATE_CARD_FAILURE,
-        payload: error.message,
+        payload: error.response?.data?.message,
       });
     }
   };

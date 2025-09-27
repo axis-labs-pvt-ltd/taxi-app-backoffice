@@ -102,6 +102,22 @@ const useDrivers = () => {
   }, [addDriverSuccess.status, dispatch]);
 
   useEffect(() => {
+    if (addDriverSuccess.error) {
+      toast.error(addDriverSuccess.error, {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetAddDriverSuccess());
+    }
+  }, [addDriverSuccess.error, dispatch]);
+
+  useEffect(() => {
     if (deleteDriverSuccess.status) {
       toast.success("Driver Deleted Successfully!", {
         position: "top-center",

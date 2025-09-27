@@ -95,6 +95,22 @@ const useExtraServices = () => {
   }, [addExtraServiceSuccess.status, dispatch]);
 
   useEffect(() => {
+    if (addExtraServiceSuccess.error) {
+      toast.error(addExtraServiceSuccess.error, {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetAddExtraServiceSuccess());
+    }
+  }, [addExtraServiceSuccess.error, dispatch]);
+
+  useEffect(() => {
     if (deleteExtraServiceSuccess.status) {
       toast.success("Service Deleted Successfully!", {
         position: "top-center",
