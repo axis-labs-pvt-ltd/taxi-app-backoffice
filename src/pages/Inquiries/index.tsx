@@ -98,50 +98,58 @@ const Inquiries = () => {
               View
             </DropdownMenuItem>
 
-            <DropdownMenuItem
-              onSelect={() => {
-                handleFetchVehiclesByModelAndDate(
-                  row.vehicleModelId.id,
-                  row.tourDate.split("T")[0]
-                );
-                setInquiryId(row.id ?? null);
-              }}
-            >
-              Assign Vehicle
-            </DropdownMenuItem>
+            {row.status !== "completed" && (
+              <DropdownMenuItem
+                onSelect={() => {
+                  handleFetchVehiclesByModelAndDate(
+                    row.vehicleModelId.id,
+                    row.tourDate.split("T")[0]
+                  );
+                  setInquiryId(row.id ?? null);
+                }}
+              >
+                Assign Vehicle
+              </DropdownMenuItem>
+            )}
 
-            <DropdownMenuItem
-              onSelect={() => {
-                handleFetchMetersByInquiry(row.id ?? "");
-                setInquiryId(row.id ?? null);
-              }}
-            >
-              Update Meter Values
-            </DropdownMenuItem>
+            {row.status !== "completed" && row.status === "confirmed" && (
+              <DropdownMenuItem
+                onSelect={() => {
+                  handleFetchMetersByInquiry(row.id ?? "");
+                  setInquiryId(row.id ?? null);
+                }}
+              >
+                Update Meter Values
+              </DropdownMenuItem>
+            )}
 
-            <DropdownMenuItem
-              onSelect={() => {
-                setIsUpdateDistanceModalOpen(true);
-                setInquiryId(row.id ?? null);
-              }}
-            >
-              Update Actual Distance
-            </DropdownMenuItem>
+            {row.status !== "completed" && row.status === "confirmed" && (
+              <DropdownMenuItem
+                onSelect={() => {
+                  setIsUpdateDistanceModalOpen(true);
+                  setInquiryId(row.id ?? null);
+                }}
+              >
+                Update Actual Distance
+              </DropdownMenuItem>
+            )}
 
-            <DropdownMenuItem
+            {/* <DropdownMenuItem
               onSelect={() => {
                 handleUpdateInquiryStatus("confirmed", row.id ?? "");
               }}
             >
               Confirm
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onSelect={() => {
-                handleUpdateInquiryStatus("cancelled", row.id ?? "");
-              }}
-            >
-              Cancel
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
+            {row.status !== "cancelled" && row.status !== "completed" && (
+              <DropdownMenuItem
+                onSelect={() => {
+                  handleUpdateInquiryStatus("cancelled", row.id ?? "");
+                }}
+              >
+                Cancel
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       ),
