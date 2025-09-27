@@ -31,6 +31,8 @@ const AddDriver: React.FC<AddDriverProps> = ({
     "basic"
   );
 
+  const today = new Date().toISOString().split("T")[0];
+
   const {
     control,
     handleSubmit,
@@ -54,7 +56,7 @@ const AddDriver: React.FC<AddDriverProps> = ({
           drivingLicenseExpireDate: "",
           email: "",
           dateOfBirth: "",
-          joinDate: "",
+          joinDate: today,
           salary: 0,
           address: { street: "", city: "", state: "", zipCode: "" },
           emergencyContact: { name: "", phone: "", relationship: "" },
