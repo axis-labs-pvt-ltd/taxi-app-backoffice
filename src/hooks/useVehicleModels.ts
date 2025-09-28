@@ -23,8 +23,15 @@ import {
 } from "../redux/Vehicles/VehiclesAction";
 import { fetchRateCards } from "../redux/RateCards/RateCardsAction";
 import { Slide, toast } from "react-toastify";
+import useFileUpload from "./useFileUpload";
+import { ResetStoredImage } from "../redux/Images/ImageAction";
+import { ImageActionTypes } from "../redux/Images/ImageReducer";
 
-type AppDispatch = ThunkDispatch<RootState, unknown, VehicleModelsActionTypes>;
+type AppDispatch = ThunkDispatch<
+  RootState,
+  unknown,
+  VehicleModelsActionTypes | ImageActionTypes
+>;
 
 const useVehicleModels = () => {
   const { pageNumber } = useParams<{ pageNumber: string }>();
@@ -52,6 +59,19 @@ const useVehicleModels = () => {
   const [isDeleteVehicleModelOpen, setIsDeleteVehicleModelOpen] =
     useState<boolean>(false);
   const [isAirConditioned, setIsAirConditioned] = useState<boolean>(true);
+
+  const {
+    selectedFiles,
+    handleClearImages,
+    dragActive,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleFileChange,
+    imageUrls,
+    setImageUrls,
+    setSelectedFiles,
+  } = useFileUpload();
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -157,6 +177,14 @@ const useVehicleModels = () => {
     setIsDeleteVehicleModelOpen(false);
   };
 
+  const handleCancel = () => {
+    setIsAddVehicleModelOpen(false);
+    setIsAirConditioned(true);
+    setEditingVehicleModel(undefined);
+    setImageUrls([]);
+    dispatch(ResetStoredImage());
+  };
+
   return {
     vehicleModelsPaginated,
     currentPage,
@@ -175,6 +203,17 @@ const useVehicleModels = () => {
     setIsDeleteVehicleModelOpen,
     handleDeleteVehicleModel,
     deleteVehicleModelSuccess,
+    selectedFiles,
+    handleClearImages,
+    dragActive,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleFileChange,
+    imageUrls,
+    setImageUrls,
+    setSelectedFiles,
+    handleCancel,
   };
 };
 

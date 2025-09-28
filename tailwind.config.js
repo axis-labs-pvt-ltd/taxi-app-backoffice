@@ -7,9 +7,9 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["Nunito", "sans-serif"],
-      },
+      // fontFamily: {
+        sans: ["sans-serif"],
+      // },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

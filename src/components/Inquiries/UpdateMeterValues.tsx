@@ -59,7 +59,7 @@ const UpdateMeterValues: React.FC<UpdateMeterValuesProps> = ({
           <div className="px-10 py-8">
             <div>
               <p className="text-2xl font-bold tracking-wider">
-                Update Actual Distance
+                Update Meter
               </p>
             </div>
             <div className="border-b border-[#EBEBEB] w-full mt-4"></div>
@@ -160,7 +160,7 @@ const UpdateMeterValues: React.FC<UpdateMeterValuesProps> = ({
                   onClick={() => setIsUpdateMeterValuesModalOpen(false)}
                 />
                 <Button
-                  children="Update Actual Distance"
+                  children="Update Meter"
                   variant="primary"
                   size="small"
                   type="submit"

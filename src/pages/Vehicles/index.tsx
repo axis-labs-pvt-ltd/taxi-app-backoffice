@@ -7,6 +7,7 @@ import useVehicles from "../../hooks/useVehicles";
 import { VehiclePaginatedDataType } from "../../types/Vehicle.types";
 import AddVehicle from "../../components/Vehicles/AddVehicle";
 import DeleteDialog from "../../components/Reusable/DeleteDialog";
+import { useEffect } from "react";
 
 const Vehicles = () => {
   const headers: TableHeaderType<VehiclePaginatedDataType>[] = [
@@ -67,7 +68,37 @@ const Vehicles = () => {
     deleteVehicleSuccess,
     handleDeleteVehicle,
     vehicleModelsEssentials,
+    selectedFiles,
+    handleClearImages,
+    dragActive,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleFileChange,
+    imageUrls,
+    setSelectedFiles,
+    handleCancel,
   } = useVehicles();
+
+  useEffect(() => {
+    setSelectedFiles(
+      editingVehicle?.images?.map((image) => {
+        if (typeof image === "string") {
+          return {
+            name: "",
+            previewUrl: image,
+            file: null as unknown as File,
+          };
+        } else {
+          return {
+            name: "",
+            previewUrl: image ?? "",
+            file: null as unknown as File,
+          };
+        }
+      }) ?? []
+    );
+  }, [editingVehicle?.images, setIsAddVehicleOpen]);
 
   return (
     <div>
@@ -103,10 +134,18 @@ const Vehicles = () => {
       </div>
       {isAddVehicleOpen && (
         <AddVehicle
-          setIsAddVehicleOpen={setIsAddVehicleOpen}
+          handleCancel={handleCancel}
           initialData={editingVehicle}
           onSubmit={onSubmit}
           vehicleModelsEssentials={vehicleModelsEssentials}
+          selectedFiles={selectedFiles}
+          handleClearImages={handleClearImages}
+          dragActive={dragActive}
+          handleDragOver={handleDragOver}
+          handleDragLeave={handleDragLeave}
+          handleDrop={handleDrop}
+          handleFileChange={handleFileChange}
+          imageUrls={imageUrls}
         />
       )}
 

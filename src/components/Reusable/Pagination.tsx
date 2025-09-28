@@ -12,6 +12,7 @@ import { fetchDriversPaginated } from "../../redux/Drivers/DriversAction";
 import { fetchInquiriesPaginated } from "../../redux/Inquiries/InquiriesAction";
 import { fetchVehicleModelsPaginated } from "../../redux/VehicleModels/VehicleModelsAction";
 import { fetchRateCardsPaginated } from "../../redux/RateCards/RateCardsAction";
+import { fetchWeddingInquiriesPaginated } from "../../redux/WeddingInquiries/WeddingInquiriesAction";
 
 type AppDispatch = ThunkDispatch<RootState, unknown, VehiclesActionTypes>;
 
@@ -76,6 +77,15 @@ const Pagination: React.FC<PaginationProps> = ({
       navigate(`${MainRoutes.rateCards}/${page}`);
       dispatch(
         fetchRateCardsPaginated({
+          pageNumber: page,
+          pageSize: 6,
+          searchKey: "",
+        })
+      );
+    } else if (type === "weddingInquiries") {
+      navigate(`${MainRoutes.weddingInquiries}/${page}`);
+      dispatch(
+        fetchWeddingInquiriesPaginated({
           pageNumber: page,
           pageSize: 6,
           searchKey: "",

@@ -12,6 +12,8 @@ import {
 import { createVehicleModelSchema } from "../../schemas/VehicleModels.schema";
 import { ToggleButton } from "../Reusable/ToggleButton";
 import { RateCardsType } from "../../types/RateCards.types";
+import ImageUpload from "../Reusable/ImageUpload";
+import { SelectedFile } from "../../hooks/useFileUpload";
 
 const transMission = ["automatic", "manual"];
 const luggageCapacity = ["Limited Baggage", "Sufficient Baggage"];
@@ -25,6 +27,18 @@ interface AddVehicleProps {
   isAirConditioned: boolean;
   setIsAirConditioned: React.Dispatch<React.SetStateAction<boolean>>;
   rateCards: ReduxState<RateCardsType[] | null>;
+  selectedFiles: SelectedFile[];
+  handleClearImages: () => void;
+  dragActive: boolean;
+  handleDragOver: (event: React.DragEvent<HTMLDivElement>) => void;
+  handleDragLeave: () => void;
+  handleDrop: (event: React.DragEvent<HTMLDivElement>) => void;
+  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  imageUrls: {
+    url: string;
+    fileName: string;
+  }[];
+  handleCancel: () => void;
 }
 
 const AddVehicleModel: React.FC<AddVehicleProps> = ({
@@ -36,6 +50,15 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
   isAirConditioned,
   setIsAirConditioned,
   rateCards,
+  selectedFiles,
+  handleClearImages,
+  dragActive,
+  handleDragOver,
+  handleDragLeave,
+  handleDrop,
+  handleFileChange,
+  imageUrls,
+  handleCancel,
 }) => {
   const {
     control,
@@ -70,15 +93,42 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
   }, []);
 
   const handleFormSubmit = (data: CreateVehicleModelType) => {
-    const payload = {
-      ...data,
-      options: {
-        airCondition: isAirConditioned,
-        passengerCount: data.options.passengerCount,
-        luggageCapacity: data.options.luggageCapacity,
-        transmission: data.options.transmission,
-      },
-    };
+    let payload;
+    if (initialData) {
+      payload = {
+        ...data,
+        options: {
+          airCondition: isAirConditioned,
+          passengerCount: data.options.passengerCount,
+          luggageCapacity: data.options.luggageCapacity,
+          transmission: data.options.transmission,
+        },
+        images: [
+          ...(initialData.images ?? []),
+          ...imageUrls.map((img) => img.url),
+        ],
+      };
+    } else {
+      payload = {
+        ...data,
+        options: {
+          airCondition: isAirConditioned,
+          passengerCount: data.options.passengerCount,
+          luggageCapacity: data.options.luggageCapacity,
+          transmission: data.options.transmission,
+        },
+        images: imageUrls.map((img) => img.url),
+      };
+    }
+    // const payload = {
+    //   ...data,
+    //   options: {
+    //     airCondition: isAirConditioned,
+    //     passengerCount: data.options.passengerCount,
+    //     luggageCapacity: data.options.luggageCapacity,
+    //     transmission: data.options.transmission,
+    //   },
+    // };
     if (initialData?.id) {
       onSubmit(payload, initialData.id); // Pass ID for update
     } else {
@@ -332,6 +382,43 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
                   />
                 </div>
               </div>
+              <div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold">
+                    Wedding Rate Card
+                    <span className="text-sm text-[#F34747]">*</span>
+                  </label>
+                  <Controller
+                    name="weddingRateCardId"
+                    control={control}
+                    render={({ field, fieldState }) => (
+                      <div>
+                        <Select
+                          options={rateCardOptions} // from backend or hardcoded enum
+                          placeholder="Select a wedding rate card"
+                          value={
+                            rateCardOptions.find(
+                              (option) => option.value === field.value
+                            ) || null
+                          }
+                          onChange={(selectedOption) =>
+                            field.onChange(
+                              selectedOption ? selectedOption.value : null
+                            )
+                          }
+                          isClearable
+                          className="capitalize"
+                        />
+                        {fieldState.error && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {fieldState.error.message}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  />
+                </div>
+              </div>
               <Controller
                 name="options.passengerCount"
                 control={control}
@@ -369,6 +456,33 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
                   />
                 )}
               />
+              <div>
+                <label className="text-sm font-semibold">Description</label>
+                <Controller
+                  name="description"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <textarea
+                      {...field}
+                      rows={4}
+                      placeholder="Enter detailed description"
+                      className="w-full border border-gray-300 rounded-md p-2 mt-1"
+                    />
+                  )}
+                />
+              </div>
+
+              <ImageUpload
+                selectedFiles={selectedFiles}
+                dragActive={dragActive}
+                handleDragOver={handleDragOver}
+                handleDragLeave={handleDragLeave}
+                handleDrop={handleDrop}
+                handleFileChange={handleFileChange}
+                handleClearImages={handleClearImages}
+              />
+
               <div className="flex flex-col gap-4 mt-[-90px]">
                 <label className="text-sm font-semibold">Air Condition</label>
                 <ToggleButton
@@ -382,10 +496,7 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
                   children="Cancel"
                   variant="secondary"
                   size="small"
-                  onClick={() => {
-                    setIsAirConditioned(true);
-                    setIsAddVehicleModelOpen(false);
-                  }}
+                  onClick={() => handleCancel()}
                 />
                 <Button
                   children={

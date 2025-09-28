@@ -23,6 +23,8 @@ export interface VehicleModelsPaginatedDataType {
   type: string;
   brand: string;
   rateCardId: VehicleModelRateType;
+  description?: string;
+  images?: string[];
 }
 
 export interface VehicleModelsPaginatedType {
@@ -42,4 +44,7 @@ export interface CreateVehicleModelType {
   type: string;
   brand: string;
   rateCardId: string;
+  weddingRateCardId?: string | null;
+  description?: string;
+  images?: string[];
 }

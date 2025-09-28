@@ -7,6 +7,7 @@ import { VehicleModelsPaginatedDataType } from "../../types/VehicleModels.types"
 import useVehicleModels from "../../hooks/useVehicleModels";
 import AddVehicleModel from "../../components/VehicleModels/AddVehicleModel";
 import DeleteDialog from "../../components/Reusable/DeleteDialog";
+import { useEffect } from "react";
 
 const VehicleModels = () => {
   const headers: TableHeaderType<VehicleModelsPaginatedDataType>[] = [
@@ -77,7 +78,37 @@ const VehicleModels = () => {
     setIsDeleteVehicleModelOpen,
     handleDeleteVehicleModel,
     deleteVehicleModelSuccess,
+    selectedFiles,
+    handleClearImages,
+    dragActive,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleFileChange,
+    imageUrls,
+    setSelectedFiles,
+    handleCancel,
   } = useVehicleModels();
+
+  useEffect(() => {
+    setSelectedFiles(
+      editingVehicleModel?.images?.map((image) => {
+        if (typeof image === "string") {
+          return {
+            name: "",
+            previewUrl: image,
+            file: null as unknown as File,
+          };
+        } else {
+          return {
+            name: "",
+            previewUrl: image ?? "",
+            file: null as unknown as File,
+          };
+        }
+      }) ?? []
+    );
+  }, [editingVehicleModel?.images, setIsAddVehicleModelOpen]);
 
   return (
     <div>
@@ -121,6 +152,15 @@ const VehicleModels = () => {
           isAirConditioned={isAirConditioned}
           setIsAirConditioned={setIsAirConditioned}
           rateCards={rateCards}
+          selectedFiles={selectedFiles}
+          handleClearImages={handleClearImages}
+          dragActive={dragActive}
+          handleDragOver={handleDragOver}
+          handleDragLeave={handleDragLeave}
+          handleDrop={handleDrop}
+          handleFileChange={handleFileChange}
+          imageUrls={imageUrls}
+          handleCancel={handleCancel}
         />
       )}
 

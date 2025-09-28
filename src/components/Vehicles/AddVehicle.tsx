@@ -11,19 +11,40 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { vehicleSchema } from "../../schemas/Vehicle.schema";
 import { ReduxState } from "../../types/Redux.types";
 import { VehicleModelsEssentialType } from "../../types/VehicleModels.types";
+import ImageUpload from "../Reusable/ImageUpload";
+import { SelectedFile } from "../../hooks/useFileUpload";
 
 interface AddVehicleProps {
-  setIsAddVehicleOpen: React.Dispatch<React.SetStateAction<boolean>>;
   initialData: VehiclePaginatedDataType | undefined;
   vehicleModelsEssentials: ReduxState<VehicleModelsEssentialType[] | null>;
   onSubmit: (data: CreateVehicleType, id?: string) => void;
+  selectedFiles: SelectedFile[];
+  handleClearImages: () => void;
+  dragActive: boolean;
+  handleDragOver: (event: React.DragEvent<HTMLDivElement>) => void;
+  handleDragLeave: () => void;
+  handleDrop: (event: React.DragEvent<HTMLDivElement>) => void;
+  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  imageUrls: {
+    url: string;
+    fileName: string;
+  }[];
+  handleCancel: () => void;
 }
 
 const AddVehicle: React.FC<AddVehicleProps> = ({
-  setIsAddVehicleOpen,
   initialData,
   vehicleModelsEssentials,
   onSubmit,
+  selectedFiles,
+  handleClearImages,
+  dragActive,
+  handleDragOver,
+  handleDragLeave,
+  handleDrop,
+  handleFileChange,
+  imageUrls,
+  handleCancel,
 }) => {
   const {
     control,
@@ -51,12 +72,27 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
   });
 
   const handleFormSubmit = (data: CreateVehicleType) => {
-    if (initialData?.id) {
-      onSubmit(data, initialData.id); // Pass ID for update
+    let payload;
+    if (initialData) {
+      payload = {
+        ...data,
+        images: [
+          ...(initialData.images ?? []),
+          ...imageUrls.map((img) => img.url),
+        ],
+      };
     } else {
-      onSubmit(data);
+      payload = {
+        ...data,
+        images: imageUrls.map((img) => img.url),
+      };
     }
-    setIsAddVehicleOpen(false);
+    if (initialData?.id) {
+      onSubmit(payload, initialData.id); // Pass ID for update
+    } else {
+      onSubmit(payload);
+    }
+    handleCancel();
     reset();
   };
 
@@ -71,7 +107,7 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
       <div className="fixed inset-0 bg-black opacity-50 z-40"></div>
       <div className="fixed inset-0 flex items-center justify-center z-40 p-4">
         <div
-          className="w-[850px] h-[430px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
+          className="w-[850px] h-[630px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="px-10 py-8">
@@ -135,13 +171,39 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
                   />
                 )}
               />
+              <div>
+                <label className="text-sm font-semibold">Description</label>
+                <Controller
+                  name="description"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <textarea
+                      {...field}
+                      rows={4}
+                      placeholder="Enter detailed description"
+                      className="w-full border border-gray-300 rounded-md p-2 mt-1"
+                    />
+                  )}
+                />
+              </div>
+
+              <ImageUpload
+                selectedFiles={selectedFiles}
+                dragActive={dragActive}
+                handleDragOver={handleDragOver}
+                handleDragLeave={handleDragLeave}
+                handleDrop={handleDrop}
+                handleFileChange={handleFileChange}
+                handleClearImages={handleClearImages}
+              />
 
               <div className="w-full flex items-center justify-end gap-8 mt-8">
                 <Button
                   children="Cancel"
                   variant="secondary"
                   size="small"
-                  onClick={() => setIsAddVehicleOpen(false)}
+                  onClick={() => handleCancel()}
                 />
                 <Button
                   children={initialData ? "Update Vehicle" : "Add Vehicle"}

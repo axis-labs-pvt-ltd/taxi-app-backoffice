@@ -31,6 +31,12 @@ export const useSidebar = () => {
         path: MainRoutes.inquiries,
       },
       {
+        id: "weddingInquiries",
+        name: "Wedding Inquiries",
+        icon: IoBoatOutline,
+        path: MainRoutes.weddingInquiries,
+      },
+      {
         id: "rateCards",
         name: "Rate Cards",
         icon: IoBoatOutline,

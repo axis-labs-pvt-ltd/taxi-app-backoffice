@@ -56,6 +56,8 @@ export const createVehicleModelSchema = z.object({
     .refine((value) => value.trim().length > 0, {
       message: "Rate card ID cannot be empty or just spaces",
     }),
+  weddingRateCardId: z.string().nullable().optional(),
+  description: z.string().optional(),
 });
 
 export type CreateVehicleModelSchemaType = z.infer<

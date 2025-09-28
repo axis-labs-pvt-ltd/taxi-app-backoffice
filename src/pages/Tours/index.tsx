@@ -78,9 +78,6 @@ const Tours = () => {
   } = useTours();
 
   useEffect(() => {
-    // setValue("isInventoryTrack", true);
-    // setValue("isManufactureDateBatch", true);
-    // setValue("isTrackExpireDate", true);
     setSelectedFiles(
       editingTour?.images?.map((image) => {
         if (typeof image === "string") {
@@ -99,17 +96,6 @@ const Tours = () => {
       }) ?? []
     );
   }, [editingTour?.images, setIsAddTourOpen]);
-
-  // const {
-  //   selectedImage,
-  //   handleClearImage,
-  //   dragActive,
-  //   handleDragOver,
-  //   handleDragLeave,
-  //   handleDrop,
-  //   handleFileChange,
-  //   imageName,
-  // } = useFileUpload();
 
   return (
     <div>
