@@ -9,6 +9,8 @@ export interface VehiclePaginatedDataType {
   id: string;
   plateNumber: string;
   model: VehiclePaginatedModelType;
+  description?: string;
+  images?: string[];
   status: string;
 }
 
@@ -25,6 +27,8 @@ export interface VehiclePaginatedType {
 export interface CreateVehicleType {
   modelId: string;
   plateNumber: string;
+  description?: string;
+  images?: string[];
   status: "available" | "booked" | "not available";
 }
 

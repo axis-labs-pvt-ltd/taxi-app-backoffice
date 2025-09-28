@@ -12,6 +12,7 @@ export enum MainRoutes {
   rateCards = "/rate-cards/page",
   users = "/users/page",
   tours = "/tours/page",
+  weddingInquiries = "/wedding-inquiries/page",
   logout = MainRoutes.login,
 
   // Error Routes

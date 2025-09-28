@@ -13,6 +13,7 @@ export const vehicleSchema = z.object({
     .refine((value) => value.trim().length > 0, {
       message: "Plate Number cannot be empty or just spaces",
     }),
+  description: z.string().optional(),
   status: z.enum(["available", "booked", "not available"], {
     message: "Status is required",
   }),
@@ -57,4 +58,3 @@ export const updateMeterValuesSchema = z
       message: "End meter must be greater than start meter",
     }
   );
-
