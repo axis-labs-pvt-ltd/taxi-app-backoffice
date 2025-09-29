@@ -15,6 +15,8 @@ import {
 import { CiMenuKebab } from "react-icons/ci";
 import UpdateMeterValues from "../../components/Inquiries/UpdateMeterValues";
 import InquiryView from "../../components/Inquiries/InquiryView";
+import { pdf } from "@react-pdf/renderer";
+import InquiryInvoice from "../../components/PDFs/InquiryInvoice";
 
 const Inquiries = () => {
   const headers: TableHeaderType<InquiryPaginatedDataType>[] = [
@@ -36,7 +38,7 @@ const Inquiries = () => {
       key: "vehicleAssigned",
       label: "Assigned Vehicle",
       render: (row) => (
-        <p>
+        <p className="uppercase">
           {row.vehicleAssigned?.plateNumber
             ? row.vehicleAssigned?.plateNumber
             : "---"}
@@ -141,6 +143,15 @@ const Inquiries = () => {
             >
               Confirm
             </DropdownMenuItem> */}
+            {row.status === "completed" && (
+              <DropdownMenuItem
+                onSelect={() => {
+                  downloadInvoice(row);
+                }}
+              >
+                Download Invoice
+              </DropdownMenuItem>
+            )}
             {row.status !== "cancelled" && row.status !== "completed" && (
               <DropdownMenuItem
                 onSelect={() => {
@@ -155,6 +166,19 @@ const Inquiries = () => {
       ),
     },
   ];
+
+  const downloadInvoice = async (inquiry: InquiryPaginatedDataType) => {
+    const blob = await pdf(<InquiryInvoice inquiry={inquiry} />).toBlob();
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `Invoice-${inquiry.fullName ?? "unknown"}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   const {
     currentPage,

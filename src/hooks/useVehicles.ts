@@ -16,6 +16,7 @@ import {
   ResetAddVehicleSuccess,
   ResetDeleteVehicleSuccess,
   updateVehicle,
+  updateVehicleStatus,
 } from "../redux/Vehicles/VehiclesAction";
 import { Slide, toast } from "react-toastify";
 import { fetchVehicleModels } from "../redux/VehicleModels/VehicleModelsAction";
@@ -172,6 +173,20 @@ const useVehicles = () => {
     dispatch(ResetStoredImage());
   };
 
+  const handleUpdateVehicleStatus = (id: string, newState: boolean) => {
+    let payload;
+    if (newState) {
+      payload = {
+        status: "available",
+      };
+    } else {
+      payload = {
+        status: "not available",
+      };
+    }
+    dispatch(updateVehicleStatus(payload, id));
+  };
+
   return {
     vehiclesPaginated,
     currentPage,
@@ -196,6 +211,7 @@ const useVehicles = () => {
     imageUrls,
     setSelectedFiles,
     handleCancel,
+    handleUpdateVehicleStatus,
   };
 };
 

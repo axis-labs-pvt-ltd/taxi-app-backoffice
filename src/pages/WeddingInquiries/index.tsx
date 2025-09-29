@@ -14,6 +14,9 @@ import { WeddingInquiryPaginatedDataType } from "../../types/WeddingInquiry.type
 import AssignVehicleModal from "../../components/Inquiries/AssignVehicleModal";
 import UpdateActualDistance from "../../components/Inquiries/UpdateActualDistance";
 import UpdateMeterValues from "../../components/Inquiries/UpdateMeterValues";
+import WeddingInquiryInvoice from "../../components/PDFs/WeddingInquiryInvoice";
+import { pdf } from "@react-pdf/renderer";
+import WeddingInquiryView from "../../components/WeddingInquiries/WeddingInquiryView";
 
 const WeddingInquiries = () => {
   const headers: TableHeaderType<WeddingInquiryPaginatedDataType>[] = [
@@ -82,10 +85,10 @@ const WeddingInquiries = () => {
             <DropdownMenuSeparator />
 
             <DropdownMenuItem
-            //   onSelect={() => {
-            //     setselectedInquiry(row);
-            //     setIsInquiryViewOpen(true);
-            //   }}
+              onSelect={() => {
+                setselectedInquiry(row);
+                setIsWeddingInquiryViewOpen(true);
+              }}
             >
               View
             </DropdownMenuItem>
@@ -133,6 +136,15 @@ const WeddingInquiries = () => {
             >
               Confirm
             </DropdownMenuItem> */}
+            {row.status === "completed" && (
+              <DropdownMenuItem
+                onSelect={() => {
+                  downloadInvoice(row);
+                }}
+              >
+                Download Invoice
+              </DropdownMenuItem>
+            )}
             {row.status !== "cancelled" && row.status !== "completed" && (
               <DropdownMenuItem
                 onSelect={() => {
@@ -147,6 +159,21 @@ const WeddingInquiries = () => {
       ),
     },
   ];
+
+  const downloadInvoice = async (inquiry: WeddingInquiryPaginatedDataType) => {
+    const blob = await pdf(
+      <WeddingInquiryInvoice inquiry={inquiry} />
+    ).toBlob();
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `Invoice-${inquiry.fullName ?? "unknown"}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   const {
     currentPage,
@@ -167,6 +194,10 @@ const WeddingInquiries = () => {
     metersByInquiry,
     handleFetchMetersByWeddingInquiry,
     handleUpdateWeddingInquiryStatus,
+    isWeddingInquiryViewOpen,
+    setIsWeddingInquiryViewOpen,
+    selectedInquiry,
+    setselectedInquiry,
   } = useWeddingInquiries();
 
   return (
@@ -216,12 +247,12 @@ const WeddingInquiries = () => {
         />
       )}
 
-      {/* {isInquiryViewOpen && (
-        <InquiryView
-          setIsInquiryViewOpen={setIsInquiryViewOpen}
+      {isWeddingInquiryViewOpen && (
+        <WeddingInquiryView
+          setIsWeddingInquiryViewOpen={setIsWeddingInquiryViewOpen}
           selectedInquiry={selectedInquiry}
         />
-      )} */}
+      )}
 
       {/* {isDeleteServiceOpen && editingService && (
         <DeleteDialog

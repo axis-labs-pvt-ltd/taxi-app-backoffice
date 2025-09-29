@@ -30,6 +30,11 @@ export const FETCH_VEHICLES_BY_MODEL_AND_DATE_FAILURE =
 export const FETCH_VEHICLE_BRANDS_REQUEST = "FETCH_VEHICLE_BRANDS_REQUEST";
 export const FETCH_VEHICLE_BRANDS_SUCCESS = "FETCH_VEHICLE_BRANDS_SUCCESS";
 export const FETCH_VEHICLE_BRANDS_FAILURE = "FETCH_VEHICLE_BRANDS_FAILURE";
+export const UPDATE_VEHICLE_STATUS_REQUEST = "UPDATE_VEHICLE_STATUS_REQUEST";
+export const UPDATE_VEHICLE_STATUS_SUCCESS = "UPDATE_VEHICLE_STATUS_SUCCESS";
+export const UPDATE_VEHICLE_STATUS_FAILURE = "UPDATE_VEHICLE_STATUS_FAILURE";
+export const RESET_UPDATE_VEHICLE_STATUS_SUCCESS =
+  "RESET_UPDATE_VEHICLE_STATUS_SUCCESS";
 
 interface VehicleState {
   loading: boolean;
@@ -39,6 +44,7 @@ interface VehicleState {
   addVehicleSuccess: ReduxStatus;
   deleteVehicleSuccess: ReduxStatus;
   vehiclesByModelAndDate: ReduxState<VehiclesByModelAndDateType[] | null>;
+  updateVehicleStatusSuccess: ReduxStatus;
 }
 
 const initialState: VehicleState = {
@@ -49,6 +55,7 @@ const initialState: VehicleState = {
   addVehicleSuccess: { status: false, loading: false, error: null },
   deleteVehicleSuccess: { status: false, loading: false, error: null },
   vehiclesByModelAndDate: { data: null, loading: false, error: null },
+  updateVehicleStatusSuccess: { status: false, loading: false, error: null },
 };
 
 interface FetchVehiclesPaginatedRequestAction {
@@ -141,6 +148,23 @@ interface FetchVehicleBrandsFailureAction {
   payload: string;
 }
 
+interface UpdateVehicleStatusRequestAction {
+  type: typeof UPDATE_VEHICLE_STATUS_REQUEST;
+}
+
+interface UpdateVehicleStatusSuccessAction {
+  type: typeof UPDATE_VEHICLE_STATUS_SUCCESS;
+}
+
+interface UpdateVehicleStatusFailureAction {
+  type: typeof UPDATE_VEHICLE_STATUS_FAILURE;
+  payload: string;
+}
+
+interface ResetUpdateVehicleStatusSuccessAction {
+  type: typeof RESET_UPDATE_VEHICLE_STATUS_SUCCESS;
+}
+
 export type VehiclesActionTypes =
   | FetchVehiclesPaginatedRequestAction
   | FetchVehiclesPaginatedSuccessAction
@@ -161,7 +185,11 @@ export type VehiclesActionTypes =
   | FetchVehiclesByModelAndDateFailureAction
   | FetchVehicleBrandsRequestAction
   | FetchVehicleBrandsSuccessAction
-  | FetchVehicleBrandsFailureAction;
+  | FetchVehicleBrandsFailureAction
+  | UpdateVehicleStatusRequestAction
+  | UpdateVehicleStatusSuccessAction
+  | UpdateVehicleStatusFailureAction
+  | ResetUpdateVehicleStatusSuccessAction;
 
 const vehiclesReducer = (
   state = initialState,
@@ -326,6 +354,48 @@ const vehiclesReducer = (
         ...state,
         loading: false,
         vehicleBrands: { data: null, error: action.payload, loading: false },
+      };
+
+    case UPDATE_VEHICLE_STATUS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        updateVehicleStatusSuccess: {
+          status: false,
+          error: null,
+          loading: true,
+        },
+      };
+    case UPDATE_VEHICLE_STATUS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        updateVehicleStatusSuccess: {
+          status: true,
+          error: null,
+          loading: false,
+        },
+      };
+    case UPDATE_VEHICLE_STATUS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        updateVehicleStatusSuccess: {
+          status: false,
+          error: action.payload,
+          loading: false,
+        },
+      };
+
+    case RESET_UPDATE_VEHICLE_STATUS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        updateVehicleStatusSuccess: {
+          status: false,
+          error: null,
+          loading: false,
+        },
       };
 
     default:

@@ -1,13 +1,13 @@
 import React from "react";
-import { InquiryPaginatedDataType } from "../../types/Inquiries.types";
+import { WeddingInquiryPaginatedDataType } from "../../types/WeddingInquiry.types";
 
-interface InquiryViewProps {
-  setIsInquiryViewOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedInquiry: InquiryPaginatedDataType | undefined;
+interface WeddingInquiryViewProps {
+  setIsWeddingInquiryViewOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedInquiry: WeddingInquiryPaginatedDataType | undefined;
 }
 
-const InquiryView: React.FC<InquiryViewProps> = ({
-  setIsInquiryViewOpen,
+const WeddingInquiryView: React.FC<WeddingInquiryViewProps> = ({
+  setIsWeddingInquiryViewOpen,
   selectedInquiry,
 }) => {
   return (
@@ -15,13 +15,13 @@ const InquiryView: React.FC<InquiryViewProps> = ({
       {/* Overlay */}
       <div
         className="fixed inset-0 bg-black/50 z-40"
-        onClick={() => setIsInquiryViewOpen(false)}
+        onClick={() => setIsWeddingInquiryViewOpen(false)}
       ></div>
 
       {/* Modal */}
       <div
         className="fixed inset-0 flex items-center justify-center z-50 p-4"
-        onClick={() => setIsInquiryViewOpen(false)}
+        onClick={() => setIsWeddingInquiryViewOpen(false)}
       >
         <div
           className="w-[1100px] max-h-[90vh] bg-white rounded-xl shadow-2xl"
@@ -30,10 +30,10 @@ const InquiryView: React.FC<InquiryViewProps> = ({
           {/* Header */}
           <div className="flex items-center justify-between border-b px-8 py-6 bg-gray-50 rounded-t-xl">
             <h2 className="text-2xl font-bold text-gray-800">
-              Inquiry Details
+              Wedding Inquiry Details
             </h2>
             <button
-              onClick={() => setIsInquiryViewOpen(false)}
+              onClick={() => setIsWeddingInquiryViewOpen(false)}
               className="text-gray-500 hover:text-gray-800 text-xl"
             >
               ✕
@@ -83,20 +83,19 @@ const InquiryView: React.FC<InquiryViewProps> = ({
               <div className="space-y-2 text-sm">
                 <p>
                   <span className="font-medium text-gray-600">Date:</span>{" "}
-                  {selectedInquiry?.tourDate.split("T")[0]}
+                  {selectedInquiry?.bookingDate.split("T")[0]}
                 </p>
-                <p>
+                {/* <p>
                   <span className="font-medium text-gray-600">Pickup:</span>{" "}
                   {selectedInquiry?.pickup?.name}
                 </p>
                 <p>
                   <span className="font-medium text-gray-600">Drop:</span>{" "}
                   {selectedInquiry?.drop?.name}
-                </p>
+                </p> */}
                 <p>
                   <span className="font-medium text-gray-600">Distance:</span>{" "}
-                  {selectedInquiry?.totalDistance?.toFixed(1)} km (Actual:{" "}
-                  {selectedInquiry?.actualTotalDistance} km)
+                  {selectedInquiry?.totalDistance?.toFixed(2)} km
                 </p>
                 <p>
                   <span className="font-medium text-gray-600">Meter:</span>{" "}
@@ -169,4 +168,4 @@ const InquiryView: React.FC<InquiryViewProps> = ({
   );
 };
 
-export default InquiryView;
+export default WeddingInquiryView;

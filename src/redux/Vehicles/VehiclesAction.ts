@@ -21,13 +21,20 @@ import {
   FETCH_VEHICLES_PAGINATED_SUCCESS,
   RESET_ADD_VEHICLE_SUCCESS,
   RESET_DELETE_VEHICLE_SUCCESS,
+  RESET_UPDATE_VEHICLE_STATUS_SUCCESS,
+  UPDATE_VEHICLE_STATUS_FAILURE,
+  UPDATE_VEHICLE_STATUS_REQUEST,
+  UPDATE_VEHICLE_STATUS_SUCCESS,
   VehiclesActionTypes,
 } from "./VehiclesReducer";
 import API_BASE_URLS from "../../config/api";
 import { apiRoutes, generateRoute } from "../../constants/apiRoutes";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { CreateVehicleType } from "../../types/Vehicle.types";
+import {
+  CreateVehicleType,
+  UpdateInquiryStatusType,
+} from "../../types/Vehicle.types";
 
 export const fetchVehiclesPaginated = ({
   pageNumber,
@@ -267,3 +274,37 @@ export const fetchVehicleBrands = () => {
     }
   };
 };
+
+export const updateVehicleStatus =
+  (status: UpdateInquiryStatusType, id: string) =>
+  async (dispatch: Dispatch<VehiclesActionTypes>) => {
+    dispatch({ type: UPDATE_VEHICLE_STATUS_REQUEST });
+    const token = Cookies.get("access_token");
+
+    try {
+      const url = `${API_BASE_URLS.backendAPI}${generateRoute(
+        apiRoutes.updateVehicleStatus,
+        { id }
+      )}`;
+      const response = await axios.put(url, status, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status !== 200 && response.status !== 201) {
+        throw new Error("Failed to update vehicle status");
+      }
+
+      dispatch({ type: UPDATE_VEHICLE_STATUS_SUCCESS });
+    } catch (error: any) {
+      dispatch({
+        type: UPDATE_VEHICLE_STATUS_FAILURE,
+        payload: error.response?.data?.message,
+      });
+    }
+  };
+
+export const ResetUpdateVehicleStatusSuccess = (): VehiclesActionTypes => ({
+  type: RESET_UPDATE_VEHICLE_STATUS_SUCCESS,
+});

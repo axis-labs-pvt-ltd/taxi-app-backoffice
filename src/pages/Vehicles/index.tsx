@@ -8,10 +8,19 @@ import { VehiclePaginatedDataType } from "../../types/Vehicle.types";
 import AddVehicle from "../../components/Vehicles/AddVehicle";
 import DeleteDialog from "../../components/Reusable/DeleteDialog";
 import { useEffect } from "react";
+import { ToggleButton } from "../../components/Reusable/ToggleButton";
 
 const Vehicles = () => {
+  const handleToggle = (id: string, newState: boolean) => {
+    handleUpdateVehicleStatus(id, newState);
+  };
+
   const headers: TableHeaderType<VehiclePaginatedDataType>[] = [
-    { key: "plateNumber", label: "Plate Number" },
+    {
+      key: "plateNumber",
+      label: "Plate Number",
+      render: (row) => <p className="uppercase">{row.plateNumber}</p>,
+    },
     {
       key: "model",
       label: "Brand",
@@ -27,7 +36,16 @@ const Vehicles = () => {
       label: "Rate Card",
       render: (row) => <p>{row.model?.rateCard}</p>,
     },
-    { key: "status", label: "Status" },
+    {
+      key: "status",
+      label: "Status",
+      render: (row) => (
+        <ToggleButton
+          isButtonActive={row.status === "available" ? true : false}
+          onToggle={(newState) => handleToggle(row.id, newState)}
+        />
+      ),
+    },
     {
       key: null,
       label: "Actions",
@@ -78,6 +96,7 @@ const Vehicles = () => {
     imageUrls,
     setSelectedFiles,
     handleCancel,
+    handleUpdateVehicleStatus,
   } = useVehicles();
 
   useEffect(() => {
