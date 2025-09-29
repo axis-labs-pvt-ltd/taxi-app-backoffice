@@ -1,12 +1,20 @@
-import { FaRegEdit } from "react-icons/fa";
 import { Button } from "../../components/Reusable/Button";
 import { TableHeaderType, TableNew } from "../../components/Reusable/TableNew";
 import SubHeader from "../../components/SubHeader";
 import { DriversPaginatedDataType } from "../../types/Drivers.types";
-import { RiDeleteBinLine } from "react-icons/ri";
 import useDrivers from "../../hooks/useDrivers";
 import AddDriver from "../../components/Drivers/AddDriver";
 import DeleteDialog from "../../components/Reusable/DeleteDialog";
+import DriverView from "../../components/Drivers/DriverView";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../../components/ui/dropdown-menu";
+import { CiMenuKebab } from "react-icons/ci";
 
 const Drivers = () => {
   const headers: TableHeaderType<DriversPaginatedDataType>[] = [
@@ -29,24 +37,44 @@ const Drivers = () => {
       key: null,
       label: "Actions",
       render: (row) => (
-        <div className="flex items-center gap-5">
-          <FaRegEdit
-            className="cursor-pointer"
-            size={16}
-            onClick={() => {
-              setEditingDriver(row); // Set selected brand for editing
-              setIsAddDriverOpen(true); // Open modal
-            }}
-          />
-          <RiDeleteBinLine
-            className="cursor-pointer"
-            size={16}
-            onClick={() => {
-              setEditingDriver(row);
-              setIsDeleteDriverOpen(true);
-            }}
-          />
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="p-1">
+              <CiMenuKebab className="w-5 h-5" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem
+              onSelect={() => {
+                setEditingDriver(row);
+                setIsDriverViewOpen(true);
+              }}
+            >
+              View
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              onSelect={() => {
+                setEditingDriver(row); // Set selected brand for editing
+                setIsAddDriverOpen(true); // Open modal
+              }}
+            >
+              Edit
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              onSelect={() => {
+                setEditingDriver(row);
+                setIsDeleteDriverOpen(true);
+              }}
+            >
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ),
     },
   ];
@@ -66,6 +94,8 @@ const Drivers = () => {
     onSubmit,
     handleDeleteDriver,
     deleteDriverSuccess,
+    isDriverViewOpen,
+    setIsDriverViewOpen,
   } = useDrivers();
 
   return (
@@ -107,6 +137,13 @@ const Drivers = () => {
           driverTypes={driverTypes}
           driverStatus={driverStatus}
           onSubmit={onSubmit}
+        />
+      )}
+
+      {isDriverViewOpen && (
+        <DriverView
+          setIsDriverViewOpen={setIsDriverViewOpen}
+          selectedDriver={editingDriver}
         />
       )}
 

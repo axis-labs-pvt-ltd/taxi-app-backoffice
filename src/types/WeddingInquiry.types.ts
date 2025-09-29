@@ -1,3 +1,5 @@
+import { ExtraServicesType } from "./Inquiries.types";
+
 export interface VehicleModelIdType {
   id: string;
   type: string;
@@ -22,6 +24,7 @@ export interface WeddingInquiryPaginatedDataType {
   startMeter: number;
   endMeter: number;
   status: string;
+  extraServices: ExtraServicesType[];
 }
 
 export interface WeddingInquiryPaginatedType {

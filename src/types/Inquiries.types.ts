@@ -1,3 +1,10 @@
+export interface ExtraServicesType {
+  id: string;
+  name: string;
+  price: number;
+  qty: number;
+}
+
 export interface VehicleModelIdType {
   id: string;
   type: string;
@@ -47,6 +54,7 @@ export interface InquiryPaginatedDataType {
   endMeter: number;
   status: string;
   dropPoints: DropPointsType[];
+  extraServices: ExtraServicesType[];
 }
 
 export interface InquiryPaginatedType {

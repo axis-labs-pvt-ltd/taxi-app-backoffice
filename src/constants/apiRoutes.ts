@@ -12,6 +12,7 @@ export enum apiRoutes {
   vehicleTypes = "/vehicleModels/types",
   vehicleBrands = "/vehicleModels/brands",
   editAndDeleteVehicle = "/vehicles/:id",
+  updateVehicleStatus = "/vehicles/:id/status",
 
   vehicleModels = "/vehicleModels",
   updateAndDeleteVehicleModel = "/vehicleModels/:id",

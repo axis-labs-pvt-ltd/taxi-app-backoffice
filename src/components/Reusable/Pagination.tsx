@@ -98,7 +98,7 @@ const Pagination: React.FC<PaginationProps> = ({
     if (e.key === "Enter") {
       const pageNumber = parseInt(customPage, 10);
       if (!isNaN(pageNumber) && pageNumber >= 1 && pageNumber <= totalPages) {
-        // handlePageChange(pageNumber);
+        handlePageChange(pageNumber);
       } else {
         // Optionally show a message if the page number is invalid
         alert(`Please enter a page number between 1 and ${totalPages}`);

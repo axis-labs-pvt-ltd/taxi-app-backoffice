@@ -147,7 +147,7 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
                           className="capitalize"
                         />
                         {fieldState.error && (
-                          <p className="text-red-500 text-sm mt-1">
+                          <p className="text-red-500 text-xs mt-1">
                             {fieldState.error.message}
                           </p>
                         )}

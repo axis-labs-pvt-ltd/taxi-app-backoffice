@@ -44,6 +44,7 @@ const useDrivers = () => {
     DriversPaginatedDataType | undefined
   >(undefined);
   const [isDeleteDriverOpen, setIsDeleteDriverOpen] = useState<boolean>(false);
+  const [isDriverViewOpen, setIsDriverViewOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -163,6 +164,8 @@ const useDrivers = () => {
     onSubmit,
     handleDeleteDriver,
     deleteDriverSuccess,
+    isDriverViewOpen,
+    setIsDriverViewOpen,
   };
 };
 

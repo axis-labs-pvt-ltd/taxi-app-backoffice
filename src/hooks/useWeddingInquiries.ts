@@ -25,6 +25,7 @@ import {
 } from "../types/Vehicle.types";
 import { Slide, toast } from "react-toastify";
 import { InquiriesActionTypes } from "../redux/Inquiries/InquiriesReducer";
+import { WeddingInquiryPaginatedDataType } from "../types/WeddingInquiry.types";
 
 type AppDispatch = ThunkDispatch<
   RootState,
@@ -57,6 +58,11 @@ const useWeddingInquiries = () => {
     useState<boolean>(false);
   const [isUpdateMeterValuesModalOpen, setIsUpdateMeterValuesModalOpen] =
     useState<boolean>(false);
+  const [isWeddingInquiryViewOpen, setIsWeddingInquiryViewOpen] =
+    useState<boolean>(false);
+  const [selectedInquiry, setselectedInquiry] = useState<
+    WeddingInquiryPaginatedDataType | undefined
+  >(undefined);
 
   const { SearchInput, searchKey } = useSearch({
     text: "Search for inquiry",
@@ -225,6 +231,10 @@ const useWeddingInquiries = () => {
     metersByInquiry,
     handleFetchMetersByWeddingInquiry,
     handleUpdateWeddingInquiryStatus,
+    isWeddingInquiryViewOpen,
+    setIsWeddingInquiryViewOpen,
+    selectedInquiry,
+    setselectedInquiry,
   };
 };
 
