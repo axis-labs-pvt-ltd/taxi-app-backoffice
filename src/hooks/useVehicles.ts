@@ -15,6 +15,7 @@ import {
   fetchVehiclesPaginated,
   ResetAddVehicleSuccess,
   ResetDeleteVehicleSuccess,
+  ResetUpdateVehicleStatusSuccess,
   updateVehicle,
   updateVehicleStatus,
 } from "../redux/Vehicles/VehiclesAction";
@@ -34,8 +35,12 @@ const useVehicles = () => {
   const { pageNumber } = useParams<{ pageNumber: string }>();
   const currentPage = parseInt(pageNumber ?? "1", 10);
   const dispatch: AppDispatch = useDispatch();
-  const { vehiclesPaginated, addVehicleSuccess, deleteVehicleSuccess } =
-    useSelector((state: RootState) => state.vehicles);
+  const {
+    vehiclesPaginated,
+    addVehicleSuccess,
+    deleteVehicleSuccess,
+    updateVehicleStatusSuccess,
+  } = useSelector((state: RootState) => state.vehicles);
   const { vehicleModelsEssentials } = useSelector(
     (state: RootState) => state.vehicleModels
   );
@@ -134,6 +139,22 @@ const useVehicles = () => {
       dispatch(ResetAddVehicleSuccess());
     }
   }, [addVehicleSuccess.error, dispatch]);
+
+  useEffect(() => {
+    if (updateVehicleStatusSuccess.status) {
+      toast.success("Vehicle Status Updated Successfully!", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetUpdateVehicleStatusSuccess());
+    }
+  }, [updateVehicleStatusSuccess.status, dispatch]);
 
   useEffect(() => {
     if (deleteVehicleSuccess.status) {
