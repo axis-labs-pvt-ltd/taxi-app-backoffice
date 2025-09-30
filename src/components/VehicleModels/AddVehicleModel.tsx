@@ -386,7 +386,6 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold">
                     Wedding Rate Card
-                    <span className="text-sm text-[#F34747]">*</span>
                   </label>
                   <Controller
                     name="weddingRateCardId"
