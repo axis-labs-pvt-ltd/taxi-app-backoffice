@@ -65,6 +65,8 @@ const RateCards = () => {
     setIsDeleteRateCardOpen,
     handleDeleteRateCard,
     deleteRateCardSuccess,
+    isWeddingRateCard,
+    setIsWeddingRateCard,
   } = useRateCards();
 
   return (
@@ -102,6 +104,8 @@ const RateCards = () => {
       {isAddRateCardOpen && (
         <AddRateCard
           setIsAddRateCardOpen={setIsAddRateCardOpen}
+          isWeddingRateCard={isWeddingRateCard}
+          setIsWeddingRateCard={setIsWeddingRateCard}
           initialData={editingRateCard}
           onSubmit={onSubmit}
         />

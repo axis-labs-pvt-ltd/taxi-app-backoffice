@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../Reusable/Button";
 import { Controller, useForm } from "react-hook-form";
 import { Input } from "../Reusable/Input";
@@ -23,6 +23,8 @@ interface AddTourProps {
     url: string;
     fileName: string;
   }[];
+  currentImages: string[];
+  setCurrentImages: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const AddTour: React.FC<AddTourProps> = ({
@@ -37,6 +39,8 @@ const AddTour: React.FC<AddTourProps> = ({
   handleDrop,
   handleFileChange,
   imageUrls,
+  currentImages,
+  setCurrentImages,
 }) => {
   const {
     control,
@@ -50,6 +54,12 @@ const AddTour: React.FC<AddTourProps> = ({
   });
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (initialData) {
+      setCurrentImages(initialData.images ?? []);
+    }
+  }, []);
+
   const handleFormSubmit = (data: ToursDataType) => {
     if (selectedFiles.length < 1) {
       setError(" Please upload at least one image.");
@@ -59,10 +69,13 @@ const AddTour: React.FC<AddTourProps> = ({
     if (initialData) {
       payload = {
         ...data,
-        images: [
-          ...(initialData.images ?? []),
-          ...imageUrls.map((img) => img.url),
-        ],
+        images:
+          currentImages.length > 0
+            ? [
+                ...(initialData.images ?? []),
+                ...imageUrls.map((img) => img.url),
+              ]
+            : imageUrls.map((img) => img.url),
       };
     } else {
       payload = {

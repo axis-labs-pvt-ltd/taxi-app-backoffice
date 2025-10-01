@@ -55,6 +55,8 @@ const useTours = () => {
     imageUrls,
     setImageUrls,
     setSelectedFiles,
+    currentImages,
+    setCurrentImages,
   } = useFileUpload();
 
   useEffect(() => {
@@ -150,6 +152,7 @@ const useTours = () => {
     setIsAddTourOpen(false);
     setEditingTour(undefined);
     setImageUrls([]);
+    setCurrentImages([])
     dispatch(ResetStoredImage());
   };
 
@@ -181,6 +184,8 @@ const useTours = () => {
     setIsDeleteTourOpen,
     handleTourDelete,
     deleteTourSuccess,
+    currentImages,
+    setCurrentImages,
   };
 };
 

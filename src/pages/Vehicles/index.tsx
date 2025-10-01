@@ -86,38 +86,38 @@ const Vehicles = () => {
     deleteVehicleSuccess,
     handleDeleteVehicle,
     vehicleModelsEssentials,
-    selectedFiles,
-    handleClearImages,
-    dragActive,
-    handleDragOver,
-    handleDragLeave,
-    handleDrop,
-    handleFileChange,
-    imageUrls,
-    setSelectedFiles,
+    // selectedFiles,
+    // handleClearImages,
+    // dragActive,
+    // handleDragOver,
+    // handleDragLeave,
+    // handleDrop,
+    // handleFileChange,
+    // imageUrls,
+    // setSelectedFiles,
     handleCancel,
     handleUpdateVehicleStatus,
   } = useVehicles();
 
-  useEffect(() => {
-    setSelectedFiles(
-      editingVehicle?.images?.map((image) => {
-        if (typeof image === "string") {
-          return {
-            name: "",
-            previewUrl: image,
-            file: null as unknown as File,
-          };
-        } else {
-          return {
-            name: "",
-            previewUrl: image ?? "",
-            file: null as unknown as File,
-          };
-        }
-      }) ?? []
-    );
-  }, [editingVehicle?.images, setIsAddVehicleOpen]);
+  // useEffect(() => {
+  //   setSelectedFiles(
+  //     editingVehicle?.images?.map((image) => {
+  //       if (typeof image === "string") {
+  //         return {
+  //           name: "",
+  //           previewUrl: image,
+  //           file: null as unknown as File,
+  //         };
+  //       } else {
+  //         return {
+  //           name: "",
+  //           previewUrl: image ?? "",
+  //           file: null as unknown as File,
+  //         };
+  //       }
+  //     }) ?? []
+  //   );
+  // }, [editingVehicle?.images, setIsAddVehicleOpen]);
 
   return (
     <div>
@@ -157,14 +157,14 @@ const Vehicles = () => {
           initialData={editingVehicle}
           onSubmit={onSubmit}
           vehicleModelsEssentials={vehicleModelsEssentials}
-          selectedFiles={selectedFiles}
-          handleClearImages={handleClearImages}
-          dragActive={dragActive}
-          handleDragOver={handleDragOver}
-          handleDragLeave={handleDragLeave}
-          handleDrop={handleDrop}
-          handleFileChange={handleFileChange}
-          imageUrls={imageUrls}
+          // selectedFiles={selectedFiles}
+          // handleClearImages={handleClearImages}
+          // dragActive={dragActive}
+          // handleDragOver={handleDragOver}
+          // handleDragLeave={handleDragLeave}
+          // handleDrop={handleDrop}
+          // handleFileChange={handleFileChange}
+          // imageUrls={imageUrls}
         />
       )}
 

@@ -75,6 +75,8 @@ const Tours = () => {
     setIsDeleteTourOpen,
     handleTourDelete,
     deleteTourSuccess,
+    currentImages,
+    setCurrentImages,
   } = useTours();
 
   useEffect(() => {
@@ -142,6 +144,8 @@ const Tours = () => {
           handleDrop={handleDrop}
           handleFileChange={handleFileChange}
           imageUrls={imageUrls}
+          currentImages={currentImages}
+          setCurrentImages={setCurrentImages}
         />
       )}
 

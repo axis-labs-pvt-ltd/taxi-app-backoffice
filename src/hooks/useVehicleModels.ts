@@ -21,7 +21,10 @@ import {
   fetchVehicleBrands,
   fetchVehicleTypes,
 } from "../redux/Vehicles/VehiclesAction";
-import { fetchRateCards } from "../redux/RateCards/RateCardsAction";
+import {
+  fetchRateCards,
+  fetchWeddingRateCards,
+} from "../redux/RateCards/RateCardsAction";
 import { Slide, toast } from "react-toastify";
 import useFileUpload from "./useFileUpload";
 import { ResetStoredImage } from "../redux/Images/ImageAction";
@@ -45,7 +48,9 @@ const useVehicleModels = () => {
   const { vehicleTypes, vehicleBrands } = useSelector(
     (state: RootState) => state.vehicles
   );
-  const { rateCards } = useSelector((state: RootState) => state.rateCards);
+  const { rateCards, weddingRateCards } = useSelector(
+    (state: RootState) => state.rateCards
+  );
 
   const { SearchInput, searchKey } = useSearch({
     text: "Search for vehicle model",
@@ -71,6 +76,8 @@ const useVehicleModels = () => {
     imageUrls,
     setImageUrls,
     setSelectedFiles,
+    currentImages,
+    setCurrentImages,
   } = useFileUpload();
 
   useEffect(() => {
@@ -112,6 +119,7 @@ const useVehicleModels = () => {
     dispatch(fetchVehicleTypes());
     dispatch(fetchVehicleBrands());
     dispatch(fetchRateCards());
+    dispatch(fetchWeddingRateCards());
   }, [dispatch]);
 
   useEffect(() => {
@@ -169,6 +177,7 @@ const useVehicleModels = () => {
       dispatch(addVehicleModel(data));
     }
     setIsAddVehicleModelOpen(false);
+    handleCancel();
     dispatch(ResetAddVehicleModelSuccess());
   };
 
@@ -182,6 +191,7 @@ const useVehicleModels = () => {
     setIsAirConditioned(true);
     setEditingVehicleModel(undefined);
     setImageUrls([]);
+    setCurrentImages([])
     dispatch(ResetStoredImage());
   };
 
@@ -214,6 +224,9 @@ const useVehicleModels = () => {
     setImageUrls,
     setSelectedFiles,
     handleCancel,
+    weddingRateCards,
+    currentImages,
+    setCurrentImages,
   };
 };
 

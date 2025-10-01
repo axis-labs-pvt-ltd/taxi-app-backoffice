@@ -33,4 +33,7 @@ export const rateCardSchema = z.object({
     .refine((val) => val.trim().length > 0, {
       message: "Currency cannot be empty or just spaces",
     }),
+  isWeddingRateCard: z.boolean().refine((value) => typeof value === "boolean", {
+    message: "Wedding Rate Card must be true or false",
+  }),
 });
