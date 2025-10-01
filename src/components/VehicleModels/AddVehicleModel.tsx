@@ -42,6 +42,7 @@ interface AddVehicleProps {
   weddingRateCards: ReduxState<RateCardsType[] | null>;
   currentImages: string[];
   setCurrentImages: React.Dispatch<React.SetStateAction<string[]>>;
+  uploading: boolean;
 }
 
 const AddVehicleModel: React.FC<AddVehicleProps> = ({
@@ -65,6 +66,7 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
   weddingRateCards,
   currentImages,
   setCurrentImages,
+  uploading,
 }) => {
   const {
     control,
@@ -514,6 +516,7 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
                   variant="primary"
                   size="small"
                   type="submit"
+                  disabled={uploading}
                 />
               </div>
             </form>

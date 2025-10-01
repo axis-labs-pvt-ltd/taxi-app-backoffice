@@ -91,6 +91,7 @@ const VehicleModels = () => {
     weddingRateCards,
     currentImages,
     setCurrentImages,
+    uploading,
   } = useVehicleModels();
 
   useEffect(() => {
@@ -167,6 +168,7 @@ const VehicleModels = () => {
           weddingRateCards={weddingRateCards}
           currentImages={currentImages}
           setCurrentImages={setCurrentImages}
+          uploading={uploading}
         />
       )}
 

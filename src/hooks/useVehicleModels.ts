@@ -78,6 +78,7 @@ const useVehicleModels = () => {
     setSelectedFiles,
     currentImages,
     setCurrentImages,
+    uploading,
   } = useFileUpload();
 
   useEffect(() => {
@@ -227,6 +228,7 @@ const useVehicleModels = () => {
     weddingRateCards,
     currentImages,
     setCurrentImages,
+    uploading,
   };
 };
 

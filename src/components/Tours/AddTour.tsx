@@ -25,6 +25,7 @@ interface AddTourProps {
   }[];
   currentImages: string[];
   setCurrentImages: React.Dispatch<React.SetStateAction<string[]>>;
+  uploading: boolean;
 }
 
 const AddTour: React.FC<AddTourProps> = ({
@@ -41,6 +42,7 @@ const AddTour: React.FC<AddTourProps> = ({
   imageUrls,
   currentImages,
   setCurrentImages,
+  uploading,
 }) => {
   const {
     control,
@@ -343,6 +345,7 @@ const AddTour: React.FC<AddTourProps> = ({
                   variant="primary"
                   size="small"
                   type="submit"
+                  disabled={uploading}
                 />
               </div>
             </form>

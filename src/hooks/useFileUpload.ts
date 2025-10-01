@@ -99,7 +99,7 @@ export interface SelectedFile {
 
 const useFileUpload = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { imageUrl } = useSelector((state: RootState) => state.images);
+  const { imageUrl, uploading } = useSelector((state: RootState) => state.images);
 
   const [dragActive, setDragActive] = useState<boolean>(false);
   const [selectedFiles, setSelectedFiles] = useState<SelectedFile[]>([]);
@@ -199,6 +199,7 @@ const useFileUpload = () => {
     setSelectedFiles,
     currentImages,
     setCurrentImages,
+    uploading,
   };
 };
 

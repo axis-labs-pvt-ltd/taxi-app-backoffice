@@ -77,6 +77,7 @@ const Tours = () => {
     deleteTourSuccess,
     currentImages,
     setCurrentImages,
+    uploading,
   } = useTours();
 
   useEffect(() => {
@@ -146,6 +147,7 @@ const Tours = () => {
           imageUrls={imageUrls}
           currentImages={currentImages}
           setCurrentImages={setCurrentImages}
+          uploading={uploading}
         />
       )}
 
