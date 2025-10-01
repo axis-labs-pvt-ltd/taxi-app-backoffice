@@ -50,6 +50,7 @@ export enum apiRoutes {
   rateCards = "/rateCards",
   rateCardsPaginated = "/rateCards/paginated",
   editAndDeleteRateCard = "/rateCards/:id",
+  weddingRateCards = "/rateCards/weddings",
 
   usersPaginated = "/users/paginated",
   createUser = "/auth/register",

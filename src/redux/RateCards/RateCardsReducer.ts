@@ -21,6 +21,12 @@ export const DELETE_RATE_CARD_REQUEST = "DELETE_RATE_CARD_REQUEST";
 export const DELETE_RATE_CARD_SUCCESS = "DELETE_RATE_CARD_SUCCESS";
 export const DELETE_RATE_CARD_FAILURE = "DELETE_RATE_CARD_FAILURE";
 export const RESET_DELETE_RATE_CARD_SUCCESS = "RESET_DELETE_RATE_CARD_SUCCESS";
+export const FETCH_WEDDING_RATE_CARDS_REQUEST =
+  "FETCH_WEDDING_RATE_CARDS_REQUEST";
+export const FETCH_WEDDING_RATE_CARDS_SUCCESS =
+  "FETCH_WEDDING_RATE_CARDS_SUCCESS";
+export const FETCH_WEDDING_RATE_CARDS_FAILURE =
+  "FETCH_WEDDING_RATE_CARDS_FAILURE";
 
 interface RateCardState {
   loading: boolean;
@@ -28,6 +34,7 @@ interface RateCardState {
   rateCardsPaginated: ReduxState<RateCardPaginatedType | null>;
   addRateCardSuccess: ReduxStatus;
   deleteRateCardSuccess: ReduxStatus;
+  weddingRateCards: ReduxState<RateCardsType[] | null>;
 }
 
 const initialState: RateCardState = {
@@ -36,6 +43,7 @@ const initialState: RateCardState = {
   rateCardsPaginated: { data: null, loading: false, error: null },
   addRateCardSuccess: { status: false, loading: false, error: null },
   deleteRateCardSuccess: { status: false, loading: false, error: null },
+  weddingRateCards: { data: null, loading: false, error: null },
 };
 
 interface FetchRateCardsRequestAction {
@@ -100,6 +108,20 @@ interface ResetDeleteRateCardsSuccessAction {
   type: typeof RESET_DELETE_RATE_CARD_SUCCESS;
 }
 
+interface FetchWeddingRateCardsRequestAction {
+  type: typeof FETCH_WEDDING_RATE_CARDS_REQUEST;
+}
+
+interface FetchWeddingRateCardsSuccessAction {
+  type: typeof FETCH_WEDDING_RATE_CARDS_SUCCESS;
+  payload: RateCardsType[];
+}
+
+interface FetchWeddingRateCardsFailureAction {
+  type: typeof FETCH_WEDDING_RATE_CARDS_FAILURE;
+  payload: string;
+}
+
 export type RateCardsActionTypes =
   | FetchRateCardsRequestAction
   | FetchRateCardsSuccessAction
@@ -114,7 +136,10 @@ export type RateCardsActionTypes =
   | DeleteRateCardsRequestAction
   | DeleteRateCardsSuccessAction
   | DeleteRateCardsFailureAction
-  | ResetDeleteRateCardsSuccessAction;
+  | ResetDeleteRateCardsSuccessAction
+  | FetchWeddingRateCardsRequestAction
+  | FetchWeddingRateCardsSuccessAction
+  | FetchWeddingRateCardsFailureAction;
 
 const rateCardsReducer = (
   state = initialState,
@@ -247,6 +272,33 @@ const rateCardsReducer = (
         deleteRateCardSuccess: {
           status: false,
           error: null,
+          loading: false,
+        },
+      };
+
+    case FETCH_WEDDING_RATE_CARDS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        weddingRateCards: { data: null, error: null, loading: true },
+      };
+    case FETCH_WEDDING_RATE_CARDS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        weddingRateCards: {
+          data: action.payload,
+          error: null,
+          loading: false,
+        },
+      };
+    case FETCH_WEDDING_RATE_CARDS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        weddingRateCards: {
+          data: null,
+          error: action.payload,
           loading: false,
         },
       };

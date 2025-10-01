@@ -39,6 +39,10 @@ interface AddVehicleProps {
     fileName: string;
   }[];
   handleCancel: () => void;
+  weddingRateCards: ReduxState<RateCardsType[] | null>;
+  currentImages: string[];
+  setCurrentImages: React.Dispatch<React.SetStateAction<string[]>>;
+  uploading: boolean;
 }
 
 const AddVehicleModel: React.FC<AddVehicleProps> = ({
@@ -59,6 +63,10 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
   handleFileChange,
   imageUrls,
   handleCancel,
+  weddingRateCards,
+  currentImages,
+  setCurrentImages,
+  uploading,
 }) => {
   const {
     control,
@@ -89,8 +97,11 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
   useEffect(() => {
     if (initialData) {
       setIsAirConditioned(initialData?.options.airCondition);
+      setCurrentImages(initialData.images ?? []);
     }
   }, []);
+
+  console.log("selectedFiles", selectedFiles);
 
   const handleFormSubmit = (data: CreateVehicleModelType) => {
     let payload;
@@ -103,10 +114,13 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
           luggageCapacity: data.options.luggageCapacity,
           transmission: data.options.transmission,
         },
-        images: [
-          ...(initialData.images ?? []),
-          ...imageUrls.map((img) => img.url),
-        ],
+        images:
+          currentImages.length > 0
+            ? [
+                ...(initialData.images ?? []),
+                ...imageUrls.map((img) => img.url),
+              ]
+            : imageUrls.map((img) => img.url),
       };
     } else {
       payload = {
@@ -120,15 +134,7 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
         images: imageUrls.map((img) => img.url),
       };
     }
-    // const payload = {
-    //   ...data,
-    //   options: {
-    //     airCondition: isAirConditioned,
-    //     passengerCount: data.options.passengerCount,
-    //     luggageCapacity: data.options.luggageCapacity,
-    //     transmission: data.options.transmission,
-    //   },
-    // };
+
     if (initialData?.id) {
       onSubmit(payload, initialData.id); // Pass ID for update
     } else {
@@ -164,6 +170,12 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
 
   const rateCardOptions: { value: string; label: string }[] | undefined =
     rateCards?.data?.map((rateCard) => ({
+      value: rateCard.id,
+      label: rateCard.name,
+    })) as { value: string; label: string }[];
+
+  const weddingRateCardOptions: { value: string; label: string }[] | undefined =
+    weddingRateCards?.data?.map((rateCard) => ({
       value: rateCard.id,
       label: rateCard.name,
     })) as { value: string; label: string }[];
@@ -393,10 +405,10 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
                     render={({ field, fieldState }) => (
                       <div>
                         <Select
-                          options={rateCardOptions} // from backend or hardcoded enum
+                          options={weddingRateCardOptions} // from backend or hardcoded enum
                           placeholder="Select a wedding rate card"
                           value={
-                            rateCardOptions.find(
+                            weddingRateCardOptions.find(
                               (option) => option.value === field.value
                             ) || null
                           }
@@ -504,6 +516,7 @@ const AddVehicleModel: React.FC<AddVehicleProps> = ({
                   variant="primary"
                   size="small"
                   type="submit"
+                  disabled={uploading}
                 />
               </div>
             </form>

@@ -11,24 +11,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { vehicleSchema } from "../../schemas/Vehicle.schema";
 import { ReduxState } from "../../types/Redux.types";
 import { VehicleModelsEssentialType } from "../../types/VehicleModels.types";
-import ImageUpload from "../Reusable/ImageUpload";
-import { SelectedFile } from "../../hooks/useFileUpload";
+// import ImageUpload from "../Reusable/ImageUpload";
+// import { SelectedFile } from "../../hooks/useFileUpload";
 
 interface AddVehicleProps {
   initialData: VehiclePaginatedDataType | undefined;
   vehicleModelsEssentials: ReduxState<VehicleModelsEssentialType[] | null>;
   onSubmit: (data: CreateVehicleType, id?: string) => void;
-  selectedFiles: SelectedFile[];
-  handleClearImages: () => void;
-  dragActive: boolean;
-  handleDragOver: (event: React.DragEvent<HTMLDivElement>) => void;
-  handleDragLeave: () => void;
-  handleDrop: (event: React.DragEvent<HTMLDivElement>) => void;
-  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  imageUrls: {
-    url: string;
-    fileName: string;
-  }[];
+  // selectedFiles: SelectedFile[];
+  // handleClearImages: () => void;
+  // dragActive: boolean;
+  // handleDragOver: (event: React.DragEvent<HTMLDivElement>) => void;
+  // handleDragLeave: () => void;
+  // handleDrop: (event: React.DragEvent<HTMLDivElement>) => void;
+  // handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  // imageUrls: {
+  //   url: string;
+  //   fileName: string;
+  // }[];
   handleCancel: () => void;
 }
 
@@ -36,14 +36,14 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
   initialData,
   vehicleModelsEssentials,
   onSubmit,
-  selectedFiles,
-  handleClearImages,
-  dragActive,
-  handleDragOver,
-  handleDragLeave,
-  handleDrop,
-  handleFileChange,
-  imageUrls,
+  // selectedFiles,
+  // handleClearImages,
+  // dragActive,
+  // handleDragOver,
+  // handleDragLeave,
+  // handleDrop,
+  // handleFileChange,
+  // imageUrls,
   handleCancel,
 }) => {
   const {
@@ -76,15 +76,15 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
     if (initialData) {
       payload = {
         ...data,
-        images: [
-          ...(initialData.images ?? []),
-          ...imageUrls.map((img) => img.url),
-        ],
+        // images: [
+        //   ...(initialData.images ?? []),
+        //   ...imageUrls.map((img) => img.url),
+        // ],
       };
     } else {
       payload = {
         ...data,
-        images: imageUrls.map((img) => img.url),
+        // images: imageUrls.map((img) => img.url),
       };
     }
     if (initialData?.id) {
@@ -107,7 +107,7 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
       <div className="fixed inset-0 bg-black opacity-50 z-40"></div>
       <div className="fixed inset-0 flex items-center justify-center z-40 p-4">
         <div
-          className="w-[850px] h-[630px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
+          className="w-[850px] h-[430px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="px-10 py-8">
@@ -171,7 +171,7 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
                   />
                 )}
               />
-              <div>
+              {/* <div>
                 <label className="text-sm font-semibold">Description</label>
                 <Controller
                   name="description"
@@ -196,7 +196,7 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
                 handleDrop={handleDrop}
                 handleFileChange={handleFileChange}
                 handleClearImages={handleClearImages}
-              />
+              /> */}
 
               <div className="w-full flex items-center justify-end gap-8 mt-8">
                 <Button

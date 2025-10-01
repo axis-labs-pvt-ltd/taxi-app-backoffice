@@ -64,6 +64,7 @@ const imageReducer = (
     case RESET_STORED_IMAGE:
       return {
         ...state,
+        uploading: false,
         imageUrl: null,
       };
 

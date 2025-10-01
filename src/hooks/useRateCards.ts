@@ -35,6 +35,7 @@ const useRateCards = () => {
   >(undefined);
   const [isDeleteRateCardOpen, setIsDeleteRateCardOpen] =
     useState<boolean>(false);
+  const [isWeddingRateCard, setIsWeddingRateCard] = useState<boolean>(false);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -147,6 +148,8 @@ const useRateCards = () => {
     setIsDeleteRateCardOpen,
     handleDeleteRateCard,
     deleteRateCardSuccess,
+    isWeddingRateCard,
+    setIsWeddingRateCard,
   };
 };
 

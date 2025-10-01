@@ -12,6 +12,9 @@ import {
   FETCH_RATE_CARDS_PAGINATED_SUCCESS,
   FETCH_RATE_CARDS_REQUEST,
   FETCH_RATE_CARDS_SUCCESS,
+  FETCH_WEDDING_RATE_CARDS_FAILURE,
+  FETCH_WEDDING_RATE_CARDS_REQUEST,
+  FETCH_WEDDING_RATE_CARDS_SUCCESS,
   RateCardsActionTypes,
   RESET_ADD_RATE_CARD_SUCCESS,
   RESET_DELETE_RATE_CARD_SUCCESS,
@@ -191,3 +194,34 @@ export const deleteRateCard =
 export const ResetDeleteRateCardSuccess = (): RateCardsActionTypes => ({
   type: RESET_DELETE_RATE_CARD_SUCCESS,
 });
+
+export const fetchWeddingRateCards = () => {
+  return async (dispatch: Dispatch<RateCardsActionTypes>) => {
+    dispatch({ type: FETCH_WEDDING_RATE_CARDS_REQUEST });
+    const token = Cookies.get("access_token");
+    if (!token) {
+      dispatch({
+        type: FETCH_WEDDING_RATE_CARDS_FAILURE,
+        payload: "Access token not found",
+      });
+      return;
+    }
+    try {
+      const url = `${API_BASE_URLS.backendAPI}${apiRoutes.weddingRateCards}`;
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch({
+        type: FETCH_WEDDING_RATE_CARDS_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: FETCH_WEDDING_RATE_CARDS_FAILURE,
+        payload: error.message,
+      });
+    }
+  };
+};

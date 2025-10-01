@@ -5,6 +5,7 @@ export interface RateCardsType {
   includedKmPerDay: number;
   extraKmRate: number;
   currency: string;
+  isWeddingRateCard: boolean;
 }
 
 export interface RateCardPaginatedType {

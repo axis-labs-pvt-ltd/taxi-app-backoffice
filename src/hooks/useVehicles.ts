@@ -21,8 +21,8 @@ import {
 } from "../redux/Vehicles/VehiclesAction";
 import { Slide, toast } from "react-toastify";
 import { fetchVehicleModels } from "../redux/VehicleModels/VehicleModelsAction";
-import useFileUpload from "./useFileUpload";
-import { ResetStoredImage } from "../redux/Images/ImageAction";
+// import useFileUpload from "./useFileUpload";
+// import { ResetStoredImage } from "../redux/Images/ImageAction";
 import { ImageActionTypes } from "../redux/Images/ImageReducer";
 
 type AppDispatch = ThunkDispatch<
@@ -56,18 +56,18 @@ const useVehicles = () => {
   const [isDeleteVehicleOpen, setIsDeleteVehicleOpen] =
     useState<boolean>(false);
 
-  const {
-    selectedFiles,
-    handleClearImages,
-    dragActive,
-    handleDragOver,
-    handleDragLeave,
-    handleDrop,
-    handleFileChange,
-    imageUrls,
-    setImageUrls,
-    setSelectedFiles,
-  } = useFileUpload();
+  // const {
+  //   selectedFiles,
+  //   handleClearImages,
+  //   dragActive,
+  //   handleDragOver,
+  //   handleDragLeave,
+  //   handleDrop,
+  //   handleFileChange,
+  //   imageUrls,
+  //   setImageUrls,
+  //   setSelectedFiles,
+  // } = useFileUpload();
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -190,8 +190,8 @@ const useVehicles = () => {
   const handleCancel = () => {
     setIsAddVehicleOpen(false);
     setEditingVehicle(undefined);
-    setImageUrls([]);
-    dispatch(ResetStoredImage());
+    // setImageUrls([]);
+    // dispatch(ResetStoredImage());
   };
 
   const handleUpdateVehicleStatus = (id: string, newState: boolean) => {
@@ -222,15 +222,15 @@ const useVehicles = () => {
     deleteVehicleSuccess,
     handleDeleteVehicle,
     vehicleModelsEssentials,
-    selectedFiles,
-    handleClearImages,
-    dragActive,
-    handleDragOver,
-    handleDragLeave,
-    handleDrop,
-    handleFileChange,
-    imageUrls,
-    setSelectedFiles,
+    // selectedFiles,
+    // handleClearImages,
+    // dragActive,
+    // handleDragOver,
+    // handleDragLeave,
+    // handleDrop,
+    // handleFileChange,
+    // imageUrls,
+    // setSelectedFiles,
     handleCancel,
     handleUpdateVehicleStatus,
   };

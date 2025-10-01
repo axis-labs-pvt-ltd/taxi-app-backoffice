@@ -18,7 +18,10 @@ export const driverEmergencyContactSchema = z.object({
 export const createDriveSchema = z.object({
   fullName: z.string().min(1, { message: "Full name is required" }),
   type: z.string().min(1, { message: "Driver type is required" }),
-  mobileNo: z.string().min(1, { message: "Mobile number is required" }),
+  mobileNo: z
+    .string()
+    .min(1, { message: "Mobile number is required" })
+    .regex(/^\d{10}$/, { message: "Mobile number must be exactly 10 digits" }),
   drivingLicenseExpireDate: z
     .string()
     .min(1, { message: "License expiration date is required" })

@@ -99,7 +99,7 @@ export interface SelectedFile {
 
 const useFileUpload = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { imageUrl } = useSelector((state: RootState) => state.images);
+  const { imageUrl, uploading } = useSelector((state: RootState) => state.images);
 
   const [dragActive, setDragActive] = useState<boolean>(false);
   const [selectedFiles, setSelectedFiles] = useState<SelectedFile[]>([]);
@@ -107,6 +107,7 @@ const useFileUpload = () => {
     { url: string; fileName: string }[]
   >([]);
   const previousImageUrlRef = useRef<ImageUrlType | null>(null);
+  const [currentImages, setCurrentImages] = useState<string[]>([]);
 
   useEffect(() => {
     if (imageUrl?.files?.length) {
@@ -136,7 +137,7 @@ const useFileUpload = () => {
     }
   }, [imageUrl]);
 
-  console.log(imageUrls);
+  console.log("imageUrls", imageUrls);
 
   const handleUpload = (files: FileList) => {
     if (!files || files.length === 0) return;
@@ -180,6 +181,8 @@ const useFileUpload = () => {
   const handleClearImages = () => {
     selectedFiles.forEach((file) => URL.revokeObjectURL(file.previewUrl)); // clean up
     setSelectedFiles([]);
+    setImageUrls([]);
+    setCurrentImages([]);
     dispatch(ResetStoredImage());
   };
 
@@ -194,6 +197,9 @@ const useFileUpload = () => {
     imageUrls,
     setImageUrls,
     setSelectedFiles,
+    currentImages,
+    setCurrentImages,
+    uploading,
   };
 };
 

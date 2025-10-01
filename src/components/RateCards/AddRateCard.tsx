@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Input } from "../Reusable/Input";
 import { Button } from "../Reusable/Button";
@@ -6,17 +6,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RateCardsType } from "../../types/RateCards.types";
 import { rateCardSchema } from "../../schemas/RateCards.schema";
 import Select from "react-select";
+import { ToggleButton } from "../Reusable/ToggleButton";
 
 const currencies = ["LKR"];
 
 interface AddRateCardProps {
   setIsAddRateCardOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isWeddingRateCard: boolean;
+  setIsWeddingRateCard: React.Dispatch<React.SetStateAction<boolean>>;
   initialData: RateCardsType | undefined;
   onSubmit: (data: RateCardsType, id?: string) => void;
 }
 
 const AddRateCard: React.FC<AddRateCardProps> = ({
   setIsAddRateCardOpen,
+  isWeddingRateCard,
+  setIsWeddingRateCard,
   initialData,
   onSubmit,
 }) => {
@@ -28,17 +33,31 @@ const AddRateCard: React.FC<AddRateCardProps> = ({
     getValues,
   } = useForm<RateCardsType>({
     resolver: zodResolver(rateCardSchema),
-    defaultValues: initialData,
+    defaultValues: initialData
+      ? {
+          ...initialData,
+          isWeddingRateCard: initialData.isWeddingRateCard,
+        }
+      : {
+          isWeddingRateCard: false,
+        },
   });
+
+  useEffect(() => {
+    if (initialData) {
+      setIsWeddingRateCard(initialData?.isWeddingRateCard);
+    }
+  }, []);
 
   const handleFormSubmit = (data: RateCardsType) => {
     const payload = {
       ...data,
+      isWeddingRateCard: isWeddingRateCard,
     };
     if (initialData?.id) {
       onSubmit(payload, initialData.id); // Pass ID for update
     } else {
-      onSubmit(data);
+      onSubmit(payload);
     }
     setIsAddRateCardOpen(false);
     reset();
@@ -236,12 +255,25 @@ const AddRateCard: React.FC<AddRateCardProps> = ({
                 )}
               />
 
+              <div className="flex flex-col gap-4 mt-[-90px]">
+                <label className="text-sm font-semibold">
+                  Wedding Rate Card
+                </label>
+                <ToggleButton
+                  isButtonActive={isWeddingRateCard}
+                  onToggle={setIsWeddingRateCard}
+                />
+              </div>
+
               <div className="w-full flex items-center justify-end gap-8 mt-8">
                 <Button
                   children="Cancel"
                   variant="secondary"
                   size="small"
-                  onClick={() => setIsAddRateCardOpen(false)}
+                  onClick={() => {
+                    setIsWeddingRateCard(false);
+                    setIsAddRateCardOpen(false);
+                  }}
                 />
                 <Button
                   children={initialData ? "Update Rate Card" : "Add Rate Card"}

@@ -88,6 +88,10 @@ const VehicleModels = () => {
     imageUrls,
     setSelectedFiles,
     handleCancel,
+    weddingRateCards,
+    currentImages,
+    setCurrentImages,
+    uploading,
   } = useVehicleModels();
 
   useEffect(() => {
@@ -161,6 +165,10 @@ const VehicleModels = () => {
           handleFileChange={handleFileChange}
           imageUrls={imageUrls}
           handleCancel={handleCancel}
+          weddingRateCards={weddingRateCards}
+          currentImages={currentImages}
+          setCurrentImages={setCurrentImages}
+          uploading={uploading}
         />
       )}
 
