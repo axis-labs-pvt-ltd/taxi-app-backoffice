@@ -54,6 +54,7 @@ export interface InquiryPaginatedDataType {
   endMeter: number;
   status: string;
   dropPoints: DropPointsType[];
+  isReturnTour: boolean;
   extraServices: ExtraServicesType[];
 }
 

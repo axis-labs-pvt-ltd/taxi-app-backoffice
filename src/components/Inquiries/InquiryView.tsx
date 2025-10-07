@@ -94,6 +94,21 @@ const InquiryView: React.FC<InquiryViewProps> = ({
                   {selectedInquiry?.drop?.name}
                 </p>
                 <p>
+                  <span className="font-medium text-gray-600">
+                    Tour method:
+                  </span>{" "}
+                  {/* {selectedInquiry?.isReturnTour ? "Return" : "One-way"} */}
+                  <span
+                    className={`ml-2 px-2 py-0.5 rounded-full text-xs font-semibold capitalize ${
+                      selectedInquiry?.isReturnTour
+                        ? "bg-green-100 text-green-700"
+                        : "bg-yellow-100 text-yellow-700"
+                    }`}
+                  >
+                    {selectedInquiry?.isReturnTour ? "Return" : "One-way"}
+                  </span>
+                </p>
+                <p>
                   <span className="font-medium text-gray-600">Distance:</span>{" "}
                   {selectedInquiry?.totalDistance?.toFixed(1)} km (Actual:{" "}
                   {selectedInquiry?.actualTotalDistance} km)
