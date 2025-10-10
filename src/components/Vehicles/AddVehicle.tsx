@@ -14,6 +14,8 @@ import { VehicleModelsEssentialType } from "../../types/VehicleModels.types";
 // import ImageUpload from "../Reusable/ImageUpload";
 // import { SelectedFile } from "../../hooks/useFileUpload";
 
+const ownership = ["Own", "Third-Party"];
+
 interface AddVehicleProps {
   initialData: VehiclePaginatedDataType | undefined;
   vehicleModelsEssentials: ReduxState<VehicleModelsEssentialType[] | null>;
@@ -51,6 +53,7 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm<CreateVehicleType>({
     resolver: zodResolver(vehicleSchema),
     defaultValues: initialData
@@ -67,9 +70,12 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
       : {
           modelId: "",
           plateNumber: "",
+          ownership: "Own",
           status: "available",
         },
   });
+
+  const ownershipType = watch("ownership");
 
   const handleFormSubmit = (data: CreateVehicleType) => {
     let payload;
@@ -102,12 +108,18 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
       label: type.modelName,
     })) as { value: string; label: string }[];
 
+  const ownershipOptions: { value: string; label: string }[] | undefined =
+    ownership?.map((type) => ({
+      value: type,
+      label: type,
+    })) as { value: string; label: string }[];
+
   return (
     <>
       <div className="fixed inset-0 bg-black opacity-50 z-40"></div>
       <div className="fixed inset-0 flex items-center justify-center z-40 p-4">
         <div
-          className="w-[850px] h-[430px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
+          className="w-[850px] h-[630px] bg-white shadow-lg overflow-y-auto rounded-md p-4"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="px-10 py-8">
@@ -171,6 +183,106 @@ const AddVehicle: React.FC<AddVehicleProps> = ({
                   />
                 )}
               />
+              <Controller
+                name="year"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    label="Vehicle year"
+                    mandotary
+                    placeholder="Vehicle year"
+                    error={errors["year"]?.message}
+                    width="w-full"
+                  />
+                )}
+              />
+              <div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold">
+                    Vehicle Ownership
+                    <span className="text-sm text-[#F34747]">*</span>
+                  </label>
+                  <Controller
+                    name="ownership"
+                    control={control}
+                    render={({ field, fieldState }) => (
+                      <div>
+                        <Select
+                          options={ownershipOptions}
+                          placeholder="Select vehicle ownership"
+                          value={
+                            ownershipOptions.find(
+                              (option) => option.value === field.value
+                            ) || null
+                          }
+                          onChange={(selectedOption) =>
+                            field.onChange(selectedOption?.value)
+                          }
+                          isClearable
+                          className="capitalize"
+                        />
+                        {fieldState.error && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {fieldState.error.message}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  />
+                </div>
+              </div>
+              {ownershipType === "Third-Party" && (
+                <>
+                  <Controller
+                    name="ownerName"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        label="Owner name"
+                        mandotary
+                        placeholder="Owner name"
+                        error={errors["ownerName"]?.message}
+                        width="w-full"
+                      />
+                    )}
+                  />
+                  <Controller
+                    name="ownerPhone"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        label="Owner phone"
+                        mandotary
+                        placeholder="Owner phone"
+                        error={errors["ownerPhone"]?.message}
+                        width="w-full"
+                      />
+                    )}
+                  />
+                  <Controller
+                    name="ownerAddress"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        label="Owner address"
+                        mandotary
+                        placeholder="Owner address"
+                        error={errors["ownerAddress"]?.message}
+                        width="w-full"
+                      />
+                    )}
+                  />
+                </>
+              )}
+
               {/* <div>
                 <label className="text-sm font-semibold">Description</label>
                 <Controller
