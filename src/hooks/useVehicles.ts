@@ -55,6 +55,7 @@ const useVehicles = () => {
   >(undefined);
   const [isDeleteVehicleOpen, setIsDeleteVehicleOpen] =
     useState<boolean>(false);
+  const [isVehicleViewOpen, setIsVehicleViewOpen] = useState<boolean>(false);
 
   // const {
   //   selectedFiles,
@@ -233,6 +234,8 @@ const useVehicles = () => {
     // setSelectedFiles,
     handleCancel,
     handleUpdateVehicleStatus,
+    isVehicleViewOpen,
+    setIsVehicleViewOpen,
   };
 };
 

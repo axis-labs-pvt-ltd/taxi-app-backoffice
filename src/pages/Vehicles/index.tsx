@@ -1,14 +1,21 @@
-import { FaRegEdit } from "react-icons/fa";
 import { TableHeaderType, TableNew } from "../../components/Reusable/TableNew";
-import { RiDeleteBinLine } from "react-icons/ri";
 import SubHeader from "../../components/SubHeader";
 import { Button } from "../../components/Reusable/Button";
 import useVehicles from "../../hooks/useVehicles";
 import { VehiclePaginatedDataType } from "../../types/Vehicle.types";
 import AddVehicle from "../../components/Vehicles/AddVehicle";
 import DeleteDialog from "../../components/Reusable/DeleteDialog";
-import { useEffect } from "react";
 import { ToggleButton } from "../../components/Reusable/ToggleButton";
+import VehicleView from "../../components/Vehicles/VehicleView";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../../components/ui/dropdown-menu";
+import { CiMenuKebab } from "react-icons/ci";
 
 const Vehicles = () => {
   const handleToggle = (id: string, newState: boolean) => {
@@ -32,6 +39,14 @@ const Vehicles = () => {
       render: (row) => <p>{row.model?.modelName}</p>,
     },
     {
+      key: "year",
+      label: "Year",
+    },
+    {
+      key: "ownership",
+      label: "Ownership",
+    },
+    {
       key: "model",
       label: "Rate Card",
       render: (row) => <p>{row.model?.rateCard}</p>,
@@ -50,24 +65,62 @@ const Vehicles = () => {
       key: null,
       label: "Actions",
       render: (row) => (
-        <div className="flex items-center gap-5">
-          <FaRegEdit
-            className="cursor-pointer"
-            size={16}
-            onClick={() => {
-              setEditingVehicle(row); // Set selected brand for editing
-              setIsAddVehicleOpen(true); // Open modal
-            }}
-          />
-          <RiDeleteBinLine
-            className="cursor-pointer"
-            size={16}
-            onClick={() => {
-              setEditingVehicle(row);
-              setIsDeleteVehicleOpen(true);
-            }}
-          />
-        </div>
+        // <div className="flex items-center gap-5">
+        //   <FaRegEdit
+        //     className="cursor-pointer"
+        //     size={16}
+        //     onClick={() => {
+        //       setEditingVehicle(row); // Set selected brand for editing
+        //       setIsAddVehicleOpen(true); // Open modal
+        //     }}
+        //   />
+        //   <RiDeleteBinLine
+        //     className="cursor-pointer"
+        //     size={16}
+        //     onClick={() => {
+        //       setEditingVehicle(row);
+        //       setIsDeleteVehicleOpen(true);
+        //     }}
+        //   />
+        // </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="p-1">
+              <CiMenuKebab className="w-5 h-5" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem
+              onSelect={() => {
+                setEditingVehicle(row);
+                setIsVehicleViewOpen(true);
+              }}
+            >
+              View
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              onSelect={() => {
+                setEditingVehicle(row); // Set selected brand for editing
+                setIsAddVehicleOpen(true); // Open modal
+              }}
+            >
+              Edit
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              onSelect={() => {
+                setEditingVehicle(row);
+                setIsDeleteVehicleOpen(true);
+              }}
+            >
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ),
     },
   ];
@@ -97,6 +150,8 @@ const Vehicles = () => {
     // setSelectedFiles,
     handleCancel,
     handleUpdateVehicleStatus,
+    isVehicleViewOpen,
+    setIsVehicleViewOpen,
   } = useVehicles();
 
   // useEffect(() => {
@@ -165,6 +220,13 @@ const Vehicles = () => {
           // handleDrop={handleDrop}
           // handleFileChange={handleFileChange}
           // imageUrls={imageUrls}
+        />
+      )}
+
+      {isVehicleViewOpen && (
+        <VehicleView
+          setIsVehicleViewOpen={setIsVehicleViewOpen}
+          editingVehicle={editingVehicle}
         />
       )}
 
