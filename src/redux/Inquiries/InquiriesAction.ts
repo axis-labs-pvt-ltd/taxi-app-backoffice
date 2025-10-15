@@ -12,12 +12,16 @@ import {
   FETCH_RECENT_INQUIRES_SUCCESS,
   InquiriesActionTypes,
   RESET_UPDATE_ACTUAL_TOTAL_DISTANCE_SUCCESS,
+  RESET_UPDATE_DISCOUNT_SUCCESS,
   RESET_UPDATE_INQUIRY_STATUS_SUCCESS,
   RESET_UPDATE_INQUIRY_SUCCESS,
   RESET_UPDATE_METER_VALUES_SUCCESS,
   UPDATE_ACTUAL_TOTAL_DISTANCE_FAILURE,
   UPDATE_ACTUAL_TOTAL_DISTANCE_REQUEST,
   UPDATE_ACTUAL_TOTAL_DISTANCE_SUCCESS,
+  UPDATE_DISCOUNT_FAILURE,
+  UPDATE_DISCOUNT_REQUEST,
+  UPDATE_DISCOUNT_SUCCESS,
   UPDATE_INQUIRY_FAILURE,
   UPDATE_INQUIRY_REQUEST,
   UPDATE_INQUIRY_STATUS_FAILURE,
@@ -38,6 +42,7 @@ import {
   UpdateInquiryStatusType,
   UpdateMeterValuesType,
 } from "../../types/Vehicle.types";
+import { UpdateDiscountType } from "../../types/Inquiries.types";
 
 export const fetchInquiriesPaginated = ({
   pageNumber,
@@ -345,3 +350,52 @@ export const fetchMetersByInquiry = (inquiryId: string) => {
     }
   };
 };
+
+export const updateDiscount =
+  (data: UpdateDiscountType, inquiryId: string) =>
+  async (dispatch: Dispatch<InquiriesActionTypes>) => {
+    dispatch({ type: UPDATE_DISCOUNT_REQUEST });
+    const token = Cookies.get("access_token");
+
+    try {
+      const url = `${API_BASE_URLS.backendAPI}${generateRoute(
+        apiRoutes.updateDiscount,
+        {
+          inquiryId,
+        }
+      )}`;
+      const response = await axios.patch(url, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status !== 200 && response.status !== 201) {
+        throw new Error("Failed to update discount");
+      }
+
+      dispatch({ type: UPDATE_DISCOUNT_SUCCESS });
+    } catch (error) {
+      // Check if it's an AxiosError
+      if (axios.isAxiosError(error)) {
+        dispatch({
+          type: UPDATE_DISCOUNT_FAILURE,
+          payload: error.response?.data?.message || error.message,
+        });
+      } else if (error instanceof Error) {
+        dispatch({
+          type: UPDATE_DISCOUNT_FAILURE,
+          payload: error.message,
+        });
+      } else {
+        dispatch({
+          type: UPDATE_DISCOUNT_FAILURE,
+          payload: "An unknown error occurred",
+        });
+      }
+    }
+  };
+
+export const ResetUpdateDiscountSuccess = (): InquiriesActionTypes => ({
+  type: RESET_UPDATE_DISCOUNT_SUCCESS,
+});

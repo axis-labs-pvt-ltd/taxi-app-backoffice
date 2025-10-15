@@ -9,10 +9,12 @@ import {
   fetchInquiriesPaginated,
   fetchMetersByInquiry,
   ResetupdateActualTotalDistanceSuccess,
+  ResetUpdateDiscountSuccess,
   ResetupdateInquiryStatusSuccess,
   ResetupdateInquirySuccess,
   ResetupdateMeterValuesSuccess,
   updateActualTotalDistance,
+  updateDiscount,
   updateInquiry,
   updateInquiryStatus,
   updateMeterValues,
@@ -25,8 +27,16 @@ import {
 } from "../types/Vehicle.types";
 import { Slide, toast } from "react-toastify";
 import { InquiryPaginatedDataType } from "../types/Inquiries.types";
+import { fetchCostCategories } from "../redux/CostCategories/CostCategoriesAction";
+import { addCosts, ResetAddCostsSuccess } from "../redux/Costs/CostsAction";
+import { AddCostsType } from "../types/CostCategory.types";
+import { CostsActionTypes } from "../redux/Costs/CostsReducer";
 
-type AppDispatch = ThunkDispatch<RootState, unknown, InquiriesActionTypes>;
+type AppDispatch = ThunkDispatch<
+  RootState,
+  unknown,
+  InquiriesActionTypes | CostsActionTypes
+>;
 
 const useInquiries = () => {
   const { pageNumber } = useParams<{ pageNumber: string }>();
@@ -39,10 +49,15 @@ const useInquiries = () => {
     updateInquiryStatusSuccess,
     updateMeterValuesSuccess,
     metersByInquiry,
+    updateDiscountSuccess,
   } = useSelector((state: RootState) => state.inquiries);
   const { vehiclesByModelAndDate } = useSelector(
     (state: RootState) => state.vehicles
   );
+  const { costCategories } = useSelector(
+    (state: RootState) => state.costCategories
+  );
+  const { addCostsSuccess } = useSelector((state: RootState) => state.costs);
 
   const { SearchInput, searchKey } = useSearch({
     text: "Search for inquiry",
@@ -61,6 +76,8 @@ const useInquiries = () => {
   >(undefined);
   //   const [isDeleteServiceOpen, setIsDeleteServiceOpen] =
   //     useState<boolean>(false);
+  const [isAddCostsOpen, setIsAddCostsOpen] = useState<boolean>(false);
+  const [isAddDiscountOpen, setIsAddDiscountOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -97,6 +114,7 @@ const useInquiries = () => {
     updateInquiryStatusSuccess.status,
     updateMeterValuesSuccess.status,
     searchKey,
+    addCostsSuccess.status,
   ]);
 
   useEffect(() => {
@@ -179,6 +197,38 @@ const useInquiries = () => {
     }
   }, [updateMeterValuesSuccess.status, dispatch]);
 
+  useEffect(() => {
+    if (addCostsSuccess.status) {
+      toast.success("Costs Added Successfully!", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetAddCostsSuccess());
+    }
+  }, [addCostsSuccess.status, dispatch]);
+
+  useEffect(() => {
+    if (updateDiscountSuccess.status) {
+      toast.success("Discount Added Successfully!", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetUpdateDiscountSuccess());
+    }
+  }, [updateDiscountSuccess.status, dispatch]);
+
   const handleFetchVehiclesByModelAndDate = async (
     modelId: string,
     date: string
@@ -221,6 +271,29 @@ const useInquiries = () => {
     setInquiryId(null);
   };
 
+  const handleFetchCostCategories = async () => {
+    await dispatch(fetchCostCategories());
+  };
+
+  const handleAddCosts = async (data: AddCostsType) => {
+    const payload = {
+      ...data,
+      inquiryId: inquiryId,
+    };
+    await dispatch(addCosts(payload));
+  };
+
+  const handleUpdateDiscount = (discount: number) => {
+    const payload = {
+      discount: discount,
+    };
+    if (inquiryId) {
+      dispatch(updateDiscount(payload, inquiryId));
+    }
+    setInquiryId(null);
+    setIsAddDiscountOpen(false);
+  };
+
   return {
     currentPage,
     inquiriesPaginated,
@@ -244,6 +317,14 @@ const useInquiries = () => {
     setIsInquiryViewOpen,
     selectedInquiry,
     setselectedInquiry,
+    costCategories,
+    handleFetchCostCategories,
+    isAddCostsOpen,
+    setIsAddCostsOpen,
+    handleAddCosts,
+    isAddDiscountOpen,
+    setIsAddDiscountOpen,
+    handleUpdateDiscount,
   };
 };
 
