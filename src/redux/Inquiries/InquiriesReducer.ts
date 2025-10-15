@@ -48,6 +48,10 @@ export const FETCH_METERS_BY_INQUIRY_SUCCESS =
   "FETCH_METERS_BY_INQUIRY_SUCCESS";
 export const FETCH_METERS_BY_INQUIRY_FAILURE =
   "FETCH_METERS_BY_INQUIRY_FAILURE";
+export const UPDATE_DISCOUNT_REQUEST = "UPDATE_DISCOUNT_REQUEST";
+export const UPDATE_DISCOUNT_SUCCESS = "UPDATE_DISCOUNT_SUCCESS";
+export const UPDATE_DISCOUNT_FAILURE = "UPDATE_DISCOUNT_FAILURE";
+export const RESET_UPDATE_DISCOUNT_SUCCESS = "RESET_UPDATE_DISCOUNT_SUCCESS";
 
 interface InquiryState {
   loading: boolean;
@@ -58,6 +62,7 @@ interface InquiryState {
   recentInquiries: ReduxState<RecentInquiriesType[] | null>;
   updateMeterValuesSuccess: ReduxStatus;
   metersByInquiry: ReduxState<MeterValuesType | null>;
+  updateDiscountSuccess: ReduxStatus;
 }
 
 const initialState: InquiryState = {
@@ -77,6 +82,7 @@ const initialState: InquiryState = {
   recentInquiries: { data: null, loading: false, error: null },
   updateMeterValuesSuccess: { status: false, loading: false, error: null },
   metersByInquiry: { data: null, loading: false, error: null },
+  updateDiscountSuccess: { status: false, loading: false, error: null },
 };
 
 interface FetchInquiriesPaginatedRequestAction {
@@ -189,6 +195,23 @@ interface FetchMetersByInquiryFailureAction {
   payload: string;
 }
 
+interface UpdateDiscountRequestAction {
+  type: typeof UPDATE_DISCOUNT_REQUEST;
+}
+
+interface UpdateDiscountSuccessAction {
+  type: typeof UPDATE_DISCOUNT_SUCCESS;
+}
+
+interface UpdateDiscountFailureAction {
+  type: typeof UPDATE_DISCOUNT_FAILURE;
+  payload: string;
+}
+
+interface ResetUpdateDiscountSuccessAction {
+  type: typeof RESET_UPDATE_DISCOUNT_SUCCESS;
+}
+
 export type InquiriesActionTypes =
   | FetchInquiriesPaginatedRequestAction
   | FetchInquiriesPaginatedSuccessAction
@@ -214,7 +237,11 @@ export type InquiriesActionTypes =
   | ResetUpdateMeterValuesSuccessAction
   | FetchMetersByInquiryRequestAction
   | FetchMetersByInquirySuccessAction
-  | FetchMetersByInquiryFailureAction;
+  | FetchMetersByInquiryFailureAction
+  | UpdateDiscountRequestAction
+  | UpdateDiscountSuccessAction
+  | UpdateDiscountFailureAction
+  | ResetUpdateDiscountSuccessAction;
 
 const inquiriesReducer = (
   state = initialState,
@@ -450,6 +477,40 @@ const inquiriesReducer = (
         metersByInquiry: {
           data: null,
           error: action.payload,
+          loading: false,
+        },
+      };
+
+    case UPDATE_DISCOUNT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        updateDiscountSuccess: { status: false, error: null, loading: true },
+      };
+    case UPDATE_DISCOUNT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        updateDiscountSuccess: { status: true, error: null, loading: false },
+      };
+    case UPDATE_DISCOUNT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        updateDiscountSuccess: {
+          status: false,
+          error: action.payload,
+          loading: false,
+        },
+      };
+
+    case RESET_UPDATE_DISCOUNT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        updateDiscountSuccess: {
+          status: false,
+          error: null,
           loading: false,
         },
       };

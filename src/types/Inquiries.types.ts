@@ -1,3 +1,18 @@
+export interface InquiryCostType {
+  id: string;
+  inquiryId: string;
+  costs: [
+    {
+      id: string;
+      costCategoryId: {
+        name: string;
+        id: string;
+      };
+      amount: number;
+    }
+  ];
+}
+
 export interface ExtraServicesType {
   id: string;
   name: string;
@@ -56,6 +71,8 @@ export interface InquiryPaginatedDataType {
   dropPoints: DropPointsType[];
   isReturnTour: boolean;
   extraServices: ExtraServicesType[];
+  costId: InquiryCostType;
+  discount?: number;
 }
 
 export interface InquiryPaginatedType {
@@ -76,4 +93,8 @@ export interface RecentInquiriesType {
 export interface MeterValuesType {
   startMeter: number;
   endMeter: number;
+}
+
+export interface UpdateDiscountType {
+  discount: number;
 }

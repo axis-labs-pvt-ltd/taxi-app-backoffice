@@ -17,6 +17,8 @@ import UpdateMeterValues from "../../components/Inquiries/UpdateMeterValues";
 import InquiryView from "../../components/Inquiries/InquiryView";
 import { pdf } from "@react-pdf/renderer";
 import InquiryInvoice from "../../components/PDFs/InquiryInvoice";
+import AddCosts from "../../components/Inquiries/AddCost";
+import AddDiscount from "../../components/Inquiries/AddDiscount";
 
 const Inquiries = () => {
   const headers: TableHeaderType<InquiryPaginatedDataType>[] = [
@@ -136,6 +138,30 @@ const Inquiries = () => {
               </DropdownMenuItem>
             )}
 
+            {row.status === "completed" && !row.discount && (
+              <DropdownMenuItem
+                onSelect={() => {
+                  setselectedInquiry(row);
+                  setIsAddDiscountOpen(true);
+                  setInquiryId(row.id ?? null);
+                }}
+              >
+                Add Discount
+              </DropdownMenuItem>
+            )}
+
+            {row.status === "completed" && !row.costId && (
+              <DropdownMenuItem
+                onSelect={() => {
+                  setIsAddCostsOpen(true);
+                  setInquiryId(row.id ?? null);
+                  handleFetchCostCategories();
+                }}
+              >
+                Add Costs
+              </DropdownMenuItem>
+            )}
+
             {/* <DropdownMenuItem
               onSelect={() => {
                 handleUpdateInquiryStatus("confirmed", row.id ?? "");
@@ -203,6 +229,14 @@ const Inquiries = () => {
     setIsInquiryViewOpen,
     selectedInquiry,
     setselectedInquiry,
+    costCategories,
+    handleFetchCostCategories,
+    isAddCostsOpen,
+    setIsAddCostsOpen,
+    handleAddCosts,
+    isAddDiscountOpen,
+    setIsAddDiscountOpen,
+    handleUpdateDiscount,
   } = useInquiries();
 
   return (
@@ -256,6 +290,24 @@ const Inquiries = () => {
         <InquiryView
           setIsInquiryViewOpen={setIsInquiryViewOpen}
           selectedInquiry={selectedInquiry}
+        />
+      )}
+
+      {isAddCostsOpen && (
+        <AddCosts
+          setIsAddCostsOpen={setIsAddCostsOpen}
+          costCategories={costCategories}
+          handleAddCosts={handleAddCosts}
+        />
+      )}
+
+      {isAddDiscountOpen && (
+        <AddDiscount
+          setIsAddDiscountOpen={setIsAddDiscountOpen}
+          isReturnTour={selectedInquiry?.isReturnTour}
+          estimatedPrice={selectedInquiry?.estimatedPrice}
+          finalPrice={selectedInquiry?.finalPrice}
+          handleUpdateDiscount={handleUpdateDiscount}
         />
       )}
 

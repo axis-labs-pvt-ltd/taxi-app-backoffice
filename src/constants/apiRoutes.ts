@@ -34,6 +34,7 @@ export enum apiRoutes {
   assignVehicleToInquiry = "/inquiries/:inquiryId",
   updateActualDiatnace = "/inquiries/:inquiryId/actualTotalDistance",
   updateMeterValues = "/inquiries/:inquiryId/meterValues",
+  updateDiscount = "/inquiries/:inquiryId/discounts",
   updateInquiryStatus = "/inquiries/:inquiryId/status",
   recentInquiries = "/inquiries/recents",
   metersByInquiry = "/inquiries/:inquiryId/meters",
@@ -62,6 +63,11 @@ export enum apiRoutes {
   editAndDeleteTour = "/tours/:id",
 
   files = "/files",
+
+  costCategories = "/costCategories",
+
+  costs = "/costs",
+  costsByInquiryId = "/costs/:inquiryId",
 }
 
 export const generateRoute = (

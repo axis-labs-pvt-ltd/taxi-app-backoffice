@@ -12,6 +12,8 @@ import dashboardReducer from "./Dashboard/DashboardReducer";
 import toursReducer from "./Tours/ToursReducer";
 import imageReducer from "./Images/ImageReducer";
 import weddingInquiriesReducer from "./WeddingInquiries/WeddingInquiriesReducer";
+import costCategoriesReducer from "./CostCategories/CostCategoriesReducer";
+import costsReducer from "./Costs/CostsReducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -26,6 +28,8 @@ const rootReducer = combineReducers({
   tours: toursReducer,
   images: imageReducer,
   weddingInquiries: weddingInquiriesReducer,
+  costCategories: costCategoriesReducer,
+  costs: costsReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
