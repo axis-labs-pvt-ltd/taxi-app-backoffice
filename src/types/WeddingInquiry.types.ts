@@ -1,4 +1,4 @@
-import { ExtraServicesType } from "./Inquiries.types";
+import { ExtraServicesType, InquiryCostType } from "./Inquiries.types";
 
 export interface VehicleModelIdType {
   id: string;
@@ -25,6 +25,8 @@ export interface WeddingInquiryPaginatedDataType {
   endMeter: number;
   status: string;
   extraServices: ExtraServicesType[];
+  costId?: InquiryCostType;
+  discount?: number;
 }
 
 export interface WeddingInquiryPaginatedType {

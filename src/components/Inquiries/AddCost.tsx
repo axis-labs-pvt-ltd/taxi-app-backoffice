@@ -47,7 +47,7 @@ const AddCosts: React.FC<AddCostsProps> = ({
         >
           <div className="px-10 py-8">
             <div>
-              <p className="text-2xl font-bold tracking-wider">Update Meter</p>
+              <p className="text-2xl font-bold tracking-wider">Add Costs</p>
             </div>
             <div className="border-b border-[#EBEBEB] w-full mt-4"></div>
             <form
@@ -147,7 +147,7 @@ const AddCosts: React.FC<AddCostsProps> = ({
                   onClick={() => setIsAddCostsOpen(false)}
                 />
                 <Button
-                  children="Update Meter"
+                  children="Add Costs"
                   variant="primary"
                   size="small"
                   type="submit"

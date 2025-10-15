@@ -9,3 +9,7 @@ export interface MonthlyIncomeType {
   month: string;
   totalIncome: number;
 }
+
+export interface totalCostType {
+  totalCost: number;
+}

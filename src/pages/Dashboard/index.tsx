@@ -18,6 +18,7 @@ const Dashboard: React.FC = () => {
     endDate,
     setEndDate,
     setSelectedDateRange,
+    totalCost,
   } = useDashboard();
 
   const dashboardMetrics: MetricCardType[] = [
@@ -29,22 +30,37 @@ const Dashboard: React.FC = () => {
       icon: "DollarSign",
     },
     {
-      title: "Completed Inquiries",
-      value: totalIncome.data?.totalCompletedInquiries ?? 0,
+      title: "Total Cost (LKR)",
+      value: totalCost.data?.totalCost ?? 0,
       change: "+8.2%",
       trend: "up",
       icon: "Users",
     },
     {
-      title: "Pending Inquiries",
-      value: totalIncome.data?.totalPendingInquiries ?? 0,
+      title: "Total Profit (LKR)",
+      value:
+        totalIncome?.data?.totalIncome !== undefined &&
+        totalCost?.data?.totalCost !== undefined
+          ? totalIncome.data.totalIncome - totalCost.data.totalCost
+          : 0,
       change: "-0.5%",
       trend: "down",
       icon: "TrendingUp",
     },
     {
-      title: "Cancelled Inquiries",
-      value: totalIncome.data?.totalcancelledInquiries ?? 0,
+      title: "Profit Margin (%)",
+      value:
+        totalIncome?.data?.totalIncome !== undefined &&
+        totalCost?.data?.totalCost !== undefined &&
+        totalIncome.data.totalIncome !== 0
+          ? parseFloat(
+              (
+                ((totalIncome.data.totalIncome - totalCost.data.totalCost) /
+                  totalIncome.data.totalIncome) *
+                100
+              ).toFixed(2)
+            )
+          : 0,
       change: "+4.1%",
       trend: "up",
       icon: "BarChart3",

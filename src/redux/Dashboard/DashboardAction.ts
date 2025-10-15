@@ -4,6 +4,9 @@ import {
   FETCH_MONTHLY_INCOME_FAILURE,
   FETCH_MONTHLY_INCOME_REQUEST,
   FETCH_MONTHLY_INCOME_SUCCESS,
+  FETCH_TOTAL_COST_FAILURE,
+  FETCH_TOTAL_COST_REQUEST,
+  FETCH_TOTAL_COST_SUCCESS,
   FETCH_TOTAL_INCOME_FAILURE,
   FETCH_TOTAL_INCOME_REQUEST,
   FETCH_TOTAL_INCOME_SUCCESS,
@@ -75,6 +78,43 @@ export const fetchMonthlyIncome = () => {
     } catch (error: any) {
       dispatch({
         type: FETCH_MONTHLY_INCOME_FAILURE,
+        payload: error.message,
+      });
+    }
+  };
+};
+
+export const fetchTotalCost = (startDate: string, endDate: string) => {
+  return async (dispatch: Dispatch<DashboardActionTypes>) => {
+    dispatch({ type: FETCH_TOTAL_COST_REQUEST });
+    const token = Cookies.get("access_token");
+    if (!token) {
+      dispatch({
+        type: FETCH_TOTAL_COST_FAILURE,
+        payload: "Access token not found",
+      });
+      return;
+    }
+    try {
+      const url = `${API_BASE_URLS.backendAPI}${generateRoute(
+        apiRoutes.totalCost,
+        {
+          startDate,
+          endDate,
+        }
+      )}`;
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch({
+        type: FETCH_TOTAL_COST_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: FETCH_TOTAL_COST_FAILURE,
         payload: error.message,
       });
     }

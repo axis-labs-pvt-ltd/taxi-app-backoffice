@@ -40,6 +40,8 @@ export enum apiRoutes {
   metersByInquiry = "/inquiries/:inquiryId/meters",
   totalIncome = "/inquiries/total-income",
   monthlyIncome = "/inquiries/monthly-income",
+  
+  totalCost = "/costs/total-cost",
 
   weddingInquiriesPaginated = "/weddingInquiries/paginated",
   assignVehicleToWeddingInquiry = "/weddingInquiries/:inquiryId",
@@ -47,6 +49,7 @@ export enum apiRoutes {
   updateWeddingInquiryMeterValues = "/weddingInquiries/:inquiryId/meterValues",
   metersByWeddingInquiry = "/weddingInquiries/:inquiryId/meters",
   updateWeddingInquiryStatus = "/weddingInquiries/:inquiryId/status",
+  updateWeddingDiscount = "/weddingInquiries/:inquiryId/discounts",
 
   rateCards = "/rateCards",
   rateCardsPaginated = "/rateCards/paginated",

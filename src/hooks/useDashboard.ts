@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { fetchRecentInquiries } from "../redux/Inquiries/InquiriesAction";
 import {
   fetchMonthlyIncome,
+  fetchTotalCost,
   fetchTotalIncome,
 } from "../redux/Dashboard/DashboardAction";
 
@@ -16,7 +17,7 @@ const useDashboard = () => {
   const { recentInquiries } = useSelector(
     (state: RootState) => state.inquiries
   );
-  const { totalIncome, monthlyIncome } = useSelector(
+  const { totalIncome, monthlyIncome, totalCost } = useSelector(
     (state: RootState) => state.dashboard
   );
   const [showPopup, setShowPopup] = useState(false);
@@ -42,6 +43,9 @@ const useDashboard = () => {
     dispatch(
       fetchTotalIncome(selectedDateRange.startDate, selectedDateRange.endDate)
     );
+    dispatch(
+      fetchTotalCost(selectedDateRange.startDate, selectedDateRange.endDate)
+    );
   }, [dispatch, selectedDateRange]);
 
   useEffect(() => {
@@ -59,6 +63,7 @@ const useDashboard = () => {
     endDate,
     setEndDate,
     setSelectedDateRange,
+    totalCost,
   };
 };
 

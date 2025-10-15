@@ -11,9 +11,11 @@ import {
   fetchWeddingInquiriesPaginated,
   ResetAssignVehicleSuccess,
   ResetupdateTotalDistanceSuccess,
+  ResetUpdateWeddingDiscountSuccess,
   ResetupdateWeddingInquiryMeterValuesSuccess,
   ResetupdateWeddingInquiryStatusSuccess,
   updateTotalDistance,
+  updateWeddingDiscount,
   updateWeddingInquiryMeterValues,
   updateWeddingInquiryStatus,
 } from "../redux/WeddingInquiries/WeddingInquiriesAction";
@@ -26,11 +28,15 @@ import {
 import { Slide, toast } from "react-toastify";
 import { InquiriesActionTypes } from "../redux/Inquiries/InquiriesReducer";
 import { WeddingInquiryPaginatedDataType } from "../types/WeddingInquiry.types";
+import { fetchCostCategories } from "../redux/CostCategories/CostCategoriesAction";
+import { AddCostsType } from "../types/CostCategory.types";
+import { addCosts, ResetAddCostsSuccess } from "../redux/Costs/CostsAction";
+import { CostsActionTypes } from "../redux/Costs/CostsReducer";
 
 type AppDispatch = ThunkDispatch<
   RootState,
   unknown,
-  WeddingInquiriesActionTypes | InquiriesActionTypes
+  WeddingInquiriesActionTypes | InquiriesActionTypes | CostsActionTypes
 >;
 
 const useWeddingInquiries = () => {
@@ -46,10 +52,15 @@ const useWeddingInquiries = () => {
     metersByInquiry,
     updateMeterValuesSuccess,
     updateInquiryStatusSuccess,
+    updateDiscountSuccess,
   } = useSelector((state: RootState) => state.inquiries);
   const { vehiclesByModelAndDate } = useSelector(
     (state: RootState) => state.vehicles
   );
+  const { costCategories } = useSelector(
+    (state: RootState) => state.costCategories
+  );
+  const { addCostsSuccess } = useSelector((state: RootState) => state.costs);
 
   const [isAssignVehicleModalOpen, setIsAssignVehicleModalOpen] =
     useState<boolean>(false);
@@ -63,6 +74,8 @@ const useWeddingInquiries = () => {
   const [selectedInquiry, setselectedInquiry] = useState<
     WeddingInquiryPaginatedDataType | undefined
   >(undefined);
+  const [isAddCostsOpen, setIsAddCostsOpen] = useState<boolean>(false);
+  const [isAddDiscountOpen, setIsAddDiscountOpen] = useState<boolean>(false);
 
   const { SearchInput, searchKey } = useSearch({
     text: "Search for inquiry",
@@ -104,6 +117,8 @@ const useWeddingInquiries = () => {
     updateInquiryStatusSuccess.status,
     updateMeterValuesSuccess.status,
     searchKey,
+    addCostsSuccess.status,
+    updateDiscountSuccess.status,
   ]);
 
   useEffect(() => {
@@ -170,6 +185,38 @@ const useWeddingInquiries = () => {
     }
   }, [updateInquiryStatusSuccess.status, dispatch]);
 
+  useEffect(() => {
+    if (addCostsSuccess.status) {
+      toast.success("Costs Added Successfully!", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetAddCostsSuccess());
+    }
+  }, [addCostsSuccess.status, dispatch]);
+
+  useEffect(() => {
+    if (updateDiscountSuccess.status) {
+      toast.success("Discount Added Successfully!", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Slide,
+      });
+      dispatch(ResetUpdateWeddingDiscountSuccess());
+    }
+  }, [updateDiscountSuccess.status, dispatch]);
+
   const handleFetchVehiclesByModelAndDate = async (
     modelId: string,
     date: string
@@ -212,6 +259,29 @@ const useWeddingInquiries = () => {
     dispatch(updateWeddingInquiryStatus(payload, id));
   };
 
+  const handleFetchCostCategories = async () => {
+    await dispatch(fetchCostCategories());
+  };
+
+  const handleAddCosts = async (data: AddCostsType) => {
+    const payload = {
+      ...data,
+      weddingInquiryId: inquiryId,
+    };
+    await dispatch(addCosts(payload));
+  };
+
+  const handleUpdateDiscount = (discount: number) => {
+    const payload = {
+      discount: discount,
+    };
+    if (inquiryId) {
+      dispatch(updateWeddingDiscount(payload, inquiryId));
+    }
+    setInquiryId(null);
+    setIsAddDiscountOpen(false);
+  };
+
   return {
     currentPage,
     weddingInquiriesPaginated,
@@ -235,6 +305,14 @@ const useWeddingInquiries = () => {
     setIsWeddingInquiryViewOpen,
     selectedInquiry,
     setselectedInquiry,
+    isAddCostsOpen,
+    setIsAddCostsOpen,
+    costCategories,
+    handleFetchCostCategories,
+    handleAddCosts,
+    isAddDiscountOpen,
+    setIsAddDiscountOpen,
+    handleUpdateDiscount,
   };
 };
 

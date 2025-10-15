@@ -17,6 +17,8 @@ import UpdateMeterValues from "../../components/Inquiries/UpdateMeterValues";
 import WeddingInquiryInvoice from "../../components/PDFs/WeddingInquiryInvoice";
 import { pdf } from "@react-pdf/renderer";
 import WeddingInquiryView from "../../components/WeddingInquiries/WeddingInquiryView";
+import AddCosts from "../../components/Inquiries/AddCost";
+import AddDiscount from "../../components/Inquiries/AddDiscount";
 
 const WeddingInquiries = () => {
   const headers: TableHeaderType<WeddingInquiryPaginatedDataType>[] = [
@@ -136,6 +138,31 @@ const WeddingInquiries = () => {
             >
               Confirm
             </DropdownMenuItem> */}
+
+            {row.status === "completed" && !row.discount && (
+              <DropdownMenuItem
+                onSelect={() => {
+                  setselectedInquiry(row);
+                  setIsAddDiscountOpen(true);
+                  setInquiryId(row.id ?? null);
+                }}
+              >
+                Add Discount
+              </DropdownMenuItem>
+            )}
+
+            {row.status === "completed" && !row.costId && (
+              <DropdownMenuItem
+                onSelect={() => {
+                  setIsAddCostsOpen(true);
+                  setInquiryId(row.id ?? null);
+                  handleFetchCostCategories();
+                }}
+              >
+                Add Costs
+              </DropdownMenuItem>
+            )}
+
             {row.status === "completed" && (
               <DropdownMenuItem
                 onSelect={() => {
@@ -198,6 +225,14 @@ const WeddingInquiries = () => {
     setIsWeddingInquiryViewOpen,
     selectedInquiry,
     setselectedInquiry,
+    isAddCostsOpen,
+    setIsAddCostsOpen,
+    costCategories,
+    handleFetchCostCategories,
+    handleAddCosts,
+    isAddDiscountOpen,
+    setIsAddDiscountOpen,
+    handleUpdateDiscount,
   } = useWeddingInquiries();
 
   return (
@@ -251,6 +286,24 @@ const WeddingInquiries = () => {
         <WeddingInquiryView
           setIsWeddingInquiryViewOpen={setIsWeddingInquiryViewOpen}
           selectedInquiry={selectedInquiry}
+        />
+      )}
+
+      {isAddCostsOpen && (
+        <AddCosts
+          setIsAddCostsOpen={setIsAddCostsOpen}
+          costCategories={costCategories}
+          handleAddCosts={handleAddCosts}
+        />
+      )}
+
+      {isAddDiscountOpen && (
+        <AddDiscount
+          setIsAddDiscountOpen={setIsAddDiscountOpen}
+          isReturnTour={false}
+          estimatedPrice={selectedInquiry?.estimatedPrice}
+          finalPrice={selectedInquiry?.finalPrice}
+          handleUpdateDiscount={handleUpdateDiscount}
         />
       )}
 
