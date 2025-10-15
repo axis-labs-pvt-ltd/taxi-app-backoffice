@@ -24,7 +24,7 @@ const AddDiscount: React.FC<AddDiscountProps> = ({
 
   // Calculate discounted price
   const { discountAmount, newFinalPrice } = useMemo(() => {
-    const basePrice = isReturnTour ? estimatedPrice / 2 : estimatedPrice;
+    const basePrice = isReturnTour ? estimatedPrice / 2 : finalPrice;
     let discountAmt = 0;
 
     if (discountType === "percent") {

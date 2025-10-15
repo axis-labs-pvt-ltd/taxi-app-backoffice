@@ -160,7 +160,44 @@ const WeddingInquiryView: React.FC<WeddingInquiryViewProps> = ({
                   </span>
                 </p>
               </div>
+              {selectedInquiry?.discount && (
+                <div className="flex items-center gap-8 text-sm mt-4">
+                  <p>
+                    <span className="font-medium text-gray-600">Discount:</span>
+                    <span className="ml-1 font-bold text-gray-900 px-2 py-0.5 rounded-full bg-green-100">
+                      Rs. {selectedInquiry?.discount?.toLocaleString()}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-medium text-gray-600">
+                      Discounted Price:
+                    </span>
+                    <span className="ml-1 font-bold text-gray-900 px-2 py-0.5 rounded-full bg-green-100">
+                      Rs.{" "}
+                      {(
+                        selectedInquiry?.finalPrice - selectedInquiry?.discount
+                      ).toFixed(2)}
+                    </span>
+                  </p>
+                </div>
+              )}
             </div>
+
+            {/* Costs */}
+            {(selectedInquiry?.costId?.costs?.length ?? 0) > 0 && (
+              <div>
+                <h3 className="text-lg font-semibold text-gray-700 mb-3">
+                  Costs
+                </h3>
+                <ul className="list-disc pl-6 text-sm text-gray-700">
+                  {selectedInquiry?.costId?.costs?.map((cost) => (
+                    <li key={cost.id}>
+                      {cost.costCategoryId.name}: LKR {cost.amount}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>

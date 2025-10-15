@@ -148,6 +148,22 @@ const WeddingInquiryInvoice: React.FC<WeddingInquiryInvoiceProps> = ({
           <Text style={styles.label}>Final Price:</Text>
           <Text style={styles.value}>Rs. {inquiry.finalPrice.toFixed(2)}</Text>
         </View>
+        {inquiry.discount && (
+          <>
+            <View style={styles.row}>
+              <Text style={styles.label}>Discount:</Text>
+              <Text style={styles.value}>
+                Rs. {inquiry?.discount?.toFixed(2)}
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.label}>Discounted Price:</Text>
+              <Text style={styles.value}>
+                Rs. {(inquiry.finalPrice - inquiry?.discount).toFixed(2)}
+              </Text>
+            </View>
+          </>
+        )}
       </View>
 
       {/* Footer */}
