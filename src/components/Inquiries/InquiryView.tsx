@@ -43,25 +43,25 @@ const InquiryView: React.FC<InquiryViewProps> = ({
           {/* Content */}
           <div className="p-8 space-y-4 overflow-y-auto h-[520px]">
             {/* Customer Info */}
-            <div>
+            <div className="border-b pb-4">
               <h3 className="text-lg font-semibold text-gray-700 mb-3">
                 Customer Information
               </h3>
               <div className="grid grid-cols-2 gap-4 text-sm">
-                <p>
-                  <span className="font-medium text-gray-600">Name:</span>{" "}
+                <p className="capitalize">
+                  <span className="font-bold text-gray-600 pr-4">Name:</span>{" "}
                   {selectedInquiry?.fullName}
                 </p>
                 <p>
-                  <span className="font-medium text-gray-600">Phone:</span>{" "}
+                  <span className="font-bold text-gray-600 pr-4">Phone:</span>{" "}
                   {selectedInquiry?.phone}
                 </p>
                 <p>
-                  <span className="font-medium text-gray-600">Email:</span>{" "}
+                  <span className="font-bold text-gray-600 pr-4">Email:</span>{" "}
                   {selectedInquiry?.email}
                 </p>
                 <p>
-                  <span className="font-medium text-gray-600">Status:</span>
+                  <span className="font-bold text-gray-600 pr-4">Status:</span>
                   <span
                     className={`ml-2 px-2 py-0.5 rounded-full text-xs font-semibold capitalize ${
                       selectedInquiry?.status === "completed"
@@ -76,25 +76,25 @@ const InquiryView: React.FC<InquiryViewProps> = ({
             </div>
 
             {/* Trip Info */}
-            <div>
+            <div className="border-b pb-4">
               <h3 className="text-lg font-semibold text-gray-700 mb-3">
                 Trip Information
               </h3>
               <div className="space-y-2 text-sm">
                 <p>
-                  <span className="font-medium text-gray-600">Date:</span>{" "}
+                  <span className="font-bold text-gray-600 pr-4">Date:</span>{" "}
                   {selectedInquiry?.tourDate.split("T")[0]}
                 </p>
                 <p>
-                  <span className="font-medium text-gray-600">Pickup:</span>{" "}
+                  <span className="font-bold text-gray-600 pr-4">Pickup:</span>{" "}
                   {selectedInquiry?.pickup?.name}
                 </p>
                 <p>
-                  <span className="font-medium text-gray-600">Drop:</span>{" "}
+                  <span className="font-bold text-gray-600 pr-4">Drop:</span>{" "}
                   {selectedInquiry?.drop?.name}
                 </p>
                 <p>
-                  <span className="font-medium text-gray-600">
+                  <span className="font-bold text-gray-600 pr-4">
                     Tour method:
                   </span>{" "}
                   {/* {selectedInquiry?.isReturnTour ? "Return" : "One-way"} */}
@@ -109,34 +109,38 @@ const InquiryView: React.FC<InquiryViewProps> = ({
                   </span>
                 </p>
                 <p>
-                  <span className="font-medium text-gray-600">Distance:</span>{" "}
+                  <span className="font-bold text-gray-600 pr-4">
+                    Distance:
+                  </span>{" "}
                   {selectedInquiry?.totalDistance?.toFixed(1)} km (Actual:{" "}
                   {selectedInquiry?.actualTotalDistance} km)
                 </p>
                 <p>
-                  <span className="font-medium text-gray-600">Meter:</span>{" "}
+                  <span className="font-bold text-gray-600 pr-4">Meter:</span>{" "}
                   {selectedInquiry?.startMeter} → {selectedInquiry?.endMeter}
                 </p>
               </div>
             </div>
 
             {/* Vehicle Info */}
-            <div>
+            <div className="border-b pb-4">
               <h3 className="text-lg font-semibold text-gray-700 mb-3">
                 Vehicle Information
               </h3>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <p>
-                  <span className="font-medium text-gray-600">Model:</span>{" "}
+                  <span className="font-bold text-gray-600 pr-4">Model:</span>{" "}
                   {selectedInquiry?.vehicleModelId?.brand}{" "}
                   {selectedInquiry?.vehicleModelId?.modelName}
                 </p>
-                <p>
-                  <span className="font-medium text-gray-600">Type:</span>{" "}
+                <p className="capitalize">
+                  <span className="font-bold text-gray-600 pr-4">Type:</span>{" "}
                   {selectedInquiry?.vehicleModelId?.type}
                 </p>
                 <p>
-                  <span className="font-medium text-gray-600">Assigned:</span>{" "}
+                  <span className="font-bold text-gray-600 pr-4">
+                    Assigned:
+                  </span>{" "}
                   {selectedInquiry?.vehicleAssigned?.plateNumber ?? "---"}
                 </p>
               </div>
@@ -144,15 +148,17 @@ const InquiryView: React.FC<InquiryViewProps> = ({
 
             {/* Extra Services */}
             {(selectedInquiry?.extraServices?.length ?? 0) > 0 && (
-              <div>
+              <div className="border-b pb-4">
                 <h3 className="text-lg font-semibold text-gray-700 mb-3">
                   Extra Services
                 </h3>
-                <ul className="list-disc pl-6 text-sm text-gray-700">
+                <ul className="text-sm text-gray-700">
                   {selectedInquiry?.extraServices.map((service) => (
-                    <li key={service.id}>
-                      {service.name} × {service.qty} → LKR{" "}
-                      {service.price * service.qty}
+                    <li key={service.id} className="pb-2">
+                      <span className="font-bold text-gray-600 pr-4">
+                        {service.name} × {service.qty}
+                      </span>
+                      → LKR {service.price * service.qty}
                     </li>
                   ))}
                 </ul>
@@ -160,17 +166,19 @@ const InquiryView: React.FC<InquiryViewProps> = ({
             )}
 
             {/* Pricing */}
-            <div>
+            <div className="border-b pb-4">
               <h3 className="text-lg font-semibold text-gray-700 mb-3">
                 Pricing
               </h3>
               <div className="flex items-center gap-8 text-sm">
                 <p>
-                  <span className="font-medium text-gray-600">Estimated:</span>{" "}
+                  <span className="font-bold text-gray-600 pr-4">
+                    Estimated:
+                  </span>{" "}
                   Rs. {selectedInquiry?.estimatedPrice?.toLocaleString()}
                 </p>
                 <p>
-                  <span className="font-medium text-gray-600">Final:</span>
+                  <span className="font-bold text-gray-600 pr-4">Final:</span>
                   <span className="ml-1 font-bold text-gray-900">
                     Rs. {selectedInquiry?.finalPrice?.toLocaleString()}
                   </span>
@@ -179,13 +187,15 @@ const InquiryView: React.FC<InquiryViewProps> = ({
               {selectedInquiry?.discount && (
                 <div className="flex items-center gap-8 text-sm mt-4">
                   <p>
-                    <span className="font-medium text-gray-600">Discount:</span>
+                    <span className="font-bold text-gray-600 pr-4">
+                      Discount:
+                    </span>
                     <span className="ml-1 font-bold text-gray-900 px-2 py-0.5 rounded-full bg-green-100">
                       Rs. {selectedInquiry?.discount?.toLocaleString()}
                     </span>
                   </p>
                   <p>
-                    <span className="font-medium text-gray-600">
+                    <span className="font-bold text-gray-600 pr-4">
                       Discounted Price:
                     </span>
                     <span className="ml-1 font-bold text-gray-900 px-2 py-0.5 rounded-full bg-green-100">
@@ -205,10 +215,14 @@ const InquiryView: React.FC<InquiryViewProps> = ({
                 <h3 className="text-lg font-semibold text-gray-700 mb-3">
                   Costs
                 </h3>
-                <ul className="list-disc pl-6 text-sm text-gray-700">
+                <ul className="text-sm text-gray-700">
                   {selectedInquiry?.costId?.costs?.map((cost) => (
-                    <li key={cost.id}>
-                      {cost.costCategoryId.name}: LKR {cost.amount}
+                    <li key={cost.id} className="pb-2">
+                      <span className="font-bold text-gray-600 pr-4">
+                        {" "}
+                        {cost.costCategoryId.name}:
+                      </span>
+                      LKR {cost.amount}
                     </li>
                   ))}
                 </ul>

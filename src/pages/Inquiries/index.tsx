@@ -19,6 +19,11 @@ import { pdf } from "@react-pdf/renderer";
 import InquiryInvoice from "../../components/PDFs/InquiryInvoice";
 import AddCosts from "../../components/Inquiries/AddCost";
 import AddDiscount from "../../components/Inquiries/AddDiscount";
+import DownloadWithDateRange from "../../components/Reusable/DownloadWithDateRange";
+import useProfitReport from "../../hooks/useProfitReport";
+import { ProfitReportType } from "../../types/Reports.types";
+import ProfitCostReportPDF from "../../components/PDFs/ProfitReport";
+import { useEffect } from "react";
 
 const Inquiries = () => {
   const headers: TableHeaderType<InquiryPaginatedDataType>[] = [
@@ -193,19 +198,6 @@ const Inquiries = () => {
     },
   ];
 
-  const downloadInvoice = async (inquiry: InquiryPaginatedDataType) => {
-    const blob = await pdf(<InquiryInvoice inquiry={inquiry} />).toBlob();
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `Invoice-${inquiry.fullName ?? "unknown"}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
-
   const {
     currentPage,
     inquiriesPaginated,
@@ -239,6 +231,59 @@ const Inquiries = () => {
     handleUpdateDiscount,
   } = useInquiries();
 
+  const {
+    profitReport,
+    showPopup,
+    setShowPopup,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    setSelectedDateRange,
+    handleDownload,
+    handleClearProfitReport,
+  } = useProfitReport();
+
+  const downloadInvoice = async (inquiry: InquiryPaginatedDataType) => {
+    const blob = await pdf(<InquiryInvoice inquiry={inquiry} />).toBlob();
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `Invoice-${inquiry.fullName ?? "unknown"}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const downloadProfitReport = async (profitReport: ProfitReportType) => {
+    const blob = await pdf(
+      <ProfitCostReportPDF
+        reports={profitReport.reports}
+        summary={profitReport.summary}
+        startDate={startDate?.toString()}
+        endDate={endDate?.toString()}
+      />
+    ).toBlob();
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `Profit-Report.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  useEffect(() => {
+    if (profitReport.data !== null) {
+      downloadProfitReport(profitReport.data);
+      handleClearProfitReport();
+    }
+  }, [profitReport.data]);
+
   return (
     <div>
       <SubHeader
@@ -248,6 +293,21 @@ const Inquiries = () => {
       <div className="">
         <div className="flex items-center justify-between mb-5">
           {SearchInput}
+          <div className="flex items-center justify-end w-full">
+            <div className="w-fit z-10">
+              <DownloadWithDateRange
+                showPopup={showPopup}
+                setShowPopup={setShowPopup}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+                setSelectedDateRange={setSelectedDateRange}
+                handleDownload={handleDownload}
+                loading={profitReport.loading}
+              />
+            </div>
+          </div>
         </div>
         <TableNew<InquiryPaginatedDataType>
           headers={headers}

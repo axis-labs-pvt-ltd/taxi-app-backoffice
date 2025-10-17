@@ -127,7 +127,7 @@ const Dashboard: React.FC = () => {
                   <div className="w-32 bg-gray-200 rounded-full h-2">
                     <div
                       className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${(item.totalIncome / 500000) * 100}%` }}
+                      style={{ width: `${(item.totalIncome / 700000) * 100}%` }}
                     />
                   </div>
                   <span className="text-sm font-medium text-gray-900 w-20 text-right">
