@@ -115,6 +115,7 @@ const useInquiries = () => {
     updateMeterValuesSuccess.status,
     searchKey,
     addCostsSuccess.status,
+    updateDiscountSuccess.status,
   ]);
 
   useEffect(() => {

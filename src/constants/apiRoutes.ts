@@ -40,7 +40,7 @@ export enum apiRoutes {
   metersByInquiry = "/inquiries/:inquiryId/meters",
   totalIncome = "/inquiries/total-income",
   monthlyIncome = "/inquiries/monthly-income",
-  
+
   totalCost = "/costs/total-cost",
 
   weddingInquiriesPaginated = "/weddingInquiries/paginated",
@@ -71,6 +71,8 @@ export enum apiRoutes {
 
   costs = "/costs",
   costsByInquiryId = "/costs/:inquiryId",
+
+  profitReport = "/reports/profit-cost-report",
 }
 
 export const generateRoute = (
