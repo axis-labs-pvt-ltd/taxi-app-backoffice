@@ -137,8 +137,6 @@ const useFileUpload = () => {
     }
   }, [imageUrl]);
 
-  console.log("imageUrls", imageUrls);
-
   const handleUpload = (files: FileList) => {
     if (!files || files.length === 0) return;
 

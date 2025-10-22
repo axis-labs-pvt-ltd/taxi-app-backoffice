@@ -1,3 +1,24 @@
+export interface DropPointType {
+  id: number;
+  index: number;
+  name?: string;
+  from?: string;
+  to?: string;
+  distance?: string;
+  duration?: string;
+  lat: number;
+  lng: number;
+}
+
+// Sub-schema for day-wise details
+export interface DayType {
+  dayNumber: string;
+  title: string;
+  description: string;
+  image?: string;
+  dropPoints: DropPointType[];
+}
+
 export interface ToursDataType {
   id?: string;
   title: string;
@@ -9,6 +30,7 @@ export interface ToursDataType {
   days: number;
   nights: number;
   images?: string[];
+  itinerary: DayType[];
 }
 
 export interface ToursPaginatedType {
