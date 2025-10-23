@@ -144,7 +144,7 @@ const InquiryInvoice: React.FC<InquiryInvoiceProps> = ({ inquiry }) => {
 
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.companyName}>BoundBond Tours</Text>
+          <Text style={styles.companyName}>47 Tours</Text>
           <Text style={styles.invoiceTitle}>INVOICE</Text>
         </View>
 
@@ -313,7 +313,7 @@ const InquiryInvoice: React.FC<InquiryInvoiceProps> = ({ inquiry }) => {
 
         {/* Footer */}
         <Text style={styles.footer}>
-          Thank you for choosing BoundBond Tours!{"\n"}
+          Thank you for choosing 47 Tours!{"\n"}
           Safe travels and see you again!
         </Text>
       </Page>

@@ -5,7 +5,7 @@ import { Input } from "../Reusable/Input";
 interface AddDiscountProps {
   setIsAddDiscountOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isReturnTour: boolean | undefined;
-  estimatedPrice: number | undefined;
+  estimatedPrice?: number | undefined;
   finalPrice: number | undefined;
   handleUpdateDiscount: (discount: number) => void;
 }

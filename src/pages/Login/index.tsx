@@ -11,7 +11,7 @@ import { ReduxActiontypes } from "../../types/Common.types";
 import { MainRoutes } from "../../data/route.data";
 import { Input } from "../../components/Reusable/Input";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import Logo from "../../assets/Logo.png";
+import Logo from "../../assets/47tour_logo.png";
 import GoogleIcon from "../../assets/Google.png";
 import TaxiBgImg from "../../assets/taxi-app_login_bg.avif";
 
@@ -142,7 +142,7 @@ const Login = () => {
           />
           <div className="items-center mt-2">
             <p className="text-sm text-[#494B49] text-center font-medium max-sm:text-xs">
-              Welcome to the Bound Bond. Sign in to <br /> access your account.
+              Welcome to the 47 Tours. Sign in to <br /> access your account.
             </p>
           </div>
           {/* {errorMessage && (

@@ -1,6 +1,6 @@
 import React from "react";
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
-import { WeddingInquiryPaginatedDataType } from "../../types/WeddingInquiry.types";
+import { TourInquiryDataType } from "../../types/TourInquiry.types";
 
 // 🧾 Styles
 const styles = StyleSheet.create({
@@ -108,15 +108,20 @@ const styles = StyleSheet.create({
   },
 });
 
-interface WeddingInquiryInvoiceProps {
-  inquiry: WeddingInquiryPaginatedDataType;
+// Component
+interface TourInquiryInvoiceProps {
+  inquiry: TourInquiryDataType;
 }
 
-const WeddingInquiryInvoice: React.FC<WeddingInquiryInvoiceProps> = ({
-  inquiry,
-}) => {
-  const formatCurrency = (value?: number) =>
+const TourInquiryInvoice: React.FC<TourInquiryInvoiceProps> = ({ inquiry }) => {
+  const formatCurrency = (value?: number | null) =>
     value != null ? `Rs. ${value.toFixed(2)}` : "N/A";
+
+  // Calculate totals
+  const extraServicesTotal = inquiry.extraServices?.reduce((acc, s) => {
+    const total = (s.qty ?? 0) * (s.price ?? 0);
+    return acc + total;
+  }, 0);
 
   return (
     <Document>
@@ -124,7 +129,7 @@ const WeddingInquiryInvoice: React.FC<WeddingInquiryInvoiceProps> = ({
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.companyName}>47 Tours</Text>
-          <Text style={styles.invoiceTitle}>INVOICE</Text>
+          <Text style={styles.invoiceTitle}>TOUR INVOICE</Text>
         </View>
 
         {/* Customer Info */}
@@ -143,10 +148,43 @@ const WeddingInquiryInvoice: React.FC<WeddingInquiryInvoiceProps> = ({
             <Text style={styles.value}>{inquiry.email}</Text>
           </View>
           <View style={styles.row}>
+            <Text style={styles.label}>Travel Date:</Text>
+            <Text style={styles.value}>
+              {inquiry.travelDate?.split("T")[0]}
+            </Text>
+          </View>
+          <View style={styles.row}>
             <Text style={styles.label}>Booking Date:</Text>
             <Text style={styles.value}>
-              {inquiry.bookingDate.split("T")[0]}
+              {inquiry.bookingDate?.split("T")[0]}
             </Text>
+          </View>
+        </View>
+
+        {/* Tour Info */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Tour Details</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Tour Title:</Text>
+            <Text style={styles.value}>{inquiry.tourId?.title}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Price per Person:</Text>
+            <Text style={styles.value}>
+              {formatCurrency(inquiry.tourId?.price)}
+            </Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Adults:</Text>
+            <Text style={styles.value}>{inquiry.adults}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Children:</Text>
+            <Text style={styles.value}>{inquiry.children}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Infants:</Text>
+            <Text style={styles.value}>{inquiry.infants}</Text>
           </View>
         </View>
 
@@ -156,17 +194,20 @@ const WeddingInquiryInvoice: React.FC<WeddingInquiryInvoiceProps> = ({
           <View style={styles.row}>
             <Text style={styles.label}>Model:</Text>
             <Text style={styles.value}>
-              {inquiry.vehicleModelId.modelName} ({inquiry.vehicleModelId.type})
+              {inquiry.vehicleAssigned?.vehicleId?.modelId?.modelName} (
+              {inquiry.vehicleAssigned?.vehicleId?.modelId?.type})
             </Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Brand:</Text>
-            <Text style={styles.value}>{inquiry.vehicleModelId.brand}</Text>
+            <Text style={styles.value}>
+              {inquiry.vehicleAssigned?.vehicleId?.modelId?.brand}
+            </Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Plate No:</Text>
             <Text style={styles.value}>
-              {inquiry.vehicleAssigned.plateNumber}
+              {inquiry.vehicleAssigned?.plateNumber}
             </Text>
           </View>
         </View>
@@ -189,9 +230,7 @@ const WeddingInquiryInvoice: React.FC<WeddingInquiryInvoiceProps> = ({
                   {service.qty ?? "N/A"}
                 </Text>
                 <Text style={[styles.tableCell, { flex: 0.6 }]}>
-                  {service.qty != null && service.price != null
-                    ? formatCurrency(service.qty * service.price)
-                    : "N/A"}
+                  {formatCurrency((service.qty ?? 0) * (service.price ?? 0))}
                 </Text>
               </View>
             ))}
@@ -201,18 +240,18 @@ const WeddingInquiryInvoice: React.FC<WeddingInquiryInvoiceProps> = ({
         {/* Price Summary */}
         <View style={styles.summaryBox}>
           <View style={styles.summaryRow}>
-            <Text style={styles.summaryLabel}>Estimated Price:</Text>
-            <Text style={styles.summaryValue}>
-              {formatCurrency(inquiry.estimatedPrice)}
-            </Text>
-          </View>
-          <View style={styles.summaryRow}>
-            <Text style={styles.summaryLabel}>Final Price:</Text>
+            <Text style={styles.summaryLabel}>Tour Cost:</Text>
             <Text style={styles.summaryValue}>
               {formatCurrency(inquiry.finalPrice)}
             </Text>
           </View>
-          {inquiry.discount && (
+          <View style={styles.summaryRow}>
+            <Text style={styles.summaryLabel}>Extra Services:</Text>
+            <Text style={styles.summaryValue}>
+              {formatCurrency(extraServicesTotal)}
+            </Text>
+          </View>
+          {inquiry.discount > 0 && (
             <>
               <View style={styles.summaryRow}>
                 <Text style={styles.summaryLabel}>Discount:</Text>
@@ -220,22 +259,12 @@ const WeddingInquiryInvoice: React.FC<WeddingInquiryInvoiceProps> = ({
                   {formatCurrency(inquiry.discount)}
                 </Text>
               </View>
-              <View style={styles.summaryRow}>
-                <Text style={styles.summaryLabel}>Discounted Price:</Text>
-                <Text style={styles.summaryValue}>
-                  {formatCurrency(inquiry.finalPrice - inquiry.discount)}
-                </Text>
-              </View>
             </>
           )}
           <View style={styles.totalRow}>
             <Text style={styles.totalLabel}>Final Price:</Text>
             <Text style={styles.totalValue}>
-              {formatCurrency(
-                inquiry.discount
-                  ? inquiry.finalPrice - inquiry.discount
-                  : inquiry.finalPrice
-              )}
+              {formatCurrency(((inquiry.finalPrice ?? 0) - inquiry.discount))}
             </Text>
           </View>
         </View>
@@ -243,11 +272,11 @@ const WeddingInquiryInvoice: React.FC<WeddingInquiryInvoiceProps> = ({
         {/* Footer */}
         <Text style={styles.footer}>
           Thank you for choosing 47 Tours!{"\n"}
-          Wishing you a wonderful wedding celebration!
+          Safe travels and see you again!
         </Text>
       </Page>
     </Document>
   );
 };
 
-export default WeddingInquiryInvoice;
+export default TourInquiryInvoice;

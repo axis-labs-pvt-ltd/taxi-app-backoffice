@@ -73,6 +73,13 @@ export enum apiRoutes {
   costsByInquiryId = "/costs/:inquiryId",
 
   profitReport = "/reports/profit-cost-report",
+
+  tourInquiriesPaginated = "/tourInquiries/paginated",
+  assignVehicleToTourInquiry = "/tourInquiries/:inquiryId",
+  updateTourTotalDistance = "/tourInquiries/:inquiryId/totalDistance",
+  metersByTourInquiry = "/tourInquiries/:inquiryId/meters",
+  updateTourInquiryMeterValues = "/tourInquiries/:inquiryId/meterValues",
+  updateTourDiscount = "/tourInquiries/:inquiryId/discounts",
 }
 
 export const generateRoute = (

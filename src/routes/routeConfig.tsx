@@ -13,6 +13,7 @@ import RateCards from "../pages/RateCards";
 import Users from "../pages/Users/index";
 import Tours from "../pages/Tours";
 import WeddingInquiries from "../pages/WeddingInquiries";
+import TourInquiries from "../pages/TourInquiries";
 
 export const routes: RouteObject[] = [
   {
@@ -98,6 +99,14 @@ export const routes: RouteObject[] = [
       {
         path: `${MainRoutes.weddingInquiries}/${DynamicRoute.pageNumber}`,
         element: <WeddingInquiries />,
+      },
+      {
+        path: MainRoutes.tourInquiries,
+        element: <TourInquiries />,
+      },
+      {
+        path: `${MainRoutes.tourInquiries}/${DynamicRoute.pageNumber}`,
+        element: <TourInquiries />,
       },
     ],
   },
