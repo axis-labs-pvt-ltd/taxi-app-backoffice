@@ -2,7 +2,7 @@ import React from "react";
 import { X } from "lucide-react";
 import { useSidebar } from "../hooks/useSideMenu";
 import ConfirmDialog from "../components/Reusable/ConfrimDialog";
-import Logo from "../assets/Logo.png";
+import Logo from "../assets/47tour_logo.png";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -45,7 +45,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       >
         <div className="flex flex-col h-full">
           {/* Logo section */}
-          <div className="flex items-center justify-between pl-8 p-[13px] border-b border-gray-200">
+          <div className="flex items-center justify-between pl-8 p-[17px] border-b border-gray-200">
             {/* <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">M</span>
@@ -55,7 +55,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <img
               src={Logo}
               alt="Logo"
-              className="items-center justify-center w-24 max-sm:w-28 object-fill"
+              className="items-center justify-center w-28 max-sm:w-28 object-fill"
             />
             <button
               onClick={closeSidebar}

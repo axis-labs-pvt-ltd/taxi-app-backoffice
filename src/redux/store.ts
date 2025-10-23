@@ -15,6 +15,7 @@ import weddingInquiriesReducer from "./WeddingInquiries/WeddingInquiriesReducer"
 import costCategoriesReducer from "./CostCategories/CostCategoriesReducer";
 import costsReducer from "./Costs/CostsReducer";
 import reportsReducer from "./Reports/ReportsReducer";
+import tourInquiriesReducer from "./TourInquiries/TourInquiryReducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   costCategories: costCategoriesReducer,
   costs: costsReducer,
   reports: reportsReducer,
+  tourInquiries: tourInquiriesReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

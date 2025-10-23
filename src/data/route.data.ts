@@ -13,6 +13,7 @@ export enum MainRoutes {
   users = "/users/page",
   tours = "/tours/page",
   weddingInquiries = "/wedding-inquiries/page",
+  tourInquiries = "/tour-inquiries/page",
   logout = MainRoutes.login,
 
   // Error Routes
