@@ -217,7 +217,7 @@ const AddTour: React.FC<AddTourProps> = ({
                   render={({ field }) => (
                     <Input
                       {...field}
-                      label="Price"
+                      label="Price per Person"
                       mandotary
                       placeholder="Enter price"
                       type="number"

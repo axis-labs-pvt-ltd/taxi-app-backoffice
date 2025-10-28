@@ -6,6 +6,7 @@ export interface RateCardsType {
   extraKmRate: number;
   currency: string;
   isWeddingRateCard: boolean;
+  returnTripDiscount?: number;
 }
 
 export interface RateCardPaginatedType {

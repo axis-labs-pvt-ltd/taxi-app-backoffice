@@ -36,4 +36,8 @@ export const rateCardSchema = z.object({
   isWeddingRateCard: z.boolean().refine((value) => typeof value === "boolean", {
     message: "Wedding Rate Card must be true or false",
   }),
+  returnTripDiscount: z
+    .number()
+    .refine((val) => !isNaN(val), { message: "Extra KM rate must be a number" })
+    .optional(),
 });

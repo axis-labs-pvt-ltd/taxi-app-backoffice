@@ -11,7 +11,7 @@ import DeleteDialog from "../../components/Reusable/DeleteDialog";
 const ExtraServices = () => {
   const headers: TableHeaderType<ExtraServicePaginatedDataType>[] = [
     { key: "name", label: "Service" },
-    { key: "price", label: "price" },
+    { key: "price", label: "Price" },
     {
       key: "isFree",
       label: "Available",
