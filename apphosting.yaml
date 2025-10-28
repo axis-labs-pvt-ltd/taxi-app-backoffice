@@ -24,3 +24,5 @@ runConfig:
 env:
   - variable: VITE_BACKEND_API_URL
     secret: VITE_BACKEND_API_URL
+  - variable: VITE_GOOGLE_MAPS_KEY
+    secret: VITE_GOOGLE_MAPS_KEY
