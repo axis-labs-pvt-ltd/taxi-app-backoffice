@@ -23,7 +23,7 @@ const Tours = () => {
     { key: "rating", label: "Rating" },
     {
       key: "price",
-      label: "Price ",
+      label: "Price (per person)",
       render: (row) => <p>Rs. {row.price.toFixed(2)}</p>,
     },
     {

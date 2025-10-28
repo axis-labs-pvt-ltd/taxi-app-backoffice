@@ -254,6 +254,42 @@ const AddRateCard: React.FC<AddRateCardProps> = ({
                   />
                 )}
               />
+              <Controller
+                name="returnTripDiscount"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    label="Return tour discount (%)"
+                    placeholder="Return tour discount (%)"
+                    error={errors["returnTripDiscount"]?.message}
+                    width="w-full"
+                    onKeyDown={(e) => {
+                      // Allow: backspace, delete, tab, escape, enter
+                      if (
+                        [8, 9, 13, 27, 46].includes(e.keyCode) ||
+                        // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                        (e.keyCode === 65 && e.ctrlKey === true) ||
+                        (e.keyCode === 67 && e.ctrlKey === true) ||
+                        (e.keyCode === 86 && e.ctrlKey === true) ||
+                        (e.keyCode === 88 && e.ctrlKey === true) ||
+                        // Allow: numbers and numpad numbers
+                        (e.keyCode >= 48 && e.keyCode <= 57) ||
+                        (e.keyCode >= 96 && e.keyCode <= 105)
+                      ) {
+                        return;
+                      }
+                      // Prevent default for all other keys
+                      e.preventDefault();
+                    }}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      // Convert to number, or use 0 if empty
+                      field.onChange(value === "" ? 0 : Number(value));
+                    }}
+                  />
+                )}
+              />
 
               <div className="flex flex-col gap-4 mt-[-90px]">
                 <label className="text-sm font-semibold">
