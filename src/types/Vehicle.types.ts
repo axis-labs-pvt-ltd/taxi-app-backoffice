@@ -1,8 +1,13 @@
+export interface RateCardType {
+  id: string;
+  name: string;
+}
+
 export interface VehiclePaginatedModelType {
   id: string;
   modelName: string;
   brand: string;
-  rateCard: string;
+  rateCard: RateCardType;
 }
 
 export interface VehiclePaginatedDataType {

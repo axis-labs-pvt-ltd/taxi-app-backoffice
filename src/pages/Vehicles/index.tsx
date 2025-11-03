@@ -49,7 +49,7 @@ const Vehicles = () => {
     {
       key: "model",
       label: "Rate Card",
-      render: (row) => <p>{row.model?.rateCard}</p>,
+      render: (row) => <p>{row.model?.rateCard?.name ?? "---"}</p>,
     },
     {
       key: "status",
