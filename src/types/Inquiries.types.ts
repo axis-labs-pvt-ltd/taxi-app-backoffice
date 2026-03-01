@@ -73,6 +73,9 @@ export interface InquiryPaginatedDataType {
   extraServices: ExtraServicesType[];
   costId: InquiryCostType;
   discount?: number;
+  returnPrice : number;
+  returnDiscount : number;
+  finalDiscount : number;
 }
 
 export interface InquiryPaginatedType {

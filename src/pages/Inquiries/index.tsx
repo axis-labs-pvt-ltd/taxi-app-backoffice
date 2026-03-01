@@ -143,7 +143,7 @@ const Inquiries = () => {
               </DropdownMenuItem>
             )}
 
-            {row.status === "completed" && !row.discount && (
+            {row.status === "completed" &&  (
               <DropdownMenuItem
                 onSelect={() => {
                   setselectedInquiry(row);

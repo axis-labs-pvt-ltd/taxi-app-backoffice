@@ -179,7 +179,7 @@ const TourInquiryView: React.FC<TourInquiryViewProps> = ({
                 <div className="flex items-center gap-8 text-sm mt-4">
                   <p>
                     <span className="font-bold text-gray-600 pr-4">
-                      Discount:
+                      Return Discount:
                     </span>
                     <span className="ml-1 font-bold text-gray-900 px-2 py-0.5 rounded-full bg-green-100">
                       Rs. {selectedInquiry?.discount?.toLocaleString()}

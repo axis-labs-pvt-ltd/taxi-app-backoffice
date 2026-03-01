@@ -44,6 +44,8 @@ export interface TourInquiryDataType {
   totalDistance: number;
   startMeter: number;
   endMeter: number;
+  returnPrice : number;
+  returnDiscount : number
 }
 
 export interface TourInquiryPaginatedType {

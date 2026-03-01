@@ -184,14 +184,27 @@ const InquiryView: React.FC<InquiryViewProps> = ({
                   </span>
                 </p>
               </div>
-              {selectedInquiry?.discount && (
+              {selectedInquiry?.isReturnTour &&(<div className="flex items-center gap-8 text-sm mt-4">
+                <p>
+                    <span className="font-bold text-gray-600 pr-4">
+                      Final Price:
+                    </span>
+                    <span className="ml-1 font-bold text-gray-900 px-2 py-0.5 rounded-full bg-green-100">
+                      Rs. {selectedInquiry?.finalPrice?.toLocaleString()}
+                    </span>
+                    <span className="ml-1 font-bold text-gray-900 px-2 py-0.5 rounded-full bg-gray-100">(
+                      One Way Price {selectedInquiry?.finalPrice - selectedInquiry?.returnPrice} + Return Charge Rs. {selectedInquiry?.returnPrice?.toLocaleString()} 
+                    )</span>
+                  </p>
+              </div>)}
+              {selectedInquiry?.finalDiscount && (
                 <div className="flex items-center gap-8 text-sm mt-4">
                   <p>
                     <span className="font-bold text-gray-600 pr-4">
-                      Discount:
+                      final Discount:
                     </span>
                     <span className="ml-1 font-bold text-gray-900 px-2 py-0.5 rounded-full bg-green-100">
-                      Rs. {selectedInquiry?.discount?.toLocaleString()}
+                      Rs. {selectedInquiry?.finalDiscount?.toLocaleString()}
                     </span>
                   </p>
                   <p>
@@ -201,7 +214,7 @@ const InquiryView: React.FC<InquiryViewProps> = ({
                     <span className="ml-1 font-bold text-gray-900 px-2 py-0.5 rounded-full bg-green-100">
                       Rs.{" "}
                       {(
-                        selectedInquiry?.finalPrice - selectedInquiry?.discount
+                        selectedInquiry?.finalPrice - selectedInquiry?.finalDiscount
                       ).toFixed(2)}
                     </span>
                   </p>
